@@ -1,0 +1,82 @@
+/* Design tokens — grounded in the web-design-principles skill.
+   Role-named so theming/dark-mode are swaps, not rewrites. */
+
+:root {
+  /* Spacing scale — 4px base (spacing-and-whitespace) */
+  --space-1: 0.25rem;  /* 4  */
+  --space-2: 0.5rem;   /* 8  */
+  --space-3: 0.75rem;  /* 12 */
+  --space-4: 1rem;     /* 16 */
+  --space-5: 1.5rem;   /* 24 */
+  --space-6: 2rem;     /* 32 */
+  --space-7: 3rem;     /* 48 */
+  --space-8: 4rem;     /* 64 */
+  --space-9: 6rem;     /* 96 */
+
+  /* Type scale — 1.25 ratio, fluid (typography) */
+  --text-sm:   clamp(0.83rem, 0.80rem + 0.15vw, 0.9rem);
+  --text-base: clamp(1rem, 0.95rem + 0.25vw, 1.125rem);
+  --text-lg:   clamp(1.25rem, 1.1rem + 0.5vw, 1.45rem);
+  --text-xl:   clamp(1.6rem, 1.3rem + 1vw, 2rem);
+  --text-2xl:  clamp(2rem, 1.5rem + 2vw, 3rem);
+  --text-3xl:  clamp(2.6rem, 1.8rem + 3.5vw, 4.5rem);
+
+  --leading-tight: 1.15;
+  --leading-body: 1.55;
+  --measure: 65ch;            /* readable line length */
+
+  --font-sans: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  --font-display: var(--font-sans);
+
+  /* Radii & shadows */
+  --radius-sm: 6px;
+  --radius-md: 12px;
+  --radius-lg: 20px;
+  --shadow-1: 0 1px 2px rgb(0 0 0 / 0.06), 0 2px 8px rgb(0 0 0 / 0.06);
+  --shadow-2: 0 8px 30px rgb(0 0 0 / 0.12);
+
+  /* Layout */
+  --container: 72rem;
+  --container-pad: var(--space-5);
+
+  /* Motion tokens (motion-and-animation) */
+  --dur-fast: 150ms;
+  --dur-base: 240ms;
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+
+  /* Color — light theme. Neutral ramp + brand + semantic.
+     Contrast pairs chosen for WCAG AA (color-and-contrast). */
+  --gray-50:  #f7f8fa;
+  --gray-100: #eceef2;
+  --gray-200: #d9dde4;
+  --gray-400: #9aa3b2;
+  --gray-600: #5b6472;
+  --gray-800: #2a303a;
+  --gray-900: #161a21;
+
+  --color-bg: var(--gray-50);
+  --color-surface: #ffffff;
+  --color-text: var(--gray-900);       /* ~15:1 on bg */
+  --color-text-muted: var(--gray-600); /* >= 4.5:1 on bg */
+  --color-border: var(--gray-200);
+  --color-primary: #3257e0;            /* >= 4.5:1 on white for text/CTA */
+  --color-primary-contrast: #ffffff;
+  --color-focus: #1d4ed8;
+}
+
+/* Dark theme — re-checked contrast, near-black/near-white to avoid halation */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --color-bg: #0e1117;
+    --color-surface: #161b22;
+    --color-text: #e8ebf0;
+    --color-text-muted: #aab2bf;
+    --color-border: #2a313c;
+    --color-primary: #7aa2ff;
+    --color-primary-contrast: #0e1117;
+    --color-focus: #9cc0ff;
+    --shadow-1: 0 1px 2px rgb(0 0 0 / 0.4), 0 2px 8px rgb(0 0 0 / 0.4);
+    --shadow-2: 0 8px 30px rgb(0 0 0 / 0.5);
+  }
+}

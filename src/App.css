@@ -1,0 +1,108 @@
+/* Component & layout styles — all spacing/type/color from tokens.css.
+   Mobile-first, fluid, grid-based (responsive-design, layout-and-grids). */
+
+.container {
+  width: 100%;
+  max-width: var(--container);
+  margin-inline: auto;
+  padding-inline: var(--container-pad);
+}
+
+/* Header */
+.site-header {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  background: color-mix(in srgb, var(--color-bg) 85%, transparent);
+  backdrop-filter: blur(8px);
+  border-bottom: 1px solid var(--color-border);
+}
+.site-header__inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-4);
+  min-height: 3.5rem;
+}
+.brand { font-weight: 700; color: var(--color-text); text-decoration: none; }
+.nav { display: flex; gap: var(--space-5); }
+.nav a { color: var(--color-text-muted); text-decoration: none; }
+.nav a:hover { color: var(--color-text); }
+
+/* Sections — generous macro whitespace (spacing-and-whitespace) */
+.section { padding-block: var(--space-8); }
+.section > * + * { margin-top: var(--space-4); }
+
+/* Hero */
+.hero { padding-block: var(--space-9) var(--space-8); }
+.eyebrow {
+  font-size: var(--text-sm);
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--color-primary);
+  font-weight: 600;
+}
+.hero__lede { font-size: var(--text-lg); color: var(--color-text-muted); margin-top: var(--space-4); }
+.hero h1 { margin-top: var(--space-2); }
+.hero__actions { display: flex; flex-wrap: wrap; gap: var(--space-3); margin-top: var(--space-6); }
+
+/* Buttons — primary is visually dominant; ghost is subordinate (visual-hierarchy).
+   Targets are comfortably >= 44px tall (accessibility-wcag 2.5.8). */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 2.75rem;
+  padding: var(--space-3) var(--space-5);
+  border-radius: var(--radius-md);
+  font-weight: 600;
+  text-decoration: none;
+  border: 1px solid transparent;
+  transition: transform var(--dur-fast) var(--ease-out),
+              background-color var(--dur-fast) var(--ease-out),
+              border-color var(--dur-fast) var(--ease-out);
+}
+.btn:active { transform: translateY(1px); }
+.btn--primary { background: var(--color-primary); color: var(--color-primary-contrast); }
+.btn--primary:hover { background: color-mix(in srgb, var(--color-primary) 88%, black); }
+.btn--ghost { color: var(--color-text); border-color: var(--color-border); background: var(--color-surface); }
+.btn--ghost:hover { border-color: var(--color-text-muted); }
+
+/* Project grid — self-adjusting, no manual breakpoints needed */
+.project-grid {
+  display: grid;
+  gap: var(--space-5);
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 16rem), 1fr));
+}
+
+.card {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  overflow: clip;
+  box-shadow: var(--shadow-1);
+  transition: transform var(--dur-base) var(--ease-out), box-shadow var(--dur-base) var(--ease-out);
+}
+.card:hover { transform: translateY(-4px); box-shadow: var(--shadow-2); }
+.card__media {
+  aspect-ratio: 16 / 10;
+  background: linear-gradient(135deg, var(--gray-200), var(--gray-100));
+}
+.card__body { padding: var(--space-5); display: flex; flex-direction: column; gap: var(--space-3); }
+.card__blurb { color: var(--color-text-muted); }
+
+.tags { display: flex; flex-wrap: wrap; gap: var(--space-2); margin-top: auto; }
+.tag {
+  font-size: var(--text-sm);
+  padding: var(--space-1) var(--space-3);
+  border-radius: 999px;
+  background: var(--gray-100);
+  color: var(--color-text-muted);
+}
+
+.text-muted { color: var(--color-text-muted); }
+
+.site-footer { border-top: 1px solid var(--color-border); padding-block: var(--space-6); margin-top: var(--space-8); }
