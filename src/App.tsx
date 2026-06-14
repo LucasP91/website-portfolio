@@ -19,8 +19,8 @@ const projects = [
   {
     title: 'CT Used-Car Scraper',
     blurb:
-      'A Python + Playwright scraper that aggregates used-car listings across Connecticut dealership sites, filtering by make, model, price, and mileage to surface the best candidates.',
-    tags: ['Python', 'Playwright', 'Automation'],
+      'A Python + Playwright scraper I scoped and directed (built with AI) that aggregates used-car listings across Connecticut dealership sites, filtering by make, model, price, and mileage to surface the best candidates.',
+    tags: ['AI-directed', 'Automation', 'Python / Playwright'],
   },
   {
     title: 'FRC Robotics — Captain & Lead Driver',
@@ -34,7 +34,7 @@ const skills = [
   { group: 'CAD & Design', items: 'SolidWorks, Onshape, GD&T, design for manufacturability' },
   { group: 'Electronics', items: 'KiCad PCB design, ESP32 / Arduino, closed-loop control, sensors & encoders' },
   { group: 'Prototyping', items: '3D printing, manual milling, laser cutting, CAM' },
-  { group: 'Software & Data', items: 'Python, Playwright, REST API automation, GitHub Actions' },
+  { group: 'AI-Assisted Development', items: 'Directing AI tools to scope, build, and ship working software — automation scripts, web scrapers, and data/reporting pipelines' },
 ]
 
 function App() {
