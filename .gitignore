@@ -48,3 +48,8 @@ coverage/
 # Blender scratch files
 *.blend
 *.blend1
+
+# Local backup / session files (not part of the published site)
+/SESSION-SETUP.md
+/config/
+/skills/

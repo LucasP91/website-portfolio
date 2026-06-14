@@ -1,19 +1,27 @@
-# Website Portfolio — Session Backup
+# Lucas Picard — Portfolio
 
-Backup of the UI/design toolchain set up on **2026-06-13**. This is a reference/restore snapshot, not the live config (the working copies live in `~/.claude/` and `~/motion-dev-mcp`).
+Personal portfolio of Lucas Picard — mechanical & robotics engineering student at WPI and hands-on mechatronics builder.
 
-## Contents
+**Live:** https://lucasp91.github.io/website-portfolio/
 
-| Path | What it is |
-|---|---|
-| [SESSION-SETUP.md](SESSION-SETUP.md) | Full reproduction notes — Node, skills, MCP servers, build steps, the workflow |
-| `skills/web-design-principles/` | Full copy of the authored design-principles skill (SKILL.md + 8 references + sources) |
-| `config/CLAUDE.md` | The required UI Development Workflow (Design → Magic `/ui` → Motion MCP) |
-| `config/mcp-servers.json` | The `magic` + `motion-dev` MCP entries (**API key redacted**) |
+The hero showcase is a scroll-driven turntable of my **SCARA robot arm** — designed in CAD, rendered in Blender, and played back as a 120-frame transparent canvas sequence over an animated aurora background.
 
-## ⚠️ Action item
-Rotate the **21st.dev Magic API key** at https://21st.dev/magic/console — it was shared in chat this session. The live value is in `~/.claude.json`; this backup has it redacted.
+## Tech
+Vite · React · TypeScript · plain CSS (design tokens) · [Motion](https://motion.dev) for scroll-driven animation.
+
+## Develop
+```bash
+npm install
+npm run dev
+```
+
+## Build
+```bash
+npm run build   # outputs to dist/
+```
+
+Deploys automatically to GitHub Pages on every push to `main` (see `.github/workflows/deploy.yml`).
 
 ## Notes
-- Third-party skills installed this session (`ui-ux-pro-max` + 6 `ckm:*` extras) are **not** duplicated here — they're large and re-downloadable; see SESSION-SETUP.md for sources and reinstall steps.
-- This folder appears to be a non-OneDrive Desktop path; verify your own backup/sync if you want it preserved off-machine.
+- `public/frames/` — turntable frames for the showcase; regenerate from Blender renders with `scripts/import-robot-frames.mjs`.
+- `docs/cad-render-recipe.md` — the reusable Blender CAD→web render recipe behind the robot animation.
