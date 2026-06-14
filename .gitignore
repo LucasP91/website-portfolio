@@ -35,3 +35,16 @@ desktop.ini
 .cache/
 coverage/
 *.tsbuildinfo
+
+# Generated demo frames (regenerate via scripts/generate-frames.mjs)
+/public/frames/*.jpg
+
+# Local audit artifacts
+/.audit/
+
+# Local chrome-devtools audit drivers
+/scripts/cdt-*.mjs
+
+# Blender scratch files
+*.blend
+*.blend1
