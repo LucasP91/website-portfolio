@@ -61,3 +61,28 @@
 @media (prefers-reduced-motion: reduce) {
   .sis__spinner { animation: none; }
 }
+
+/* Caption overlaid on the pinned canvas */
+.sis__caption {
+  position: absolute;
+  left: clamp(1rem, 5vw, 4rem);
+  bottom: clamp(1.5rem, 8vh, 5rem);
+  max-width: min(90vw, 32rem);
+  pointer-events: none;
+  z-index: 2;
+}
+.sis__caption-title {
+  margin: 0;
+  font-size: var(--text-xl, 1.6rem);
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  color: var(--color-text, #e8ebf0);
+  text-wrap: balance;
+}
+.sis__caption-note {
+  margin: 0.45rem 0 0;
+  font-size: var(--text-sm, 0.9rem);
+  line-height: 1.5;
+  color: var(--color-text-muted, #aab2bf);
+  max-width: 34ch;
+}

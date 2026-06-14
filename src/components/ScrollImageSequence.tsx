@@ -27,6 +27,10 @@ export interface ScrollImageSequenceProps {
   posterFrame?: number
   /** Accessible description of what the sequence depicts. */
   label?: string
+  /** Optional caption shown over the pinned canvas (title). */
+  caption?: string
+  /** Optional smaller note under the caption title. */
+  captionNote?: string
 }
 
 const defaultFrameSrc = (frame: number) =>
@@ -38,7 +42,15 @@ export default function ScrollImageSequence({
   heightVh = 300,
   posterFrame = 1,
   label = 'Product animation sequence',
+  caption,
+  captionNote,
 }: ScrollImageSequenceProps) {
+  const Caption = caption ? (
+    <div className="sis__caption">
+      <h2 className="sis__caption-title">{caption}</h2>
+      {captionNote && <p className="sis__caption-note">{captionNote}</p>}
+    </div>
+  ) : null
   const prefersReduced = useReducedMotion()
 
   const sectionRef = useRef<HTMLDivElement>(null)
@@ -194,6 +206,7 @@ export default function ScrollImageSequence({
       <section className="sis sis--static" aria-label={label}>
         <div className="sis__sticky">
           <canvas ref={canvasRef} className="sis__canvas" role="img" aria-label={label} />
+          {Caption}
           {!loaded && <Loader progress={progress} />}
         </div>
       </section>
@@ -209,6 +222,7 @@ export default function ScrollImageSequence({
     >
       <div className="sis__sticky">
         <canvas ref={canvasRef} className="sis__canvas" role="img" aria-label={label} />
+        {Caption}
         {!loaded && <Loader progress={progress} />}
       </div>
     </section>
