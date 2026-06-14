@@ -44,7 +44,8 @@
   background-size: 200%, 100%;
   background-attachment: fixed;
   mix-blend-mode: difference;
-  animation: aurora 60s linear infinite;
+  /* ping-pong (alternate) so it eases back instead of hard-resetting — no flash at the loop */
+  animation: aurora 90s ease-in-out infinite alternate;
 }
 
 @keyframes aurora {
