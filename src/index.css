@@ -1,2 +1,18 @@
 @import "./styles/tokens.css";
 @import "./styles/base.css";
+
+/* Force the dark galaxy theme site-wide (independent of OS preference);
+   the body is transparent so the Aurora Background shows through. */
+html { background: #050608; }
+body { background: transparent; }
+:root {
+  color-scheme: dark;
+  --color-bg: #0a0b0e;
+  --color-surface: #14161b;
+  --color-text: #e8ebf0;
+  --color-text-muted: #aab2bf;
+  --color-border: #262b34;
+  --color-primary: #7aa2ff;
+  --color-primary-contrast: #0a0b0e;
+  --color-focus: #9cc0ff;
+}

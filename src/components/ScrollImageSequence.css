@@ -14,7 +14,7 @@
   height: 100dvh;
   width: 100%;
   overflow: clip;
-  background: var(--color-bg, #0e1117);
+  background: transparent;
   display: grid;
   place-items: center;
 }
@@ -40,7 +40,7 @@
   justify-items: center;
   gap: var(--space-4, 1rem);
   color: var(--color-text, #e8ebf0);
-  background: var(--color-bg, #0e1117);
+  background: rgba(5, 6, 8, 0.55);
   font-size: var(--text-sm, 0.9rem);
 }
 

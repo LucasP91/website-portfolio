@@ -1,5 +1,6 @@
 import './App.css'
 import ScrollImageSequence from './components/ScrollImageSequence'
+import AuroraBackground from './components/AuroraBackground'
 
 /**
  * Portfolio shell — accessible, semantic foundation built per the
@@ -22,6 +23,7 @@ const projects = [
 function App() {
   return (
     <>
+      <AuroraBackground />
       <a className="skip-link" href="#main">Skip to content</a>
 
       <header className="site-header">
