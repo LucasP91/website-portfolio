@@ -117,7 +117,9 @@ export default function ScrollImageSequence({
 
     const cw = canvas.clientWidth
     const ch = canvas.clientHeight
-    const scale = Math.max(cw / img.naturalWidth, ch / img.naturalHeight)
+    // "contain" fit (+8% padding) so the whole subject is always visible,
+    // letterboxed/centered, rather than cropped to fill (which cut the base off).
+    const scale = Math.min(cw / img.naturalWidth, ch / img.naturalHeight) * 0.92
     const dw = img.naturalWidth * scale
     const dh = img.naturalHeight * scale
     const dx = (cw - dw) / 2
