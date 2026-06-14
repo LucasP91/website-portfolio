@@ -34,7 +34,7 @@ export interface ScrollImageSequenceProps {
 }
 
 const defaultFrameSrc = (frame: number) =>
-  `/frames/frame-${String(frame).padStart(4, '0')}.png`
+  `${import.meta.env.BASE_URL}frames/frame-${String(frame).padStart(4, '0')}.png`
 
 export default function ScrollImageSequence({
   frameCount = 120,
