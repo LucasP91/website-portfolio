@@ -7,7 +7,7 @@ import { dirname, join } from 'node:path'
 
 const SRC = 'C:/Users/Lucas/renders/turntable_web'
 const DST = join(dirname(fileURLToPath(import.meta.url)), '..', 'public', 'frames')
-const WIDTH = 600
+const WIDTH = 800
 
 await mkdir(DST, { recursive: true })
 const files = (await readdir(SRC)).filter(f => /^frame_\d+\.png$/.test(f)).sort()
