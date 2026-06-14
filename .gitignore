@@ -53,3 +53,7 @@ coverage/
 /SESSION-SETUP.md
 /config/
 /skills/
+
+# Private files (kept in the separate private repo)
+/CLAUDE.md
+Lucas_Picard_Resume.*
