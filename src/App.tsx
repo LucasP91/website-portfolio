@@ -6,26 +6,26 @@ const projects = [
   {
     title: 'SCARA Robot Arm',
     blurb:
-      'A 4-axis SCARA arm repurposed from salvaged Anet A8 3D-printer parts (NEMA 17 steppers, frame hardware). Closed-loop joint feedback via AS5600 magnetic encoders, custom 3D-printed arm segments, a Tr8x2 lead screw and closed-loop GT2 belts. J1 base assembled and in motion testing.',
+      "I'm turning salvaged Anet A8 3D-printer parts into a working 4-axis SCARA arm. AS5600 magnetic encoders give each joint closed-loop feedback, the segments are my own 3D-printed designs, and a Tr8x2 lead screw with closed-loop GT2 belts drives it. The J1 base is assembled and in motion testing.",
     tags: ['SolidWorks / Onshape', 'Mechatronics', 'Closed-loop control', '3D printing'],
     note: 'Shown spinning above ↑',
   },
   {
     title: 'ESP32-P4 AI Camera Pen',
     blurb:
-      'A 12 mm-diameter handwriting-capture pen on a dual-PCB stack with an OV5640 camera and a 0.95" AMOLED display. Captures handwriting, processes it through cloud AI over WiFi, and shows results on-device. KiCad schematic complete; PCBs ~65% laid out.',
+      'A 12 mm-wide handwriting-capture pen I\'m designing on a dual-PCB stack — an OV5640 camera and a 0.95" AMOLED display. It captures your handwriting, runs it through cloud AI over WiFi, and shows the result on-device. KiCad schematic is done; PCBs are ~65% laid out.',
     tags: ['KiCad', 'ESP32', 'PCB design', 'Embedded'],
   },
   {
     title: 'CT Used-Car Scraper',
     blurb:
-      'A Python + Playwright scraper I scoped and directed (built with AI) that aggregates used-car listings across Connecticut dealership sites, filtering by make, model, price, and mileage to surface the best candidates.',
+      'I scoped and directed (built with AI) a Python + Playwright scraper that pulls used-car listings from Connecticut dealership sites and filters them by make, model, price, and mileage to surface the best candidates.',
     tags: ['AI-directed', 'Automation', 'Python / Playwright'],
   },
   {
     title: 'FRC Robotics — Captain & Lead Driver',
     blurb:
-      '1000+ hours leading CAD, mechanical build, and electrical integration across subteams. Designed subsystems in Onshape / SolidWorks. As primary driver, earned the team its first New England District Championship qualification in 10 years.',
+      "1000+ hours as captain and lead driver. I led CAD, mechanical build, and electrical integration across subteams and designed subsystems in Onshape / SolidWorks — and behind the wheel, I drove us to the team's first New England District Championship qualification in 10 years.",
     tags: ['Leadership', 'CAD', 'Robotics'],
   },
 ]
@@ -60,10 +60,10 @@ function App() {
         {/* Hero */}
         <section className="hero container" aria-labelledby="hero-title">
           <p className="eyebrow">Mechanical &amp; Robotics Engineering · WPI</p>
-          <h1 id="hero-title">I design and build real hardware.</h1>
+          <h1 id="hero-title">I build the things I&apos;m told can&apos;t be built.</h1>
           <p className="hero__lede">
-            I&apos;m Lucas Picard — a mechatronics builder who ships robotic systems, embedded
-            electronics, and CAD assemblies, plus the software and automation to support them.
+            I&apos;m Lucas Picard — a mechanical &amp; robotics engineer, happiest the moment a hard
+            problem finally clicks into hardware that actually works.
           </p>
           <div className="hero__actions">
             <a className="btn btn--primary" href="#projects">View projects</a>
@@ -84,12 +84,19 @@ function App() {
         <section id="about" className="section container" aria-labelledby="about-title">
           <h2 id="about-title">About</h2>
           <p>
-            I&apos;m a mechanical engineering student at WPI on a combined B.S./M.S. in Mechanical
-            Engineering, with a second B.S. major in Robotics Engineering — completing it all in four
-            years. I&apos;m happiest with a hands-on build: designing and shipping real
-            hardware, then writing the software and automation that make it work. I&apos;m currently an
-            engineering intern at Microboard Processing, automating digital engineering and
-            documentation for SMT/PCB assembly. Dual US/German citizen, bilingual in English and German.
+            What makes me lose track of time is the moment a stubborn problem finally clicks — when
+            every piece comes together into something that actually works. I&apos;ve chased that feeling
+            since I rebalanced a Lego Technic motorcycle everyone said couldn&apos;t stand on its own, and
+            since my uncle — a mechanical engineer in Germany — taught me to solder over Skype and shipped
+            me a rough little 3D printer at eleven. I&apos;ve been designing and building real hardware ever since.
+          </p>
+          <p>
+            Today I&apos;m a mechanical engineering student at WPI on a combined B.S./M.S. in Mechanical
+            Engineering, with a second B.S. major in Robotics Engineering — all in four years. I design and
+            build robotic systems, embedded electronics, and CAD assemblies, and I direct AI to write the
+            software and automation around them. I&apos;m an engineering intern at Microboard Processing, and
+            a dual US/German citizen, bilingual in English and German. Long-term, I want to point that same
+            problem-solving at eco-friendly, high-performance vehicles.
           </p>
           <ul role="list" className="meta">
             <li><strong>WPI</strong> — Combined B.S./M.S. in Mechanical Engineering + B.S. major in Robotics Engineering, 4-year track, expected 2029</li>
