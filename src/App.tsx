@@ -1,4 +1,5 @@
 import './App.css'
+import ScrollImageSequence from './components/ScrollImageSequence'
 
 /**
  * Portfolio shell — accessible, semantic foundation built per the
@@ -49,6 +50,9 @@ function App() {
             <a className="btn btn--ghost" href="#contact">Get in touch</a>
           </div>
         </section>
+
+        {/* Showcase — scroll-driven image sequence (Apple-style) */}
+        <ScrollImageSequence frameCount={120} heightVh={300} label="SCARA robot arm — 360° turntable" />
 
         <section id="about" className="section container" aria-labelledby="about-title">
           <h2 id="about-title">About</h2>
