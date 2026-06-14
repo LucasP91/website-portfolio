@@ -85,13 +85,14 @@ function App() {
           <h2 id="about-title">About</h2>
           <p>
             I&apos;m a mechanical engineering student at WPI pursuing a double major in Mechanical and
-            Robotics Engineering. I&apos;m happiest with a hands-on build: designing and shipping real
+            Robotics Engineering on a combined B.S./M.S. track — both degrees in four years. I&apos;m
+            happiest with a hands-on build: designing and shipping real
             hardware, then writing the software and automation that make it work. I&apos;m currently an
             engineering intern at Microboard Processing, automating digital engineering and
             documentation for SMT/PCB assembly. Dual US/German citizen, bilingual in English and German.
           </p>
           <ul role="list" className="meta">
-            <li><strong>WPI</strong> — B.S. Mechanical &amp; Robotics Engineering (double major), expected 2029</li>
+            <li><strong>WPI</strong> — Combined B.S./M.S., Mechanical &amp; Robotics Engineering (double major) — both in 4 years, expected 2029</li>
             <li><strong>3.75 GPA</strong> · Dean&apos;s List</li>
             <li><strong>Now</strong> — Engineering Intern, Microboard Processing (Seymour, CT)</li>
           </ul>
