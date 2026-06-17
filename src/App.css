@@ -137,3 +137,104 @@
   gap: var(--space-3) var(--space-6);
   font-size: var(--text-lg);
 }
+
+/* ── Résumé sections ────────────────────────────────────────────── */
+
+/* Experience timeline — vertical line + dots, plain text (minimal on dark bg) */
+.timeline { list-style: none; padding: 0; max-width: 46rem; }
+.timeline__item {
+  position: relative;
+  margin-left: 6px;
+  padding: 0 0 var(--space-6) var(--space-6);
+  border-left: 2px solid var(--color-border);
+}
+.timeline__item:last-child { padding-bottom: 0; }
+.timeline__item::before {
+  content: "";
+  position: absolute;
+  left: -7px;
+  top: 4px;
+  width: 12px;
+  height: 12px;
+  border-radius: 999px;
+  background: var(--color-primary);
+  box-shadow: 0 0 0 4px var(--color-bg);
+}
+.timeline__head {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: var(--space-1) var(--space-4);
+}
+.timeline__role { font-size: var(--text-lg); }
+.timeline__dates { font-size: var(--text-sm); color: var(--color-text-muted); white-space: nowrap; }
+.timeline__org { color: var(--color-primary); font-weight: 600; margin-top: var(--space-1); }
+.timeline__org .text-muted { font-weight: 400; }
+.timeline__bullets {
+  margin-top: var(--space-3);
+  padding-left: var(--space-4);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  color: var(--color-text-muted);
+  max-width: var(--measure);
+}
+.timeline__bullets li { list-style: disc; }
+
+/* Education */
+.edu { display: flex; flex-direction: column; gap: var(--space-5); }
+.edu__item {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  padding: var(--space-5);
+  box-shadow: var(--shadow-1);
+}
+.edu__head {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: var(--space-1) var(--space-4);
+}
+.edu__school { font-size: var(--text-lg); }
+.edu__degree { color: var(--color-primary); font-weight: 600; margin-top: var(--space-1); }
+.edu__meta { color: var(--color-text-muted); margin-top: var(--space-2); max-width: var(--measure); }
+.edu__label {
+  font-size: var(--text-sm);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--color-text-muted);
+  margin-top: var(--space-4);
+  margin-bottom: var(--space-2);
+}
+.coursework { display: flex; flex-wrap: wrap; gap: var(--space-2); list-style: none; padding: 0; }
+.tag--ghost { background: transparent; border: 1px solid var(--color-border); }
+.edu__activities { margin-top: var(--space-4); }
+
+/* Facts strip — awards / languages / interests */
+.facts {
+  display: grid;
+  gap: var(--space-4);
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 15rem), 1fr));
+  list-style: none;
+  padding: 0;
+}
+.fact {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  padding: var(--space-5);
+}
+.fact h3 {
+  font-size: var(--text-sm);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--color-text-muted);
+}
+.fact p { margin-top: var(--space-2); }
+
+/* Let Reveal wrappers fill project-grid cells so cards keep equal heights */
+.project-grid > li { display: flex; }
+.project-grid > li > * { flex: 1; }
