@@ -141,7 +141,7 @@ function App() {
           <div className="hero__actions">
             <a className="btn btn--primary" href="#projects">View projects</a>
             <a className="btn btn--ghost" href="#contact">Get in touch</a>
-            <a className="btn btn--ghost" href={resumeUrl} target="_blank" rel="noreferrer">Résumé ↓</a>
+            <a className="btn btn--ghost" href={resumeUrl} target="_blank" rel="noreferrer">Resume ↓</a>
           </div>
         </section>
 
@@ -290,7 +290,7 @@ function App() {
             <li><a href="mailto:lucassamuelpicard@gmail.com">lucassamuelpicard@gmail.com</a></li>
             <li><a href="tel:+14752811281">475.281.1281</a></li>
             <li><a href="https://github.com/LucasP91" target="_blank" rel="noreferrer">github.com/LucasP91</a></li>
-            <li><a href={resumeUrl} target="_blank" rel="noreferrer">Résumé (PDF)</a></li>
+            <li><a href={resumeUrl} target="_blank" rel="noreferrer">Resume (PDF)</a></li>
             <li><span className="text-muted">Southbury, CT</span></li>
           </ul>
         </section>
