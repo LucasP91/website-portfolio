@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from 'react'
 import {
+  motion,
   useScroll,
   useTransform,
   useMotionValueEvent,
@@ -45,12 +46,6 @@ export default function ScrollImageSequence({
   caption,
   captionNote,
 }: ScrollImageSequenceProps) {
-  const Caption = caption ? (
-    <div className="sis__caption">
-      <h2 className="sis__caption-title">{caption}</h2>
-      {captionNote && <p className="sis__caption-note">{captionNote}</p>}
-    </div>
-  ) : null
   const prefersReduced = useReducedMotion()
 
   const sectionRef = useRef<HTMLDivElement>(null)
@@ -72,6 +67,21 @@ export default function ScrollImageSequence({
 
   // Map progress (0–1) to a 0-based frame index.
   const frameIndex = useTransform(scrollYProgress, [0, 1], [0, frameCount - 1])
+
+  // Caption eases away (fade + slight lift) near the end of the scroll so it
+  // doesn't sit misaligned over the section below. (motion-and-animation:
+  // opacity/transform only; disabled under reduced motion.)
+  const captionOpacity = useTransform(scrollYProgress, [0, 0.78, 0.94], [1, 1, 0])
+  const captionY = useTransform(scrollYProgress, [0.78, 0.94], [0, -24])
+  const Caption = caption ? (
+    <motion.div
+      className="sis__caption"
+      style={prefersReduced ? undefined : { opacity: captionOpacity, y: captionY }}
+    >
+      <h2 className="sis__caption-title">{caption}</h2>
+      {captionNote && <p className="sis__caption-note">{captionNote}</p>}
+    </motion.div>
+  ) : null
 
   // --- Preload every frame into an Image before we start ---
   useEffect(() => {
