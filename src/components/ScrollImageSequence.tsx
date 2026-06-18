@@ -101,8 +101,8 @@ export default function ScrollImageSequence({
       if (raf != null) cancelAnimationFrame(raf)
     }
   }, [capProgress])
-  const captionOpacity = useTransform(capProgress, [0, 0.3, 0.5], [1, 1, 0])
-  const captionY = useTransform(capProgress, [0.3, 0.5], [0, -30])
+  const captionOpacity = useTransform(capProgress, [0, 0.6, 0.82], [1, 1, 0])
+  const captionY = useTransform(capProgress, [0.6, 0.82], [0, -30])
   const Caption = caption ? (
     <motion.div
       className="sis__caption"
