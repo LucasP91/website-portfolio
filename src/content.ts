@@ -86,7 +86,7 @@ export const content = {
         bullets: [
           `Built and maintained KPI dashboards tracking MRR, ARPU, retention, churn, and acquisition to drive decisions.`,
           `Automated monthly metrics reporting through the Kajabi API and GitHub Actions, piping data into Google Sheets.`,
-          `Authored a 459-record membership cancellation analysis (13 charts, 15-page report) that surfaced retention signals.`,
+          `Analyzed 459 membership cancellations, surfacing renewal-window and engagement-based retention signals.`,
           `Delivered freelance CAD — designed, prototyped, and invoiced a wall-mount equipment cradle.`,
         ],
       },
