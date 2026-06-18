@@ -99,10 +99,10 @@
   font-size: var(--text-sm);
   padding: var(--space-1) var(--space-3);
   border-radius: 999px;
-  /* Muted light blue-grey pill (softer than stark white on the dark cards) with
-     dark navy text — keeps ~5.4:1 contrast (WCAG AA). */
-  background: #a9b4ca;
-  color: #21386b;
+  /* Subtle dark-grey chip (faint tint of the text color over the card) with
+     full-contrast light text — blends with the dark theme. */
+  background: color-mix(in srgb, var(--color-text) 10%, transparent);
+  color: var(--color-text);
 }
 
 .text-muted { color: var(--color-text-muted); }
