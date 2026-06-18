@@ -155,33 +155,36 @@ function App() {
         />
 
         {/* About */}
-        <section id="about" className="section container" aria-labelledby="about-title">
-          <h2 id="about-title">About</h2>
-          <p>
-            What makes me lose track of time is the moment a stubborn problem finally clicks — when
-            every piece comes together into something that actually works. I&apos;ve chased that feeling
-            since I rebalanced a Lego Technic motorcycle everyone said couldn&apos;t stand on its own, and
-            since my uncle — a mechanical engineer in Germany — taught me to solder over Skype and shipped
-            me a rough little 3D printer at eleven. I&apos;ve been designing and building real hardware ever since.
-          </p>
-          <p>
-            Today I&apos;m a mechanical engineering student at WPI on a combined B.S./M.S. in Mechanical
-            Engineering, with a second B.S. major in Robotics Engineering — all in four years. I design and
-            build robotic systems, embedded electronics, and CAD assemblies, and I direct AI to write the
-            software and automation around them. I&apos;m an engineering intern at Microboard Processing, and
-            a dual US/German citizen, bilingual in English and German. Long-term, I want to point that same
-            problem-solving at eco-friendly, high-performance vehicles.
-          </p>
-          <ul role="list" className="meta">
-            <li><strong>WPI</strong> — Combined B.S./M.S. in Mechanical Engineering + B.S. major in Robotics Engineering, 4-year track, expected 2029</li>
-            <li><strong>3.75 GPA</strong> · Dean&apos;s List</li>
-            <li><strong>Now</strong> — Engineering Intern, Microboard Processing (Seymour, CT)</li>
-          </ul>
+        <section id="about" className="section container section--split" aria-labelledby="about-title">
+          <div className="section__head"><h2 id="about-title">About</h2></div>
+          <div className="section__body">
+            <p>
+              What makes me lose track of time is the moment a stubborn problem finally clicks — when
+              every piece comes together into something that actually works. I&apos;ve chased that feeling
+              since I rebalanced a Lego Technic motorcycle everyone said couldn&apos;t stand on its own, and
+              since my uncle — a mechanical engineer in Germany — taught me to solder over Skype and shipped
+              me a rough little 3D printer at eleven. I&apos;ve been designing and building real hardware ever since.
+            </p>
+            <p>
+              Today I&apos;m a mechanical engineering student at WPI on a combined B.S./M.S. in Mechanical
+              Engineering, with a second B.S. major in Robotics Engineering — all in four years. I design and
+              build robotic systems, embedded electronics, and CAD assemblies, and I direct AI to write the
+              software and automation around them. I&apos;m an engineering intern at Microboard Processing, and
+              a dual US/German citizen, bilingual in English and German. Long-term, I want to point that same
+              problem-solving at eco-friendly, high-performance vehicles.
+            </p>
+            <ul role="list" className="meta">
+              <li><strong>WPI</strong> — Combined B.S./M.S. in Mechanical Engineering + B.S. major in Robotics Engineering, 4-year track, expected 2029</li>
+              <li><strong>3.75 GPA</strong> · Dean&apos;s List</li>
+              <li><strong>Now</strong> — Engineering Intern, Microboard Processing (Seymour, CT)</li>
+            </ul>
+          </div>
         </section>
 
         {/* Experience — timeline */}
-        <section id="experience" className="section container" aria-labelledby="experience-title">
-          <Reveal><h2 id="experience-title">Experience</h2></Reveal>
+        <section id="experience" className="section container section--split" aria-labelledby="experience-title">
+          <div className="section__head"><h2 id="experience-title">Experience</h2></div>
+          <div className="section__body">
           <ol className="timeline" role="list">
             {experience.map((job, i) => (
               <li className="timeline__item" key={job.org}>
@@ -203,11 +206,13 @@ function App() {
               </li>
             ))}
           </ol>
+          </div>
         </section>
 
         {/* Education */}
-        <section id="education" className="section container" aria-labelledby="education-title">
-          <Reveal><h2 id="education-title">Education</h2></Reveal>
+        <section id="education" className="section container section--split" aria-labelledby="education-title">
+          <div className="section__head"><h2 id="education-title">Education</h2></div>
+          <div className="section__body">
           <div className="edu">
             {education.map((e, i) => (
               <Reveal key={e.school} delay={Math.min(i * 0.06, 0.12)}>
@@ -234,6 +239,7 @@ function App() {
                 </article>
               </Reveal>
             ))}
+          </div>
           </div>
         </section>
 
@@ -283,16 +289,18 @@ function App() {
         </section>
 
         {/* Contact */}
-        <section id="contact" className="section container" aria-labelledby="contact-title">
-          <h2 id="contact-title">Contact</h2>
-          <p>Building something, hiring, or want to talk hardware? Reach out.</p>
-          <ul role="list" className="contact-list">
-            <li><a href="mailto:lucassamuelpicard@gmail.com">lucassamuelpicard@gmail.com</a></li>
-            <li><a href="tel:+14752811281">475.281.1281</a></li>
-            <li><a href="https://github.com/LucasP91" target="_blank" rel="noreferrer">github.com/LucasP91</a></li>
-            <li><a href={resumeUrl} target="_blank" rel="noreferrer">Resume (PDF)</a></li>
-            <li><span className="text-muted">Southbury, CT</span></li>
-          </ul>
+        <section id="contact" className="section container section--split" aria-labelledby="contact-title">
+          <div className="section__head"><h2 id="contact-title">Contact</h2></div>
+          <div className="section__body">
+            <p>Building something, hiring, or want to talk hardware? Reach out.</p>
+            <ul role="list" className="contact-list">
+              <li><a href="mailto:lucassamuelpicard@gmail.com">lucassamuelpicard@gmail.com</a></li>
+              <li><a href="tel:+14752811281">475.281.1281</a></li>
+              <li><a href="https://github.com/LucasP91" target="_blank" rel="noreferrer">github.com/LucasP91</a></li>
+              <li><a href={resumeUrl} target="_blank" rel="noreferrer">Resume (PDF)</a></li>
+              <li><span className="text-muted">Southbury, CT</span></li>
+            </ul>
+          </div>
         </section>
       </main>
 

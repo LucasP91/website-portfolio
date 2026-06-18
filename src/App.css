@@ -238,3 +238,23 @@
 /* Let Reveal wrappers fill project-grid cells so cards keep equal heights */
 .project-grid > li { display: flex; }
 .project-grid > li > * { flex: 1; }
+
+/* ── Editorial split: heading in a left rail, content fills the right column ──
+   Keeps the wide frame full (no left-hug / right-void) while every section
+   heading stays aligned to the same left edge. Stacks on narrow screens. */
+.section__body > * + * { margin-top: var(--space-4); }
+/* In the split layout the content column sets the line length, so let text
+   fill it instead of being capped narrow and left-hugging. */
+.section__body p,
+.section__body .meta,
+.section__body .timeline__bullets { max-width: none; }
+
+@media (min-width: 60rem) {
+  .section--split {
+    display: grid;
+    grid-template-columns: 13rem minmax(0, 1fr);
+    column-gap: var(--space-7);
+    align-items: start;
+  }
+  .section--split > * + * { margin-top: 0; }
+}
