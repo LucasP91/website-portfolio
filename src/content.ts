@@ -33,7 +33,7 @@ export const content = {
   /* ---- Hero (the big opening) ---- */
   hero: {
     eyebrow: `Mechanical & Robotics Engineering · WPI`,
-    title: `I build the things I'm told can't be built.`,
+    title: `From Dreams To Reality`,
     lede: `I'm Lucas Picard — a mechanical & robotics engineer, happiest the moment a hard problem finally clicks into hardware that actually works.`,
     primaryCta: { label: `View projects`, href: `#projects` },
     secondaryCta: { label: `Get in touch`, href: `#contact` },
