@@ -141,7 +141,7 @@
 /* ── Résumé sections ────────────────────────────────────────────── */
 
 /* Experience timeline — vertical line + dots, plain text (minimal on dark bg) */
-.timeline { list-style: none; padding: 0; max-width: 46rem; }
+.timeline { list-style: none; padding: 0; }
 .timeline__item {
   position: relative;
   margin-left: 6px;
