@@ -99,8 +99,9 @@
   font-size: var(--text-sm);
   padding: var(--space-1) var(--space-3);
   border-radius: 999px;
-  /* Light "white" pill with dark navy text — readable on the light pill. */
-  background: var(--gray-100);
+  /* Muted light blue-grey pill (softer than stark white on the dark cards) with
+     dark navy text — keeps ~5.4:1 contrast (WCAG AA). */
+  background: #a9b4ca;
   color: #21386b;
 }
 
@@ -256,10 +257,10 @@
 @media (max-width: 40rem) {
   .site-header__inner {
     flex-direction: column;
-    align-items: flex-start;
+    align-items: center;
     gap: var(--space-2);
     min-height: 0;
     padding-block: var(--space-3);
   }
-  .nav { gap: var(--space-4); }
+  .nav { gap: var(--space-4); justify-content: center; }
 }
