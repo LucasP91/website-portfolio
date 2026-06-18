@@ -3,6 +3,7 @@ import {
   motion,
   useScroll,
   useTransform,
+  useMotionValue,
   useMotionValueEvent,
   useReducedMotion,
 } from 'motion/react'
@@ -71,8 +72,37 @@ export default function ScrollImageSequence({
   // Caption eases away (fade + slight lift) near the end of the scroll so it
   // doesn't sit misaligned over the section below. (motion-and-animation:
   // opacity/transform only; disabled under reduced motion.)
-  const captionOpacity = useTransform(scrollYProgress, [0, 0.78, 0.94], [1, 1, 0])
-  const captionY = useTransform(scrollYProgress, [0.78, 0.94], [0, -24])
+  // Caption fade is driven by a manually-computed, guaranteed-monotonic section
+  // progress (the section's own scroll offset), not the pinned scrollYProgress —
+  // which measured non-monotonic at depth and let the caption creep back. This
+  // can't reverse, so once it clears it stays cleared. Fades out over the first
+  // ~half of the orbit.
+  const capProgress = useMotionValue(0)
+  useEffect(() => {
+    const sec = sectionRef.current
+    if (!sec) return
+    let raf: number | null = null
+    const update = () => {
+      raf = null
+      const rect = sec.getBoundingClientRect()
+      const dist = rect.height - window.innerHeight
+      const p = dist > 0 ? Math.min(1, Math.max(0, -rect.top / dist)) : 0
+      capProgress.set(p)
+    }
+    const onScroll = () => {
+      if (raf == null) raf = requestAnimationFrame(update)
+    }
+    update()
+    window.addEventListener('scroll', onScroll, { passive: true })
+    window.addEventListener('resize', onScroll)
+    return () => {
+      window.removeEventListener('scroll', onScroll)
+      window.removeEventListener('resize', onScroll)
+      if (raf != null) cancelAnimationFrame(raf)
+    }
+  }, [capProgress])
+  const captionOpacity = useTransform(capProgress, [0, 0.3, 0.5], [1, 1, 0])
+  const captionY = useTransform(capProgress, [0.3, 0.5], [0, -30])
   const Caption = caption ? (
     <motion.div
       className="sis__caption"
