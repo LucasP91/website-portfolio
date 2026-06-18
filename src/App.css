@@ -246,3 +246,18 @@
 .section__body .meta,
 .section__body .timeline__bullets,
 .edu__meta { max-width: none; }
+
+/* Header: on phone widths, stack the nav below the brand so neither gets cut.
+   flex-wrap is a safety net for any in-between width. */
+.site-header__inner { flex-wrap: wrap; row-gap: var(--space-2); }
+.nav { flex-wrap: wrap; }
+@media (max-width: 40rem) {
+  .site-header__inner {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--space-2);
+    min-height: 0;
+    padding-block: var(--space-3);
+  }
+  .nav { gap: var(--space-4); }
+}
