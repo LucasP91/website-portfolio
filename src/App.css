@@ -259,5 +259,6 @@
     min-height: 0;
     padding-block: var(--space-3);
   }
-  .nav { gap: var(--space-4); }
+  .site-header__inner > nav { align-self: stretch; }
+  .nav { gap: var(--space-4); justify-content: center; }
 }
