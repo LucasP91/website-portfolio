@@ -51,7 +51,7 @@ const education = [
     degree: 'Combined B.S./M.S. Mechanical Engineering · B.S. Robotics Engineering (double major)',
     place: 'Worcester, MA',
     dates: 'Expected 2029',
-    meta: "Sophomore standing · 3.75 / 4.00 GPA · Dean's List. Entered with 21 AP transfer credits (Calculus I–II, Physics C: Mechanics & E&M, CS A).",
+    meta: "Sophomore standing · 3.75 / 4.00 GPA · Dean's List. Entered with 21 AP transfer credits (Calculus I–II, Physics C: Mechanics & E&M, CS A, Art, U.S. Government).",
     completed: ['Statics', 'Dynamics', 'Thermodynamics', 'Manufacturing Science & CNC', 'Intro to Robotics', 'Intro to ECE', 'Calculus III–IV', 'Differential Equations', 'Linear Algebra'],
     upcoming: ['Unified Robotics I–IV', 'Fluid Mechanics', 'Heat Transfer', 'Stress Analysis', 'Control Engineering', 'Materials Science', 'Software Engineering'],
     activities: 'Combat Robotics · Club Badminton · Intramural Soccer',
