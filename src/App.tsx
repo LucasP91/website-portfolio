@@ -1,17 +1,31 @@
 import './App.css'
+import { motion, useReducedMotion } from 'motion/react'
 import ScrollImageSequence from './components/ScrollImageSequence'
 import AuroraBackground from './components/AuroraBackground'
 import Reveal from './components/Reveal'
+import ScrollProgress from './components/ScrollProgress'
 import { content } from './content'
+
+// Hero entrance: children stagger in with a fade + lift (ease-out, ~500ms).
+const heroContainer = {
+  hidden: {},
+  show: { transition: { staggerChildren: 0.09, delayChildren: 0.05 } },
+}
+const heroItem = {
+  hidden: { opacity: 0, y: 22 },
+  show: { opacity: 1, y: 0, transition: { duration: 0.5, ease: [0.16, 1, 0.3, 1] as const } },
+}
 
 // Layout & styling live here; ALL text lives in src/content.ts.
 function App() {
   const { brand, nav, hero, showcase, about, experience, education, projects, skills, contact, footer } = content
   const year = new Date().getFullYear()
+  const reduce = useReducedMotion()
 
   return (
     <>
       <AuroraBackground />
+      <ScrollProgress />
       <a className="skip-link" href="#main">Skip to content</a>
 
       <header className="site-header">
@@ -28,17 +42,23 @@ function App() {
       </header>
 
       <main id="main">
-        {/* Hero */}
-        <section className="hero container" aria-labelledby="hero-title">
-          <p className="eyebrow">{hero.eyebrow}</p>
-          <h1 id="hero-title">{hero.title}</h1>
-          <p className="hero__lede">{hero.lede}</p>
-          <div className="hero__actions">
+        {/* Hero — staggered entrance (fade + lift), static under reduced motion */}
+        <motion.section
+          className="hero container"
+          aria-labelledby="hero-title"
+          variants={heroContainer}
+          initial={reduce ? false : 'hidden'}
+          animate="show"
+        >
+          <motion.p variants={heroItem} className="eyebrow">{hero.eyebrow}</motion.p>
+          <motion.h1 variants={heroItem} id="hero-title">{hero.title}</motion.h1>
+          <motion.p variants={heroItem} className="hero__lede">{hero.lede}</motion.p>
+          <motion.div variants={heroItem} className="hero__actions">
             <a className="btn btn--primary" href={hero.primaryCta.href}>{hero.primaryCta.label}</a>
             <a className="btn btn--ghost" href={hero.secondaryCta.href}>{hero.secondaryCta.label}</a>
             <a className="btn btn--ghost" href={hero.resumeCta.href} target="_blank" rel="noreferrer">{hero.resumeCta.label}</a>
-          </div>
-        </section>
+          </motion.div>
+        </motion.section>
 
         {/* Showcase — scroll-driven SCARA arm turntable */}
         <ScrollImageSequence
@@ -152,18 +172,22 @@ function App() {
         <section id="skills" className="section container" aria-labelledby="skills-title">
           <Reveal><h2 id="skills-title">{skills.heading}</h2></Reveal>
           <ul role="list" className="skills-grid">
-            {skills.groups.map((s) => (
-              <li key={s.group} className="skill">
-                <h3 className="skill__group">{s.group}</h3>
-                <p className="skill__items">{s.items}</p>
+            {skills.groups.map((s, i) => (
+              <li key={s.group}>
+                <Reveal className="skill" delay={Math.min(i * 0.05, 0.15)}>
+                  <h3 className="skill__group">{s.group}</h3>
+                  <p className="skill__items">{s.items}</p>
+                </Reveal>
               </li>
             ))}
           </ul>
           <ul role="list" className="facts">
-            {skills.facts.map((f) => (
-              <li key={f.label} className="fact">
-                <h3>{f.label}</h3>
-                <p>{f.text}</p>
+            {skills.facts.map((f, i) => (
+              <li key={f.label}>
+                <Reveal className="fact" delay={Math.min(i * 0.05, 0.1)}>
+                  <h3>{f.label}</h3>
+                  <p>{f.text}</p>
+                </Reveal>
               </li>
             ))}
           </ul>
