@@ -152,7 +152,7 @@ export const content = {
         blurb: `I'm turning salvaged Anet A8 3D-printer parts into a working 4-axis SCARA arm. AS5600 magnetic encoders give each joint closed-loop feedback, the segments are my own 3D-printed designs, and a Tr8x2 lead screw with closed-loop GT2 belts drives it. The J1 base is assembled and in motion testing.`,
         tags: [`SolidWorks / Onshape`, `Mechatronics`, `Closed-loop control`, `3D printing`],
         note: `Shown spinning above ↑`,
-        image: `${import.meta.env.BASE_URL}frames/frame-0001.png`,
+        image: `${import.meta.env.BASE_URL}projects/scara-card.png`,
         imageAlt: `Rendered CAD model of the SCARA robot arm`,
         imageFit: `contain`,
         page: {
