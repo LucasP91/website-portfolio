@@ -154,7 +154,7 @@ export const content = {
         note: `Shown spinning above ↑`,
         image: `${import.meta.env.BASE_URL}projects/scara-card.png`,
         imageAlt: `Rendered CAD model of the SCARA robot arm`,
-        imageFit: `contain`,
+        imageFit: `cover`,
         page: {
           tagline: `A 4-axis robot arm built from the bones of a salvaged 3D printer — my own CAD, my own prints, closed-loop control on every joint.`,
           sections: [
