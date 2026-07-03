@@ -3,6 +3,17 @@ import { useParams, Link, Navigate } from 'react-router-dom'
 import Reveal from '../components/Reveal'
 import { content } from '../content'
 
+/* Sections may optionally carry bullets and/or a figure (image + caption);
+   typed here so content.ts sections only declare the fields they use. */
+type PageSection = {
+  heading: string
+  paragraphs: string[]
+  bullets?: string[]
+  image?: string
+  imageAlt?: string
+  imageCaption?: string
+}
+
 // Project detail page (/projects/<slug>). All copy comes from content.ts.
 export default function ProjectPage() {
   const { slug } = useParams()
@@ -44,11 +55,17 @@ export default function ProjectPage() {
         )}
 
         <div className="ppage__body">
-          {page.sections.map((s) => (
+          {(page.sections as PageSection[]).map((s) => (
             <Reveal key={s.heading}>
               <section className="ppage__section">
                 <h2>{s.heading}</h2>
                 {s.paragraphs.map((p, i) => <p key={i}>{p}</p>)}
+                {s.image && (
+                  <figure className="ppage__figure">
+                    <img src={s.image} alt={s.imageAlt ?? ''} loading="lazy" />
+                    {s.imageCaption && <figcaption>{s.imageCaption}</figcaption>}
+                  </figure>
+                )}
                 {Array.isArray(s.bullets) && s.bullets.length > 0 && (
                   <ul className="ppage__list">
                     {s.bullets.map((b, i) => <li key={i}>{b}</li>)}

@@ -306,39 +306,129 @@ export const content = {
       {
         slug: `ct-used-car-scraper`,
         title: `CT Used-Car Scraper`,
-        blurb: `I scoped and directed (built with AI) a Python + Playwright scraper that pulls used-car listings from Connecticut dealership sites and filters them by make, model, price, and mileage to surface the best candidates.`,
-        tags: [`AI-directed`, `Automation`, `Python / Playwright`],
+        blurb: `I scoped and directed (built with AI) a used-car-hunting system: every 6 hours it scrapes ~36 Connecticut dealer sites, tracks full price history in SQLite, scores each car against the local market, and sends Discord alerts with per-model reliability warnings. Filters are edited by typing commands into a Discord channel.`,
+        tags: [`AI-directed`, `Automation`, `Python / Playwright`, `Discord bot`],
         note: ``,
         image: `${import.meta.env.BASE_URL}projects/car-scraper.svg`,
         pageImage: ``,
         imageAlt: `Illustration of a magnifying glass finding a car listing`,
         imageFit: `cover`,
         page: {
-          tagline: `An automated scout that watches Connecticut's dealer lots for the right used car — so I don't have to.`,
+          tagline: `A used-car-hunting system that watches 36 Connecticut dealer sites around the clock, prices every car against the local market, and pings Discord when the right one shows up — built for $0 a month by directing AI.`,
           sections: [
             {
               heading: `Overview`,
               paragraphs: [
-                `Shopping for a reliable used car means checking the same dealership sites over and over. I scoped a tool to do that for me: a Python + Playwright scraper that sweeps Connecticut dealership listings and filters them by make, model, price, and mileage to surface the best candidates.`,
+                `Shopping for a reliable used car means refreshing a dozen dealer websites, every day, for weeks. I scoped a system to do it for me: one Python process scrapes ~36 Connecticut dealer sites every 6 hours, stores every listing in SQLite with full price and mileage history, scores each car against the local market, and pushes Discord alerts for new matches and price drops — with per-model reliability warnings attached at exactly the moment of decision.`,
+                `The search brief it serves is specific:`,
+              ],
+              bullets: [
+                `Volkswagen · Hyundai · Mazda · Kia · Ford · Honda · Toyota`,
+                `$7,000–$11,500 cash · 135k miles or less · 2015 or newer`,
+                `Within 50 miles of Southbury, CT`,
+                `Nissan and Chevrolet deliberately excluded (CVT and Cruze reliability)`,
+              ],
+            },
+            {
+              heading: `Architecture`,
+              paragraphs: [
+                `The whole system is one Python process and one SQLite file — no services, no queues, no paid APIs. GitHub Actions wakes it every 6 hours; five scraper engines pull listings from 36 sites; an ingest layer dedupes by VIN and records every change; and the database feeds deal scoring, Discord alerts, a CLI, and a local dashboard.`,
+              ],
+              image: `${import.meta.env.BASE_URL}projects/car-scraper-architecture.svg`,
+              imageAlt: `Architecture diagram: GitHub Actions cron drives five scraper engines over 36 dealer sites into SQLite, feeding deal scoring, Discord alerts, and a dashboard`,
+              imageCaption: `The pipeline: scrape → dedup & track changes → score → alert. The database snapshot persists between CI runs on an orphan git branch.`,
+            },
+            {
+              heading: `Scraping sites that don't have an API`,
+              paragraphs: [
+                `Dealer inventory pages are JavaScript shells behind bot walls — there's no public API to call. The trick that makes the whole system work is intercept-and-replay: drive the real page in Playwright Chromium so the Akamai bot wall sees a real browser, capture the exact inventory request the page fires for its own data, then re-issue that request with a larger page size and take the entire inventory in one JSON response. One parser per platform covers every store on it.`,
+                `Not every source needs the heavy machinery. The platform most independent lots use serves plain JSON to a plain request — no browser at all — and CarGurus, which sits behind a stricter anti-bot service, is handled the honest way: a deliberately manual-only mode drives a real Chrome profile so a human can solve the occasional CAPTCHA. It never runs in CI.`,
+              ],
+              image: `${import.meta.env.BASE_URL}projects/car-scraper-intercept.svg`,
+              imageAlt: `Four-step diagram of the intercept-and-replay scraping pattern`,
+              imageCaption: `Intercept-and-replay, the pattern behind the dealer.com engine — one Playwright page load yields a whole store's inventory.`,
+            },
+            {
+              heading: `Going where the cheap cars are`,
+              paragraphs: [
+                `The first weeks of data exposed a real market fact: the big franchise dealers with scrape-friendly websites rarely stock $7–10k cars. The budget inventory lives at independent lots. Instead of adding more franchise dealers, the system pivoted — a new engine for the platform most CT independents use, ~35 independent dealers bulk-registered through a YAML registry, and an auto-discovery command that searches for nearby used-car lots, verifies each site's platform by probing for known inventory APIs, and safely merges confirmed finds into the registry.`,
               ],
               bullets: [],
             },
             {
-              heading: `How I built it`,
+              heading: `Honest pricing`,
               paragraphs: [
-                `This one is AI-directed by design: I defined the requirements, the filtering rules, and what "a good candidate" means, then directed AI tools to write and iterate on the code while I reviewed results and steered. It's the same engineering loop I use on hardware — spec, build, test, refine — applied to software I don't hand-write.`,
-                `The scraper runs on a schedule and posts matching cars to a private Discord channel, so new candidates show up as notifications instead of another browser tab.`,
+                `Every car gets a Deal Score: how far its asking price sits below the market reference, where "market" is the median price of tight comparables — same make, model, and year within a 25,000-mile band — drawn from the scraper's own corpus rather than a paid valuation API. If fewer than three comparables exist, it reports "insufficient data" instead of a made-up number; an earlier looser fallback was deliberately removed after it produced misleading scores on thin data.`,
+                `Real listings also forced price-quality hardening: independents love advertising a "finance special" price, so cash and finance prices are split, doc fees are captured, and every price from the verify-by-phone platform carries a lower confidence rating so ranking can tell solid prices from optimistic ones. Each alert also tags the car IN BUDGET or STRETCH against the ceiling.`,
               ],
               bullets: [],
             },
+            {
+              heading: `Stateful automation on a stateless CI`,
+              paragraphs: [
+                `The scraper has no server — it runs on GitHub Actions' free tier, which forgets everything between runs. The state problem is solved with a git trick: the SQLite database persists on an orphan branch as a single force-pushed commit — durable where caches get evicted and artifacts expire, and never accumulating binary history because change history lives inside the database itself.`,
+                `The reliability details are where it earns trust: vanished listings are only marked sold for sources actually scraped that run, so one failed dealer never falsely "sells" its inventory; alerts dedupe through a notification ledger — one alert per VIN per state change, so a further price drop alerts again but a re-scrape of the same price never does — and failed sends self-heal on the next run. A total failure automatically opens a GitHub issue with the log tail, and a dry-run mode executes the full pipeline inside a transaction, shows exactly what would happen, then rolls back.`,
+              ],
+              bullets: [],
+            },
+            {
+              heading: `Alerts with a mechanic's memory`,
+              paragraphs: [
+                `A cheap car with a doomed transmission is not a deal. The system encodes mechanic-grade reliability rules that surface as a caution on the alert itself — at exactly the moment of decision:`,
+              ],
+              bullets: [
+                `Ford Focus and Fiesta 2012–18 automatics — failure-prone DPS6 "PowerShift" dual-clutch`,
+                `Hyundai and Kia — avoid the Theta II GDI (2.0/2.4) and 1.6T engines; the 2.0 MPI is the safe pick`,
+                `VW EA888 1.8T/2.0T — verify timing-chain tensioner service before buying`,
+                `Structured engine and trim excludes with year ranges, plus per-VIN manual excludes so a bad-CarFax car stays gone`,
+              ],
+            },
+            {
+              heading: `Discord as the control panel`,
+              paragraphs: [
+                `Changing filters shouldn't require a laptop and a git commit. A bot reads a private #bot-config channel at the start of each scheduled scrape and applies typed commands — set max-price 12000, add-make Subaru, exclude-vin, show config — then replies with a check or warning per command.`,
+                `Because it runs unattended, the failure modes are each explicitly closed off: only the owner's messages are accepted, the filters file stays the single source of truth (and stays hand-editable), writes are atomic with a last-good snapshot and round-trip validation before commit, and a message cursor in the database guarantees each command applies exactly once — old history is never re-executed.`,
+              ],
+              bullets: [],
+            },
+            {
+              heading: `The dashboard`,
+              paragraphs: [
+                `For browsing rather than alerts, a single-file FastAPI + HTMX dashboard (no build step) serves live filter and sort over active listings, per-VIN price history, and a top-deals view straight from the same SQLite file.`,
+              ],
+              image: `${import.meta.env.BASE_URL}projects/car-scraper-dashboard.png`,
+              imageAlt: `Screenshot of the local dashboard listing real cars with deal scores, mileage, prices, reliability warnings, and distances`,
+              imageCaption: `The live dashboard on real data — deal scores where enough comparables exist, "insufficient data" where they don't, reliability warnings, and verify-by-phone price markers.`,
+            },
+            {
+              heading: `Built by directing AI`,
+              paragraphs: [
+                `This is the project where I proved out my AI-directed development loop on something real. I wrote the specs, made the judgment calls — what counts as a duplicate, when a score is honest, which failure modes matter — and directed AI to write the code, then reviewed and stress-tested each phase before moving on. Five spec-driven phases over about two and a half weeks took it from a single-site proof of concept to the full system, backed by a 175-test suite that keeps every rule pinned down.`,
+              ],
+              bullets: [],
+            },
+            {
+              heading: `By the numbers`,
+              paragraphs: [],
+              bullets: [
+                `36 dealer sites · 5 scraper engines · scrape every 6 hours`,
+                `3,001 listings tracked · 481 recorded price/mileage/status changes`,
+                `~5,300 lines of Python across 33 modules · ~2,600 lines of tests (175 tests)`,
+                `6 database migrations · full change history on every listing`,
+                `Built May 27 – June 14, 2026 in 5 phases · 20 commits`,
+                `$0/month — no paid APIs, free CI tier`,
+              ],
+            },
           ],
           highlights: [
-            `Sweeps multiple CT dealership sites automatically`,
-            `Filters by make, model, price, mileage, and reliability picks`,
-            `Discord alerts for new matching listings`,
-            `AI-directed build — I spec, review, and steer; AI writes the code`,
+            `36 CT dealer sites on a 6-hour cron — $0/month, no paid APIs`,
+            `Intercept-and-replay scraping: the page authenticates itself, the engine reuses its own API call`,
+            `Deal Score from its own corpus — refuses to guess below 3 comparables`,
+            `Full price/mileage history in SQLite, persisted on an orphan git branch`,
+            `Discord both ways: alert embeds out, owner-only typed config commands in`,
+            `~5,300 lines of AI-directed Python · 175 tests`,
           ],
-          status: `Running on a schedule · still iterating`,
+          status: `Live on a 6-hour cron — 36 sources · 3,001 listings tracked · $0/month`,
         },
       },
       {

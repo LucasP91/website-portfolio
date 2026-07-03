@@ -1,0 +1,96 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 560" role="img" aria-label="Four-step diagram of the intercept-and-replay scraping pattern" font-family="ui-sans-serif, system-ui, sans-serif">
+  <defs>
+    <linearGradient id="bg2" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#232831"/>
+      <stop offset="1" stop-color="#15181e"/>
+    </linearGradient>
+    <marker id="arr2" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+      <path d="M0 0 L10 5 L0 10 z" fill="#7aa2ff"/>
+    </marker>
+  </defs>
+  <rect width="1600" height="560" fill="url(#bg2)"/>
+
+  <!-- panels -->
+  <g fill="#1b202a" stroke="#2a313c" stroke-width="2.5">
+    <rect x="60"   y="70" width="330" height="400" rx="16"/>
+    <rect x="450"  y="70" width="330" height="400" rx="16"/>
+    <rect x="840"  y="70" width="330" height="400" rx="16"/>
+    <rect x="1230" y="70" width="330" height="400" rx="16"/>
+  </g>
+
+  <!-- step numbers -->
+  <g>
+    <circle cx="100" cy="110" r="22" fill="rgb(122 162 255 / 0.18)" stroke="#7aa2ff" stroke-width="2.5"/>
+    <circle cx="490" cy="110" r="22" fill="rgb(122 162 255 / 0.18)" stroke="#7aa2ff" stroke-width="2.5"/>
+    <circle cx="880" cy="110" r="22" fill="rgb(122 162 255 / 0.18)" stroke="#7aa2ff" stroke-width="2.5"/>
+    <circle cx="1270" cy="110" r="22" fill="rgb(122 162 255 / 0.18)" stroke="#7aa2ff" stroke-width="2.5"/>
+    <g fill="#dbe7ff" font-size="24" font-weight="700" text-anchor="middle">
+      <text x="100" y="119">1</text>
+      <text x="490" y="119">2</text>
+      <text x="880" y="119">3</text>
+      <text x="1270" y="119">4</text>
+    </g>
+  </g>
+
+  <!-- arrows between panels -->
+  <g stroke="#7aa2ff" stroke-width="4" fill="none">
+    <path d="M394 270 L444 270" marker-end="url(#arr2)"/>
+    <path d="M784 270 L834 270" marker-end="url(#arr2)"/>
+    <path d="M1174 270 L1224 270" marker-end="url(#arr2)"/>
+  </g>
+
+  <!-- panel 1 glyph: browser + shield -->
+  <rect x="130" y="150" width="190" height="130" rx="10" fill="none" stroke="#7aa2ff" stroke-width="3"/>
+  <line x1="130" y1="182" x2="320" y2="182" stroke="#7aa2ff" stroke-width="3"/>
+  <circle cx="148" cy="166" r="5" fill="#7aa2ff"/>
+  <circle cx="166" cy="166" r="5" fill="#3a4353"/>
+  <text x="225" y="245" text-anchor="middle" fill="#55627a" font-size="30" font-weight="700">JS shell</text>
+  <path d="M300 262 l22 8 v20 c0 16 -10 24 -22 30 c-12 -6 -22 -14 -22 -30 v-20 z" fill="rgb(122 162 255 / 0.15)" stroke="#93c5fd" stroke-width="2.5"/>
+  <path d="M291 292 l7 7 l13 -14" stroke="#93c5fd" stroke-width="3" fill="none" stroke-linecap="round"/>
+  <g fill="#aab2bf" font-size="20" text-anchor="middle">
+    <text x="225" y="352">Real Chromium loads the</text>
+    <text x="225" y="380">inventory page — the Akamai</text>
+    <text x="225" y="408">bot wall sees a real browser</text>
+  </g>
+
+  <!-- panel 2 glyph: page fires request -->
+  <rect x="500" y="160" width="120" height="90" rx="10" fill="none" stroke="#7aa2ff" stroke-width="3"/>
+  <line x1="500" y1="184" x2="620" y2="184" stroke="#7aa2ff" stroke-width="3"/>
+  <path d="M626 208 L688 208" stroke="#93c5fd" stroke-width="3.5" marker-end="url(#arr2)"/>
+  <text x="722" y="222" text-anchor="middle" fill="#93c5fd" font-size="36" font-weight="700">{ }</text>
+  <text x="615" y="292" text-anchor="middle" fill="#55627a" font-size="19" font-style="italic">getInventory → JSON</text>
+  <g fill="#aab2bf" font-size="20" text-anchor="middle">
+    <text x="615" y="352">The page fires its own</text>
+    <text x="615" y="380">API request for the</text>
+    <text x="615" y="408">inventory data it renders</text>
+  </g>
+
+  <!-- panel 3 glyph: interception -->
+  <path d="M890 210 L1024 210" stroke="#93c5fd" stroke-width="3.5"/>
+  <path d="M1062 210 L1120 210" stroke="#3a4353" stroke-width="3.5" stroke-dasharray="6 7"/>
+  <rect x="1014" y="182" width="56" height="56" rx="12" fill="rgb(122 162 255 / 0.18)" stroke="#7aa2ff" stroke-width="2.5"/>
+  <circle cx="1042" cy="210" r="9" fill="#7aa2ff"/>
+  <text x="1005" y="292" text-anchor="middle" fill="#55627a" font-size="19" font-style="italic">request captured</text>
+  <g fill="#aab2bf" font-size="20" text-anchor="middle">
+    <text x="1005" y="352">The engine intercepts</text>
+    <text x="1005" y="380">that exact request —</text>
+    <text x="1005" y="408">no reverse-engineering</text>
+  </g>
+
+  <!-- panel 4 glyph: replay bigger -->
+  <text x="1330" y="235" text-anchor="middle" fill="#93c5fd" font-size="64" font-weight="700">{ }</text>
+  <g stroke="#3a4353" stroke-width="3" stroke-linecap="round">
+    <line x1="1390" y1="180" x2="1500" y2="180"/>
+    <line x1="1390" y1="208" x2="1478" y2="208"/>
+    <line x1="1390" y1="236" x2="1500" y2="236"/>
+    <line x1="1390" y1="264" x2="1466" y2="264"/>
+  </g>
+  <text x="1395" y="300" text-anchor="middle" fill="#55627a" font-size="19" font-style="italic">page size ↑ = full inventory</text>
+  <g fill="#aab2bf" font-size="20" text-anchor="middle">
+    <text x="1395" y="352">…and replays it with a</text>
+    <text x="1395" y="380">bigger page size — the whole</text>
+    <text x="1395" y="408">inventory in one response</text>
+  </g>
+
+  <text x="60" y="524" fill="#8a93a3" font-size="19">One parser per platform covers every store on it — no brittle HTML scraping, no forged request signatures.</text>
+</svg>

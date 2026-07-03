@@ -468,3 +468,20 @@
   color: var(--color-text-muted);
 }
 .ppage__list li { list-style: disc; }
+
+/* Figures inside project-page sections (diagrams, screenshots) */
+.ppage__figure {
+  margin: var(--space-5) 0 0;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  overflow: clip;
+  background: linear-gradient(135deg, #232831, #15181e);
+  box-shadow: var(--shadow-1);
+}
+.ppage__figure img { display: block; width: 100%; }
+.ppage__figure figcaption {
+  padding: var(--space-3) var(--space-4);
+  font-size: var(--text-sm);
+  color: var(--color-text-muted);
+  border-top: 1px solid var(--color-border);
+}
