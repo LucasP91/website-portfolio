@@ -438,3 +438,14 @@
   color: var(--color-primary);
   margin-right: var(--space-2);
 }
+
+/* Whole card is clickable (stretched-link pattern): the title link's hit area
+   expands over the card. Keeps a single real link for a11y; "Read more" sits
+   above the overlay so it stays independently clickable. */
+.card__title-link::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+}
+.card__more { position: relative; z-index: 3; }
