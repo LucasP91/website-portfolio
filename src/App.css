@@ -449,3 +449,8 @@
   z-index: 2;
 }
 .card__more { position: relative; z-index: 3; }
+
+/* All project-card images share one taller 4:5 box — consistent heights
+   across the row, and the portrait SCARA render fits whole with minimal
+   side space (contain), while photos crop-center (cover). */
+.card__media { aspect-ratio: 4 / 5; }
