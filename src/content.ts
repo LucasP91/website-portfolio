@@ -181,8 +181,22 @@ export const content = {
               heading: `Mechanical design`,
               paragraphs: [
                 `The base joint rotates the entire three-rod Z-tower. Two 60 mm-bore bearings wrap around the stepper body itself — a packaging trick that shortened the tower by 80 mm and widened the bearing spacing, which is what actually drives tilt stiffness (the bearings' load rating is barely touched).`,
-                `The vertical axis rides the printer's original T8×2 lead screw on three smooth rods — self-locking, so the arm holds its height unpowered, with a measured practical ceiling around 12 mm/s. Joint travel is protected by soft limits (±180° base, ±150° elbow, 280 mm of Z) chosen to guard the cable wrap rather than the mechanics, and the output-side encoders measured the drivetrain's real rotary backlash at about 1–1.5°.`,
+                `The vertical axis rides the printer's original T8×2 lead screw on three smooth rods — self-locking, so the arm holds its height unpowered, with a measured practical ceiling around 12 mm/s. Joint travel is protected by soft limits chosen to guard the cable wrap rather than the mechanics, and the output-side encoders measured the drivetrain's real rotary backlash at about 1–1.5°.`,
               ],
+              table: {
+                headers: [`Parameter`, `Value`],
+                rows: [
+                  [`Upper arm (L1)`, `160 mm`],
+                  [`Forearm (L2)`, `138.5 mm`],
+                  [`Max reach`, `298.5 mm · 21.5 mm inner dead zone`],
+                  [`J1 / J2 travel`, `±180° / ±150° (cable-protecting soft limits)`],
+                  [`Z travel`, `280 mm, soft-capped · ~12 mm/s practical ceiling`],
+                  [`Measured rotary backlash`, `~1–1.5° at the joint outputs`],
+                ],
+              },
+              image: `${import.meta.env.BASE_URL}projects/scara-workspace.svg`,
+              imageAlt: `To-scale top-down plot of the reachable workspace: a 298.5 mm annulus with a 21.5 mm dead zone and the ±180° base seam marked`,
+              imageCaption: `The workspace, drawn to scale from the kinematics constants — the same numbers the IK solver clamps against.`,
               bullets: [],
             },
             {
@@ -191,6 +205,15 @@ export const content = {
                 `Every reduction runs stock GT2 belts on driven pulleys I print myself — 5:1 on the base through a 100-tooth wheel, 2:1 on the elbow and wrist, with off-the-shelf aluminum pulleys on the motor side. Synchronous belts key on tooth count, so printing error can affect belt fit — but never the ratio.`,
                 `The printed pulleys taught me a real tolerance lesson. An empirically sized 40T ran fine, but pitch error accumulates tooth by tooth, and on a 100T it would guarantee skipping — so the big pulleys are built to corrected theoretical geometry (64.16 mm tip diameter) and proven with printed test wedges first. The finished 100T drives the whole rotating tower without missing a tooth. And when the originally measured belt length turned out to be essentially unbuyable, I resized the pulleys and mounts around belt sizes that actually ship — the final drivetrain runs stock belts with no idlers.`,
               ],
+              table: {
+                headers: [`Joint`, `Reduction`, `Ratio`, `Resolution`],
+                rows: [
+                  [`J1 · base`, `20T → 100T printed pulley`, `5:1`, `44.444 steps/°`],
+                  [`J2 · elbow`, `20T → 40T printed pulley`, `2:1`, `17.778 steps/°`],
+                  [`J4 · wrist`, `20T → 40T printed pulley`, `2:1`, `17.778 steps/° (wiring next)`],
+                  [`Z · lift`, `T8×2 lead screw, direct`, `—`, `1600 steps/mm`],
+                ],
+              },
               bullets: [],
             },
             {
@@ -207,6 +230,9 @@ export const content = {
                 `Each rotary joint carries an AS5600 12-bit absolute magnetic encoder mounted on the joint output — after the reduction — so it reads the true joint angle directly. Homing is a read, not a motion: a one-time calibration stores each joint's zero offset, and at startup the host reads the encoders and tells the firmware exactly where the arm is. No homing dance, and it survives power cycles.`,
                 `Getting three identical sensors talking was its own saga. Every AS5600 shares one fixed I²C address, so the plan was a multiplexer — until the multiplexer itself proved defective on the bench. The redesign skipped extra hardware entirely: three private I²C buses, one on the controller's hardware peripheral and two bit-banged in software on spare GPIO at ~80 kHz. Along the way, a broken I²C read path in the platform framework had to be worked around with a combined write-then-read transfer, and the firmware gained custom Marlin G-codes (M970/M971) that report each encoder's angle, gain, and magnet-strength flags — which is how I tuned the wired sensors' air gaps empirically.`,
               ],
+              image: `${import.meta.env.BASE_URL}projects/scara-homing.svg`,
+              imageAlt: `Four-step diagram of switch-free homing: calibrate once, power on anywhere, read the encoders and sync the firmware, no homing motion required`,
+              imageCaption: `Switch-free homing: calibrate once, then every power-up starts already knowing where it is.`,
               bullets: [],
             },
             {
@@ -217,6 +243,9 @@ export const content = {
                 `The safety layer is host-side and always on: every move is clamped to the reachable workspace, Z and wrist limits are enforced, and a base soft-stop refuses any path that would wrap the base joint across the ±180° seam and wind up the tower's cable harness — with on-screen status flags so a protective hold never reads as a stall.`,
                 `The firmware module and host software were built AI-assisted — I direct the architecture, review every decision, and test everything on the real hardware.`,
               ],
+              image: `${import.meta.env.BASE_URL}projects/scara-architecture.svg`,
+              imageAlt: `Control architecture diagram: Xbox controller into the Python kinematics host, G-code over USB to Marlin and TMC2209 drivers, absolute encoders reporting back over three I²C buses`,
+              imageCaption: `PC is the brain, board is the muscle — kinematics and safety host-side, step timing on the controller, encoders reporting truth back.`,
               bullets: [],
             },
             {

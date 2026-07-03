@@ -1,0 +1,60 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1300 1000" role="img" aria-label="To-scale top-down plot of the SCARA arm's reachable workspace annulus" font-family="ui-sans-serif, system-ui, sans-serif">
+  <defs>
+    <linearGradient id="bgw" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#232831"/>
+      <stop offset="1" stop-color="#15181e"/>
+    </linearGradient>
+  </defs>
+  <rect width="1300" height="1000" fill="url(#bgw)"/>
+
+  <!-- scale: 1.5 px per mm, base at (500,500) -->
+  <!-- reachable disc to max reach -->
+  <circle cx="500" cy="500" r="448" fill="rgb(122 162 255 / 0.04)" stroke="#7aa2ff" stroke-width="3"/>
+  <!-- practical annulus 80–260 mm -->
+  <path d="M500 110 a390 390 0 1 0 0.01 0 Z M500 380 a120 120 0 1 1 -0.01 0 Z" fill="rgb(122 162 255 / 0.10)" fill-rule="evenodd"/>
+  <circle cx="500" cy="500" r="390" fill="none" stroke="#3a4353" stroke-width="2" stroke-dasharray="4 8"/>
+  <circle cx="500" cy="500" r="120" fill="none" stroke="#3a4353" stroke-width="2" stroke-dasharray="4 8"/>
+  <!-- dead zone -->
+  <circle cx="500" cy="500" r="32" fill="#15181e" stroke="#8a93a3" stroke-width="2.5"/>
+
+  <!-- ±180° seam -->
+  <line x1="468" y1="500" x2="52" y2="500" stroke="#c98a8a" stroke-width="3" stroke-dasharray="10 8"/>
+  <text x="70" y="472" fill="#c98a8a" font-size="20" font-weight="600">±180° seam</text>
+  <text x="70" y="537" fill="#8a93a3" font-size="17">the base soft-stop refuses</text>
+  <text x="70" y="560" fill="#8a93a3" font-size="17">to wrap the cable harness</text>
+
+  <!-- reach callout along +x -->
+  <line x1="500" y1="500" x2="948" y2="500" stroke="#55627a" stroke-width="2" stroke-dasharray="3 6" transform="rotate(38 500 500)"/>
+
+  <!-- arm skeleton: L1 160mm @ -25°, L2 138.5mm @ -60° -->
+  <g stroke-linecap="round">
+    <line x1="500" y1="500" x2="717" y2="398" stroke="#e8ebf0" stroke-width="12"/>
+    <line x1="717" y1="398" x2="821" y2="218" stroke="#e8ebf0" stroke-width="10"/>
+  </g>
+  <circle cx="500" cy="500" r="16" fill="#1b202a" stroke="#7aa2ff" stroke-width="4"/>
+  <circle cx="717" cy="398" r="12" fill="#1b202a" stroke="#7aa2ff" stroke-width="4"/>
+  <circle cx="821" cy="218" r="10" fill="#93c5fd"/>
+  <text x="560" y="425" fill="#aab2bf" font-size="19">L1 · 160 mm</text>
+  <text x="790" y="320" fill="#aab2bf" font-size="19">L2 · 138.5 mm</text>
+  <text x="843" y="205" fill="#dbe7ff" font-size="19" font-weight="600">end effector</text>
+
+  <!-- legend -->
+  <g font-size="20">
+    <rect x="990" y="120" width="26" height="26" rx="6" fill="rgb(122 162 255 / 0.04)" stroke="#7aa2ff" stroke-width="2.5"/>
+    <text x="1030" y="140" fill="#e8ebf0">max reach</text>
+    <text x="1030" y="164" fill="#8a93a3" font-size="17">298.5 mm (L1 + L2)</text>
+
+    <rect x="990" y="204" width="26" height="26" rx="6" fill="rgb(122 162 255 / 0.10)" stroke="#3a4353" stroke-width="2"/>
+    <text x="1030" y="224" fill="#e8ebf0">practical band</text>
+    <text x="1030" y="248" fill="#8a93a3" font-size="17">~80–260 mm radius</text>
+
+    <circle cx="1003" cy="301" r="13" fill="#15181e" stroke="#8a93a3" stroke-width="2.5"/>
+    <text x="1030" y="308" fill="#e8ebf0">dead zone</text>
+    <text x="1030" y="332" fill="#8a93a3" font-size="17">21.5 mm — where L2</text>
+    <text x="1030" y="355" fill="#8a93a3" font-size="17">can't fold past L1</text>
+
+    <line x1="988" y1="398" x2="1018" y2="398" stroke="#c98a8a" stroke-width="3" stroke-dasharray="8 6"/>
+    <text x="1030" y="405" fill="#e8ebf0">J1 soft-stop seam</text>
+  </g>
+
+</svg>

@@ -3,12 +3,14 @@ import { useParams, Link, Navigate } from 'react-router-dom'
 import Reveal from '../components/Reveal'
 import { content } from '../content'
 
-/* Sections may optionally carry bullets and/or a figure (image + caption);
-   typed here so content.ts sections only declare the fields they use. */
+/* Sections may optionally carry bullets, a data table, and/or a figure
+   (image + caption); typed here so content.ts sections only declare the
+   fields they use. */
 type PageSection = {
   heading: string
   paragraphs: string[]
   bullets?: string[]
+  table?: { headers: string[]; rows: string[][] }
   image?: string
   imageAlt?: string
   imageCaption?: string
@@ -60,6 +62,20 @@ export default function ProjectPage() {
               <section className="ppage__section">
                 <h2>{s.heading}</h2>
                 {s.paragraphs.map((p, i) => <p key={i}>{p}</p>)}
+                {s.table && (
+                  <div className="ppage__tablewrap">
+                    <table className="ppage__table">
+                      <thead>
+                        <tr>{s.table.headers.map((h) => <th key={h} scope="col">{h}</th>)}</tr>
+                      </thead>
+                      <tbody>
+                        {s.table.rows.map((row, i) => (
+                          <tr key={i}>{row.map((cell, j) => <td key={j}>{cell}</td>)}</tr>
+                        ))}
+                      </tbody>
+                    </table>
+                  </div>
+                )}
                 {s.image && (
                   <figure className="ppage__figure">
                     <img src={s.image} alt={s.imageAlt ?? ''} loading="lazy" />

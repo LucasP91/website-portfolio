@@ -1,0 +1,71 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900" role="img" aria-label="Control architecture: Xbox controller into a Python kinematics host, G-code over USB to Marlin and TMC2209 drivers, with absolute encoders reporting back over three I2C buses" font-family="ui-sans-serif, system-ui, sans-serif">
+  <defs>
+    <linearGradient id="bga" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#232831"/>
+      <stop offset="1" stop-color="#15181e"/>
+    </linearGradient>
+    <marker id="arra" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0 0 L10 5 L0 10 z" fill="#55627a"/>
+    </marker>
+    <marker id="arrab" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0 0 L10 5 L0 10 z" fill="#7aa2ff"/>
+    </marker>
+  </defs>
+  <rect width="1600" height="900" fill="url(#bga)"/>
+
+  <!-- controller -->
+  <rect x="70" y="360" width="300" height="180" rx="14" fill="#1b202a" stroke="#2a313c" stroke-width="2.5"/>
+  <text x="220" y="435" text-anchor="middle" fill="#e8ebf0" font-size="26" font-weight="700">Xbox controller</text>
+  <text x="220" y="467" text-anchor="middle" fill="#aab2bf" font-size="20">wired · XInput via ctypes</text>
+  <text x="220" y="495" text-anchor="middle" fill="#aab2bf" font-size="20">sticks · bumpers · triggers</text>
+
+  <!-- host -->
+  <rect x="470" y="320" width="360" height="260" rx="14" fill="#1b202a" stroke="#7aa2ff" stroke-width="2.5"/>
+  <text x="650" y="372" text-anchor="middle" fill="#e8ebf0" font-size="26" font-weight="700">Python host — “the brain”</text>
+  <g fill="#aab2bf" font-size="20" text-anchor="middle">
+    <text x="650" y="412">forward / inverse kinematics</text>
+    <text x="650" y="442">elbow-preference + fallback</text>
+    <text x="650" y="472">25 Hz pacing · flow control</text>
+    <text x="650" y="502">workspace + seam soft-stops</text>
+  </g>
+  <path d="M370 450 L466 450" stroke="#55627a" stroke-width="3" marker-end="url(#arra)"/>
+
+  <!-- board -->
+  <rect x="960" y="320" width="330" height="260" rx="14" fill="#1b202a" stroke="#2a313c" stroke-width="2.5"/>
+  <text x="1125" y="372" text-anchor="middle" fill="#e8ebf0" font-size="26" font-weight="700">SKR V1.4 — “the muscle”</text>
+  <g fill="#aab2bf" font-size="20" text-anchor="middle">
+    <text x="1125" y="412">stock Marlin 2.1.2.5</text>
+    <text x="1125" y="442">TMC2209 UART drivers</text>
+    <text x="1125" y="472">step timing · acceleration</text>
+    <text x="1125" y="502">custom M970/M971 G-codes</text>
+  </g>
+
+  <!-- host <-> board -->
+  <path d="M830 410 L956 410" stroke="#7aa2ff" stroke-width="3.5" marker-end="url(#arrab)"/>
+  <text x="893" y="392" text-anchor="middle" fill="#8a93a3" font-size="18">G-code over USB · 115200</text>
+  <path d="M956 500 L830 500" stroke="#55627a" stroke-width="3" stroke-dasharray="7 6" marker-end="url(#arra)"/>
+  <text x="893" y="532" text-anchor="middle" fill="#8a93a3" font-size="18">encoder reads · ok P&lt;n&gt;</text>
+
+  <!-- joints -->
+  <rect x="1390" y="320" width="150" height="260" rx="14" fill="#1b202a" stroke="#2a313c" stroke-width="2.5"/>
+  <text x="1465" y="380" text-anchor="middle" fill="#e8ebf0" font-size="26" font-weight="700">Joints</text>
+  <g fill="#aab2bf" font-size="21" text-anchor="middle">
+    <text x="1465" y="425">J1 · base</text>
+    <text x="1465" y="457">J2 · elbow</text>
+    <text x="1465" y="489">Z · lift</text>
+    <text x="1465" y="521" fill="#55627a">J4 · next</text>
+  </g>
+  <path d="M1290 450 L1386 450" stroke="#55627a" stroke-width="3" marker-end="url(#arra)"/>
+
+  <!-- encoders -->
+  <rect x="960" y="720" width="330" height="120" rx="14" fill="#1b202a" stroke="#7aa2ff" stroke-width="2.5"/>
+  <text x="1125" y="770" text-anchor="middle" fill="#e8ebf0" font-size="26" font-weight="700">3× AS5600 encoders</text>
+  <text x="1125" y="802" text-anchor="middle" fill="#aab2bf" font-size="20">absolute · on the joint outputs</text>
+  <path d="M1465 584 L1465 780 L1294 780" stroke="#55627a" stroke-width="3" fill="none" stroke-dasharray="7 6" marker-end="url(#arra)"/>
+  <text x="1380" y="756" text-anchor="middle" fill="#8a93a3" font-size="18">true joint angle</text>
+  <path d="M1060 716 L1060 584" stroke="#7aa2ff" stroke-width="3.5" marker-end="url(#arrab)"/>
+  <text x="1044" y="660" text-anchor="end" fill="#8a93a3" font-size="18">3 private I²C buses</text>
+  <text x="1044" y="684" text-anchor="end" fill="#8a93a3" font-size="18">(hardware + 2 bit-banged)</text>
+
+  <text x="70" y="846" fill="#8a93a3" font-size="19">Homing = read + G92, no motion. Kinematics stays on the PC; Marlin does what motion controllers are good at.</text>
+</svg>

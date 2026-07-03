@@ -1,0 +1,86 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 560" role="img" aria-label="Four-step diagram of switch-free absolute-encoder homing" font-family="ui-sans-serif, system-ui, sans-serif">
+  <defs>
+    <linearGradient id="bgh" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#232831"/>
+      <stop offset="1" stop-color="#15181e"/>
+    </linearGradient>
+    <marker id="arrh" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+      <path d="M0 0 L10 5 L0 10 z" fill="#7aa2ff"/>
+    </marker>
+  </defs>
+  <rect width="1600" height="560" fill="url(#bgh)"/>
+
+  <g fill="#1b202a" stroke="#2a313c" stroke-width="2.5">
+    <rect x="60"   y="70" width="330" height="400" rx="16"/>
+    <rect x="450"  y="70" width="330" height="400" rx="16"/>
+    <rect x="840"  y="70" width="330" height="400" rx="16"/>
+    <rect x="1230" y="70" width="330" height="400" rx="16"/>
+  </g>
+
+  <g>
+    <circle cx="100" cy="110" r="22" fill="rgb(122 162 255 / 0.18)" stroke="#7aa2ff" stroke-width="2.5"/>
+    <circle cx="490" cy="110" r="22" fill="rgb(122 162 255 / 0.18)" stroke="#7aa2ff" stroke-width="2.5"/>
+    <circle cx="880" cy="110" r="22" fill="rgb(122 162 255 / 0.18)" stroke="#7aa2ff" stroke-width="2.5"/>
+    <circle cx="1270" cy="110" r="22" fill="rgb(122 162 255 / 0.18)" stroke="#7aa2ff" stroke-width="2.5"/>
+    <g fill="#dbe7ff" font-size="24" font-weight="700" text-anchor="middle">
+      <text x="100" y="119">1</text>
+      <text x="490" y="119">2</text>
+      <text x="880" y="119">3</text>
+      <text x="1270" y="119">4</text>
+    </g>
+  </g>
+
+  <g stroke="#7aa2ff" stroke-width="4" fill="none">
+    <path d="M394 270 L444 270" marker-end="url(#arrh)"/>
+    <path d="M784 270 L834 270" marker-end="url(#arrh)"/>
+    <path d="M1174 270 L1224 270" marker-end="url(#arrh)"/>
+  </g>
+
+  <!-- panel 1: calibrate once (dial with zero mark) -->
+  <circle cx="225" cy="210" r="62" fill="none" stroke="#7aa2ff" stroke-width="3.5"/>
+  <line x1="225" y1="210" x2="268" y2="167" stroke="#93c5fd" stroke-width="4" stroke-linecap="round"/>
+  <circle cx="225" cy="210" r="7" fill="#93c5fd"/>
+  <line x1="225" y1="140" x2="225" y2="122" stroke="#dbe7ff" stroke-width="4" stroke-linecap="round"/>
+  <text x="225" y="305" text-anchor="middle" fill="#55627a" font-size="19" font-style="italic">zero_deg saved per joint</text>
+  <g fill="#aab2bf" font-size="20" text-anchor="middle">
+    <text x="225" y="352">Calibrate once at a</text>
+    <text x="225" y="380">known pose — each joint's</text>
+    <text x="225" y="408">encoder zero is stored</text>
+  </g>
+
+  <!-- panel 2: power on anywhere -->
+  <path d="M622 150 l-30 62 h24 l-16 58 44 -74 h-24 l22 -46 z" fill="rgb(122 162 255 / 0.18)" stroke="#93c5fd" stroke-width="2.5"/>
+  <text x="690" y="228" fill="#dbe7ff" font-size="34" font-weight="700">217.4°</text>
+  <text x="615" y="305" text-anchor="middle" fill="#55627a" font-size="19" font-style="italic">absolute — knows at power-up</text>
+  <g fill="#aab2bf" font-size="20" text-anchor="middle">
+    <text x="615" y="352">Power on in any pose —</text>
+    <text x="615" y="380">the magnetic encoders</text>
+    <text x="615" y="408">already read true angles</text>
+  </g>
+
+  <!-- panel 3: read -> G92 -->
+  <text x="925" y="222" fill="#93c5fd" font-size="40" font-weight="700">θ</text>
+  <path d="M960 208 L1030 208" stroke="#93c5fd" stroke-width="3.5" marker-end="url(#arrh)"/>
+  <rect x="1040" y="176" width="90" height="64" rx="10" fill="rgb(122 162 255 / 0.12)" stroke="#7aa2ff" stroke-width="2.5"/>
+  <text x="1085" y="216" text-anchor="middle" fill="#dbe7ff" font-size="24" font-weight="700">G92</text>
+  <text x="1005" y="305" text-anchor="middle" fill="#55627a" font-size="19" font-style="italic">host read → firmware synced</text>
+  <g fill="#aab2bf" font-size="20" text-anchor="middle">
+    <text x="1005" y="352">The host reads each joint</text>
+    <text x="1005" y="380">and tells Marlin exactly</text>
+    <text x="1005" y="408">where the arm is</text>
+  </g>
+
+  <!-- panel 4: no seek, survives power cycles -->
+  <rect x="1310" y="170" width="86" height="52" rx="10" fill="none" stroke="#3a4353" stroke-width="3"/>
+  <circle cx="1336" cy="196" r="9" fill="#3a4353"/>
+  <line x1="1296" y1="236" x2="1410" y2="156" stroke="#c98a8a" stroke-width="5" stroke-linecap="round"/>
+  <path d="M1438 178 l14 16 l30 -34" stroke="#93c5fd" stroke-width="6" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="1395" y="305" text-anchor="middle" fill="#55627a" font-size="19" font-style="italic">no switch-seek, no motion</text>
+  <g fill="#aab2bf" font-size="20" text-anchor="middle">
+    <text x="1395" y="352">Homing is a read, not a</text>
+    <text x="1395" y="380">search — and calibration</text>
+    <text x="1395" y="408">survives power cycles</text>
+  </g>
+
+  <text x="60" y="524" fill="#8a93a3" font-size="19">The one exception: Z still homes to the printer's original endstop switch — the only physical switch on the machine.</text>
+</svg>

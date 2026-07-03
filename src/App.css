@@ -485,3 +485,31 @@
   color: var(--color-text-muted);
   border-top: 1px solid var(--color-border);
 }
+
+/* Data tables inside project-page sections — horizontal scroll on narrow
+   screens so the page body never overflows. */
+.ppage__tablewrap {
+  margin-top: var(--space-4);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  overflow-x: auto;
+  background: var(--color-surface);
+}
+.ppage__table { width: 100%; border-collapse: collapse; }
+.ppage__table th {
+  text-align: left;
+  font-size: var(--text-sm);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--color-text-muted);
+  padding: var(--space-3) var(--space-4);
+  border-bottom: 1px solid var(--color-border);
+  white-space: nowrap;
+}
+.ppage__table td {
+  padding: var(--space-3) var(--space-4);
+  border-top: 1px solid var(--color-border);
+  color: var(--color-text-muted);
+}
+.ppage__table tr > td:first-child { color: var(--color-text); font-weight: 600; white-space: nowrap; }
+.ppage__table tbody tr:first-child td { border-top: none; }
