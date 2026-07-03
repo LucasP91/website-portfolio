@@ -33,7 +33,12 @@ export default function ProjectPage() {
         {project.image && (
           <Reveal>
             <figure className={`ppage__media${project.imageFit === 'contain' ? ' ppage__media--contain' : ''}`}>
-              <img src={project.image} alt={project.imageAlt} />
+              {/* Wide screens can use a page-specific framing (e.g. SCARA padded
+                  so its column is centered); phones keep the tight crop. */}
+              <picture>
+                {project.pageImage && <source media="(min-width: 40rem)" srcSet={project.pageImage} />}
+                <img src={project.image} alt={project.imageAlt} />
+              </picture>
             </figure>
           </Reveal>
         )}

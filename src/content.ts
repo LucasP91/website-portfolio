@@ -153,6 +153,10 @@ export const content = {
         tags: [`SolidWorks / Onshape`, `Mechatronics`, `Closed-loop control`, `3D printing`],
         note: `Shown spinning above ↑`,
         image: `${import.meta.env.BASE_URL}projects/scara-card.png`,
+        /* Wide screens use this variant on the project page — padded so the
+           arm's column (elevator) is the horizontal center. Phones keep the
+           tight `image` above. Leave `` to always use `image`. */
+        pageImage: `${import.meta.env.BASE_URL}projects/scara-page.png`,
         imageAlt: `Rendered CAD model of the SCARA robot arm`,
         imageFit: `contain`,
         page: {
@@ -189,6 +193,7 @@ export const content = {
         tags: [`KiCad`, `ESP32`, `PCB design`, `Embedded`],
         note: ``,
         image: ``,
+        pageImage: ``,
         imageAlt: ``,
         imageFit: `cover`,
         page: {
@@ -225,6 +230,7 @@ export const content = {
         tags: [`AI-directed`, `Automation`, `Python / Playwright`],
         note: ``,
         image: `${import.meta.env.BASE_URL}projects/car-scraper.svg`,
+        pageImage: ``,
         imageAlt: `Illustration of a magnifying glass finding a car listing`,
         imageFit: `cover`,
         page: {
@@ -260,6 +266,7 @@ export const content = {
         tags: [`Leadership`, `CAD`, `Robotics`],
         note: ``,
         image: `${import.meta.env.BASE_URL}projects/frc-team.jpg`,
+        pageImage: ``,
         imageAlt: `Lucas and a teammate holding the district event finalist plaque and trophy at a New England FIRST competition`,
         imageFit: `cover`,
         page: {
