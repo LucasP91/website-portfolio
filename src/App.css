@@ -359,3 +359,82 @@
 /* Skill/fact cards keep equal heights now that Reveal wraps their content. */
 .skills-grid > li, .facts > li { display: flex; }
 .skills-grid > li > *, .facts > li > * { flex: 1; }
+
+/* ── Project cards: real images + links to the detail pages ─────────────── */
+.card__media { position: relative; }
+.card__media img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform var(--dur-base) var(--ease-out);
+}
+.card:hover .card__media img { transform: scale(1.04); }
+/* Transparent renders (e.g. the SCARA frame) letterbox instead of cropping. */
+.card__media--contain img { object-fit: contain; padding: var(--space-3); }
+.card__title-link { color: inherit; text-decoration: none; }
+.card__title-link:hover { color: var(--color-primary); }
+.card__more {
+  font-size: var(--text-sm);
+  font-weight: 600;
+  text-decoration: none;
+  margin-top: var(--space-2);
+}
+.card__more:hover { text-decoration: underline; }
+
+/* ── Project detail pages ────────────────────────────────────────────────── */
+.ppage__back {
+  display: inline-block;
+  font-size: var(--text-sm);
+  font-weight: 600;
+  text-decoration: none;
+  margin-bottom: var(--space-6);
+}
+.ppage__back:hover { text-decoration: underline; }
+.ppage__header .tags { margin-top: var(--space-4); }
+.ppage__tagline {
+  font-size: var(--text-lg);
+  color: var(--color-text-muted);
+  margin-top: var(--space-3);
+  max-width: var(--measure);
+}
+.ppage__media {
+  margin: var(--space-6) 0 0;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  overflow: clip;
+  background: linear-gradient(135deg, #232831, #15181e);
+  box-shadow: var(--shadow-2);
+}
+.ppage__media img { width: 100%; max-height: 34rem; object-fit: cover; }
+.ppage__media--contain img { object-fit: contain; padding: var(--space-4); }
+.ppage__body { margin-top: var(--space-6); max-width: var(--measure); }
+.ppage__section { margin-top: var(--space-6); }
+.ppage__section h2 { font-size: var(--text-xl); }
+.ppage__section p { margin-top: var(--space-3); }
+/* Project-page section headings reuse the accent bar via .section h2::after */
+.ppage__highlights {
+  margin-top: var(--space-3);
+  padding-left: var(--space-4);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  color: var(--color-text-muted);
+}
+.ppage__highlights li { list-style: disc; }
+.ppage__status {
+  margin-top: var(--space-6);
+  padding: var(--space-3) var(--space-4);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  background: var(--color-surface);
+  display: inline-block;
+  color: var(--color-text-muted);
+}
+.ppage__status-label {
+  font-size: var(--text-sm);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-weight: 600;
+  color: var(--color-primary);
+  margin-right: var(--space-2);
+}

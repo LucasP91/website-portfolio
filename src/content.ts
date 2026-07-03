@@ -137,35 +137,165 @@ export const content = {
   },
 
   /* ---- Projects. One { } block per card. `tags` are the little chips.
-         `note` is the optional blue line under a card (leave `` to hide). ---- */
+         `note` is the optional blue line under a card (leave `` to hide).
+         `slug` is the page URL (/projects/<slug>) — lowercase-with-dashes.
+         `image`/`imageAlt` show on the card and page (`` = placeholder).
+         `page` is that project's detail page: a tagline, sections of
+         paragraphs, a highlights list, and a status line. ---- */
   projects: {
     heading: `Projects`,
+    readMore: `Read more →`,
     items: [
       {
+        slug: `scara-robot-arm`,
         title: `SCARA Robot Arm`,
         blurb: `I'm turning salvaged Anet A8 3D-printer parts into a working 4-axis SCARA arm. AS5600 magnetic encoders give each joint closed-loop feedback, the segments are my own 3D-printed designs, and a Tr8x2 lead screw with closed-loop GT2 belts drives it. The J1 base is assembled and in motion testing.`,
         tags: [`SolidWorks / Onshape`, `Mechatronics`, `Closed-loop control`, `3D printing`],
         note: `Shown spinning above ↑`,
+        image: `${import.meta.env.BASE_URL}frames/frame-0031.png`,
+        imageAlt: `Rendered CAD model of the SCARA robot arm`,
+        imageFit: `contain`,
+        page: {
+          tagline: `A 4-axis robot arm built from the bones of a salvaged 3D printer — my own CAD, my own prints, closed-loop control on every joint.`,
+          sections: [
+            {
+              heading: `Overview`,
+              paragraphs: [
+                `A SCARA (Selective Compliance Articulated Robot Arm) moves like a human arm flattened onto a plane: two rotating joints sweep the workspace while a vertical axis raises and lowers the tool. It's the architecture behind a huge share of industrial pick-and-place robots — fast, rigid, and precise.`,
+                `Mine started as a broken Anet A8 3D printer. Instead of letting the NEMA 17 steppers, rods, and hardware collect dust, I'm turning them into a working 4-axis SCARA arm — every structural part designed by me in CAD and 3D-printed.`,
+              ],
+            },
+            {
+              heading: `Engineering`,
+              paragraphs: [
+                `Each joint carries an AS5600 magnetic encoder for closed-loop position feedback, housed in dedicated mounts I designed into the printed arm segments. The Z-axis rides a Tr8x2 lead screw; the rotary joints are driven through closed-loop GT2 belt reductions.`,
+                `The spinning model at the top of this site is the real assembly — exported from Onshape and rendered in Blender into the scroll-driven sequence you see.`,
+              ],
+            },
+          ],
+          highlights: [
+            `4-axis SCARA kinematics with closed-loop feedback on every joint`,
+            `Custom 3D-printed structure with integrated encoder mounts`,
+            `Tr8x2 lead-screw Z-axis + GT2 belt-driven rotary joints`,
+            `Salvaged Anet A8 donor parts — steppers, rods, and hardware`,
+          ],
+          status: `J1 base assembled · motion testing underway`,
+        },
       },
       {
+        slug: `esp32-ai-camera-pen`,
         title: `ESP32-P4 AI Camera Pen`,
         blurb: `A 12 mm-wide handwriting-capture pen I'm designing on a dual-PCB stack — an OV5640 camera and a 0.95" AMOLED display. It captures your handwriting, runs it through cloud AI over WiFi, and shows the result on-device. KiCad schematic is done; PCBs are ~65% laid out.`,
         tags: [`KiCad`, `ESP32`, `PCB design`, `Embedded`],
         note: ``,
+        image: ``,
+        imageAlt: ``,
+        imageFit: `cover`,
+        page: {
+          tagline: `A pen that reads its own handwriting — camera, display, and an AI loop packed into a 12 mm barrel.`,
+          sections: [
+            {
+              heading: `Overview`,
+              paragraphs: [
+                `The idea: write normally on paper, and the pen itself captures what you wrote, sends it through cloud AI, and shows the response on a tiny display built into the pen — no phone, no scanner in the loop.`,
+                `The hard part is the packaging. Everything has to fit a 12 mm-diameter barrel, which drove me to a dual-PCB stack architecture with flex interconnects between the boards.`,
+              ],
+            },
+            {
+              heading: `Hardware`,
+              paragraphs: [
+                `An ESP32-P4 runs the show, paired with an OV5640 camera watching the pen tip and a 0.95" AMOLED for output. WiFi carries captures to a cloud AI service and brings results back to the display.`,
+                `The full schematic is done in KiCad, and board layout is roughly 65% complete across the two PCBs.`,
+              ],
+            },
+          ],
+          highlights: [
+            `12 mm-diameter dual-PCB stack — extreme packaging constraint`,
+            `OV5640 camera + 0.95" AMOLED display on-device`,
+            `ESP32-P4 with a WiFi → cloud AI → display loop`,
+            `Full KiCad schematic complete; layout ~65%`,
+          ],
+          status: `Schematic complete · PCB layout ~65%`,
+        },
       },
       {
+        slug: `ct-used-car-scraper`,
         title: `CT Used-Car Scraper`,
         blurb: `I scoped and directed (built with AI) a Python + Playwright scraper that pulls used-car listings from Connecticut dealership sites and filters them by make, model, price, and mileage to surface the best candidates.`,
         tags: [`AI-directed`, `Automation`, `Python / Playwright`],
         note: ``,
+        image: ``,
+        imageAlt: ``,
+        imageFit: `cover`,
+        page: {
+          tagline: `An automated scout that watches Connecticut's dealer lots for the right used car — so I don't have to.`,
+          sections: [
+            {
+              heading: `Overview`,
+              paragraphs: [
+                `Shopping for a reliable used car means checking the same dealership sites over and over. I scoped a tool to do that for me: a Python + Playwright scraper that sweeps Connecticut dealership listings and filters them by make, model, price, and mileage to surface the best candidates.`,
+              ],
+            },
+            {
+              heading: `How I built it`,
+              paragraphs: [
+                `This one is AI-directed by design: I defined the requirements, the filtering rules, and what "a good candidate" means, then directed AI tools to write and iterate on the code while I reviewed results and steered. It's the same engineering loop I use on hardware — spec, build, test, refine — applied to software I don't hand-write.`,
+                `The scraper runs on a schedule and posts matching cars to a private Discord channel, so new candidates show up as notifications instead of another browser tab.`,
+              ],
+            },
+          ],
+          highlights: [
+            `Sweeps multiple CT dealership sites automatically`,
+            `Filters by make, model, price, mileage, and reliability picks`,
+            `Discord alerts for new matching listings`,
+            `AI-directed build — I spec, review, and steer; AI writes the code`,
+          ],
+          status: `Running on a schedule · still iterating`,
+        },
       },
       {
+        slug: `frc-robotics`,
         title: `FRC Robotics — Captain & Lead Driver`,
         blurb: `1000+ hours as captain and lead driver. I led CAD, mechanical build, and electrical integration across subteams and designed subsystems in Onshape / SolidWorks — and behind the wheel, I drove us to the team's first New England District Championship qualification in 10 years and its first CT State Championship.`,
         tags: [`Leadership`, `CAD`, `Robotics`],
         note: ``,
+        image: `${import.meta.env.BASE_URL}projects/frc-team.jpg`,
+        imageAlt: `Lucas and a teammate holding the district event finalist plaque and trophy at a New England FIRST competition`,
+        imageFit: `cover`,
+        page: {
+          tagline: `Four seasons, 1000+ hours — leading the build during the week and driving the robot on match day.`,
+          sections: [
+            {
+              heading: `Overview`,
+              paragraphs: [
+                `FIRST Robotics Competition gives you six weeks to design, build, and program a competition robot — then puts it on a field against the best teams in the region. I spent four seasons on my high-school team, finishing as captain and lead driver with 1000+ hours in the shop and behind the wheel.`,
+              ],
+            },
+            {
+              heading: `What I did`,
+              paragraphs: [
+                `I led CAD, mechanical build, and electrical integration across subteams, designing robot subsystems in Onshape and SolidWorks and troubleshooting fast in the pit between matches, where a broken mechanism has minutes to get fixed, not days.`,
+                `As primary driver I put the design to the test on the field — driving us to the team's first New England District Championship qualification in 10 years, and its first CT State Championship at an off-season event.`,
+              ],
+            },
+          ],
+          highlights: [
+            `Team captain & lead driver · 1000+ hours over four seasons`,
+            `Subsystem design in Onshape / SolidWorks across subteams`,
+            `First New England District Championship qualification in 10 years`,
+            `First CT State Championship (off-season event)`,
+          ],
+          status: `2021 – 2025 · alumni`,
+        },
       },
     ],
+  },
+
+  /* ---- Labels used on the project detail pages ---- */
+  projectPage: {
+    back: `← All projects`,
+    highlightsLabel: `Highlights`,
+    statusLabel: `Status`,
   },
 
   /* ---- Skills + the Awards/Languages/Interests strip below them ---- */
