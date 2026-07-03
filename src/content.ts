@@ -149,7 +149,7 @@ export const content = {
       {
         slug: `scara-robot-arm`,
         title: `SCARA Robot Arm`,
-        blurb: `I'm turning salvaged Anet A8 3D-printer parts into a working 4-axis SCARA arm. AS5600 magnetic encoders give each joint closed-loop feedback, the segments are my own 3D-printed designs, and a Tr8x2 lead screw with closed-loop GT2 belts drives it. The J1 base is assembled and in motion testing.`,
+        blurb: `I'm turning salvaged Anet A8 3D-printer parts into a working 4-axis SCARA arm. AS5600 magnetic encoders give each joint closed-loop feedback, the segments are my own 3D-printed designs, and a Tr8x2 lead screw with closed-loop GT2 belts drives it. The full system — mechanics, electronics, and software — is built and running; only the end effector remains.`,
         tags: [`SolidWorks / Onshape`, `Mechatronics`, `Closed-loop control`, `3D printing`],
         note: `Shown spinning above ↑`,
         image: `${import.meta.env.BASE_URL}projects/scara-card.png`,
@@ -183,7 +183,7 @@ export const content = {
             `Tr8x2 lead-screw Z-axis + GT2 belt-driven rotary joints`,
             `Salvaged Anet A8 donor parts — steppers, rods, and hardware`,
           ],
-          status: `J1 base assembled · motion testing underway`,
+          status: `Full system complete — mechanics, electronics & software · end effector in progress`,
         },
       },
       {
