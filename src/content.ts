@@ -160,28 +160,50 @@ export const content = {
         imageAlt: `Rendered CAD model of the SCARA robot arm`,
         imageFit: `contain`,
         page: {
-          tagline: `A 4-axis robot arm built from the bones of a salvaged 3D printer — my own CAD, my own prints, closed-loop control on every joint.`,
+          tagline: `A 4-axis SCARA arm with absolute encoder feedback — designed, printed, wired, and programmed from the remains of a $150 3D printer, for about $120 in new parts.`,
           sections: [
             {
               heading: `Overview`,
               paragraphs: [
-                `A SCARA (Selective Compliance Articulated Robot Arm) moves like a human arm flattened onto a plane: two rotating joints sweep the workspace while a vertical axis raises and lowers the tool. It's the architecture behind a huge share of industrial pick-and-place robots — fast, rigid, and precise.`,
-                `Mine started as a broken Anet A8 3D printer. Instead of letting the NEMA 17 steppers, rods, and hardware collect dust, I'm turning them into a working 4-axis SCARA arm — every structural part designed by me in CAD and 3D-printed.`,
+                `The donor was a broken Anet A8 — a $150 3D printer. Its NEMA 17 steppers, smooth rods, lead screw, endstop, and power supply all live on in this arm; every structural part is my own design in Onshape, 3D-printed. Total new spend: about $120, most of it one control board.`,
+                `The result is a 4-axis SCARA: a 160 mm upper arm and 140 mm forearm sweep a 300 mm-reach workspace, a lead-screw Z-axis raises and lowers the arm, and a wrist joint rotates the tool. The spinning model at the top of this site is the real assembly, exported from Onshape and rendered in Blender.`,
               ],
             },
             {
-              heading: `Engineering`,
+              heading: `Why a SCARA`,
               paragraphs: [
-                `Each joint carries an AS5600 magnetic encoder for closed-loop position feedback, housed in dedicated mounts I designed into the printed arm segments. The Z-axis rides a Tr8x2 lead screw; the rotary joints are driven through closed-loop GT2 belt reductions.`,
-                `The spinning model at the top of this site is the real assembly — exported from Onshape and rendered in Blender into the scroll-driven sequence you see.`,
+                `The salvaged motors turned out to be the weak 0.5 A variant — about a third the torque of robotics-standard NEMA 17s. That killed the original 6-axis plan; the elbow alone would have needed a 15–25:1 reduction. Instead of buying better motors, I changed the architecture: in a SCARA the arm joints sweep horizontally and never fight gravity, so the same motors became adequate with modest 2–5:1 belt reductions. A hardware limitation became the design decision.`,
+              ],
+            },
+            {
+              heading: `Mechanical`,
+              paragraphs: [
+                `The base joint rotates the entire three-rod Z-tower. Two 60 mm-bore bearings wrap around the stepper body itself — a packaging trick that shortened the tower by 80 mm and widened the bearing spacing, which is what actually drives tilt stiffness.`,
+                `The drivetrain runs on GT2 belts and pulleys I print myself, up to a 100-tooth wheel for the 5:1 base reduction. Printed pulleys taught me a real tolerance lesson: pitch error a small pulley shrugs off accumulates tooth by tooth on a big one, so the large pulleys use corrected theoretical geometry, proven with printed test wedges before committing to full prints.`,
+              ],
+            },
+            {
+              heading: `Electronics & sensing`,
+              paragraphs: [
+                `A 32-bit SKR V1.4 Turbo runs Marlin 2.0 with TMC2209 drivers in UART mode, current-tuned to the 0.5 A motors. Every rotational joint carries an AS5600 absolute magnetic encoder — position is known the moment power comes on, no homing dance — and since all three share one I²C address, they sit behind a TCA9548A multiplexer. The Z-axis homes on the printer's original endstop.`,
+                `The electronics also carry a scar: the printer's original control board died in a short against the power-supply housing — smoke, fire, gone. The forced replacement became an upgrade (quiet drivers, native 3.3 V logic for the encoders) and a permanent habit: boards live on standoffs, and nothing gets handled powered.`,
+              ],
+            },
+            {
+              heading: `Software`,
+              paragraphs: [
+                `The control split is "PC is the brain, board is the muscle." Python on the PC handles forward and inverse kinematics, path planning, and the control interface, then streams G-code over USB; Marlin does what a motion controller is genuinely good at — step timing, acceleration, coordinated multi-axis moves. Encoder angles flow back over serial for homing, verification, and missed-step detection.`,
+                `The firmware configuration and kinematics were built AI-assisted — I direct the architecture, review every decision, and test on the real hardware.`,
               ],
             },
           ],
           highlights: [
-            `4-axis SCARA kinematics with closed-loop feedback on every joint`,
-            `Custom 3D-printed structure with integrated encoder mounts`,
-            `Tr8x2 lead-screw Z-axis + GT2 belt-driven rotary joints`,
-            `Salvaged Anet A8 donor parts — steppers, rods, and hardware`,
+            `4-axis SCARA · 160 + 140 mm links · 300 mm reach`,
+            `~$120 in new parts — everything else salvaged from the donor printer`,
+            `Absolute magnetic encoders (AS5600) on every rotational joint via an I²C multiplexer`,
+            `Whole-tower base joint on 60 mm bearings wrapped around the motor itself`,
+            `Self-printed GT2 drivetrain up to 100 teeth, geometry-corrected for pitch drift`,
+            `PC-host Python kinematics + Marlin 2.0 / TMC2209 motion control`,
           ],
           status: `Full system complete — mechanics, electronics & software · end effector in progress`,
         },
