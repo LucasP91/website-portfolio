@@ -152,7 +152,7 @@ export const content = {
         blurb: `I'm turning salvaged Anet A8 3D-printer parts into a working 4-axis SCARA arm. AS5600 magnetic encoders give each joint closed-loop feedback, the segments are my own 3D-printed designs, and a Tr8x2 lead screw with closed-loop GT2 belts drives it. The J1 base is assembled and in motion testing.`,
         tags: [`SolidWorks / Onshape`, `Mechatronics`, `Closed-loop control`, `3D printing`],
         note: `Shown spinning above ↑`,
-        image: `${import.meta.env.BASE_URL}frames/frame-0031.png`,
+        image: `${import.meta.env.BASE_URL}frames/frame-0001.png`,
         imageAlt: `Rendered CAD model of the SCARA robot arm`,
         imageFit: `contain`,
         page: {
@@ -224,8 +224,8 @@ export const content = {
         blurb: `I scoped and directed (built with AI) a Python + Playwright scraper that pulls used-car listings from Connecticut dealership sites and filters them by make, model, price, and mileage to surface the best candidates.`,
         tags: [`AI-directed`, `Automation`, `Python / Playwright`],
         note: ``,
-        image: ``,
-        imageAlt: ``,
+        image: `${import.meta.env.BASE_URL}projects/car-scraper.svg`,
+        imageAlt: `Illustration of a magnifying glass finding a car listing`,
         imageFit: `cover`,
         page: {
           tagline: `An automated scout that watches Connecticut's dealer lots for the right used car — so I don't have to.`,
