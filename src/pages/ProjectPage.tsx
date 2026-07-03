@@ -49,6 +49,11 @@ export default function ProjectPage() {
               <section className="ppage__section">
                 <h2>{s.heading}</h2>
                 {s.paragraphs.map((p, i) => <p key={i}>{p}</p>)}
+                {Array.isArray(s.bullets) && s.bullets.length > 0 && (
+                  <ul className="ppage__list">
+                    {s.bullets.map((b, i) => <li key={i}>{b}</li>)}
+                  </ul>
+                )}
               </section>
             </Reveal>
           ))}

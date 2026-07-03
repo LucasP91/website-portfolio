@@ -454,3 +454,14 @@
    across the row, and the portrait SCARA render fits whole with minimal
    side space (contain), while photos crop-center (cover). */
 .card__media { aspect-ratio: 4 / 5; }
+
+/* Bullet lists inside project-page sections (same rhythm as highlights) */
+.ppage__list {
+  margin-top: var(--space-3);
+  padding-left: var(--space-4);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  color: var(--color-text-muted);
+}
+.ppage__list li { list-style: disc; }

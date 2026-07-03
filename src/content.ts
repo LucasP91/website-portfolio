@@ -149,8 +149,8 @@ export const content = {
       {
         slug: `scara-robot-arm`,
         title: `SCARA Robot Arm`,
-        blurb: `I'm turning salvaged Anet A8 3D-printer parts into a working 4-axis SCARA arm. AS5600 magnetic encoders give each joint closed-loop feedback, the segments are my own 3D-printed designs, and a Tr8x2 lead screw with closed-loop GT2 belts drives it. The full system — mechanics, electronics, and software — is built and running; only the end effector remains.`,
-        tags: [`SolidWorks / Onshape`, `Mechatronics`, `Closed-loop control`, `3D printing`],
+        blurb: `I turned a dead $150 3D printer into a teleoperated SCARA arm: a Python host solves the inverse kinematics live while an Xbox controller drives the end effector through Cartesian space, and absolute magnetic encoders give the rotary joints switch-free homing. About $120 in new parts — the rest is salvage, my own printed designs, and software I directed AI to build.`,
+        tags: [`Onshape CAD`, `Mechatronics`, `Absolute encoders`, `3D printing`],
         note: `Shown spinning above ↑`,
         image: `${import.meta.env.BASE_URL}projects/scara-card.png`,
         /* Wide screens use this variant on the project page — padded so the
@@ -160,52 +160,108 @@ export const content = {
         imageAlt: `Rendered CAD model of the SCARA robot arm`,
         imageFit: `contain`,
         page: {
-          tagline: `A 4-axis SCARA arm with absolute encoder feedback — designed, printed, wired, and programmed from the remains of a $150 3D printer, for about $120 in new parts.`,
+          tagline: `A teleoperated SCARA arm salvaged from a $150 3D printer — driven through live inverse kinematics with an Xbox controller, homed switch-free by absolute magnetic encoders, with every gear ratio calculated, every failure diagnosed, and every part iterated.`,
           sections: [
             {
               heading: `Overview`,
               paragraphs: [
-                `The donor was a broken Anet A8 — a $150 3D printer. Its NEMA 17 steppers, smooth rods, lead screw, endstop, and power supply all live on in this arm; every structural part is my own design in Onshape, 3D-printed. Total new spend: about $120, most of it one control board.`,
-                `The result is a 4-axis SCARA: a 160 mm upper arm and 140 mm forearm sweep a 300 mm-reach workspace, a lead-screw Z-axis raises and lowers the arm, and a wrist joint rotates the tool. The spinning model at the top of this site is the real assembly, exported from Onshape and rendered in Blender.`,
+                `The donor was a broken Anet A8, a $150 3D printer. Its NEMA 17 steppers, smooth rods, lead screw, endstop, and power supply all live on in this arm; every structural part — arm segments, tower, carriage, even the driven pulleys — is my own design in Onshape, printed on a Bambu Lab P1S. Total new spend: about $120, most of it one control board.`,
+                `Today it's a working teleoperated robot: I drive the end effector in straight Cartesian lines with an Xbox controller while a Python host solves the inverse kinematics live at 25 Hz and streams motion to the board. A 160 mm upper arm and 138.5 mm forearm give it a 298.5 mm reach, and homing is just a sensor read at startup. The spinning model at the top of this site is the real assembly, exported from Onshape and rendered in Blender.`,
               ],
+              bullets: [],
             },
             {
               heading: `Why a SCARA`,
               paragraphs: [
-                `The salvaged motors turned out to be the weak 0.5 A variant — about a third the torque of robotics-standard NEMA 17s. That killed the original 6-axis plan; the elbow alone would have needed a 15–25:1 reduction. Instead of buying better motors, I changed the architecture: in a SCARA the arm joints sweep horizontally and never fight gravity, so the same motors became adequate with modest 2–5:1 belt reductions. A hardware limitation became the design decision.`,
+                `The salvaged motors turned out to be the weak 0.5 A variant — decoding their labels revealed about a third the torque of robotics-standard NEMA 17s. That killed the original 6-axis plan; the elbow alone would have needed a 15–25:1 reduction. Instead of buying better motors, I changed the architecture: in a SCARA the arm joints sweep horizontally and never fight gravity, so the same motors became adequate with modest 2–5:1 belt reductions. A hardware limitation became the architecture decision.`,
+              ],
+              bullets: [],
+            },
+            {
+              heading: `Mechanical design`,
+              paragraphs: [
+                `The base joint rotates the entire three-rod Z-tower. Two 60 mm-bore bearings wrap around the stepper body itself — a packaging trick that shortened the tower by 80 mm and widened the bearing spacing, which is what actually drives tilt stiffness (the bearings' load rating is barely touched).`,
+                `The vertical axis rides the printer's original T8×2 lead screw on three smooth rods — self-locking, so the arm holds its height unpowered, with a measured practical ceiling around 12 mm/s. Joint travel is protected by soft limits (±180° base, ±150° elbow, 280 mm of Z) chosen to guard the cable wrap rather than the mechanics, and the output-side encoders measured the drivetrain's real rotary backlash at about 1–1.5°.`,
+              ],
+              bullets: [],
+            },
+            {
+              heading: `Drivetrain`,
+              paragraphs: [
+                `Every reduction runs stock GT2 belts on driven pulleys I print myself — 5:1 on the base through a 100-tooth wheel, 2:1 on the elbow and wrist, with off-the-shelf aluminum pulleys on the motor side. Synchronous belts key on tooth count, so printing error can affect belt fit — but never the ratio.`,
+                `The printed pulleys taught me a real tolerance lesson. An empirically sized 40T ran fine, but pitch error accumulates tooth by tooth, and on a 100T it would guarantee skipping — so the big pulleys are built to corrected theoretical geometry (64.16 mm tip diameter) and proven with printed test wedges first. The finished 100T drives the whole rotating tower without missing a tooth. And when the originally measured belt length turned out to be essentially unbuyable, I resized the pulleys and mounts around belt sizes that actually ship — the final drivetrain runs stock belts with no idlers.`,
+              ],
+              bullets: [],
+            },
+            {
+              heading: `Electronics`,
+              paragraphs: [
+                `A 32-bit SKR V1.4 Turbo runs Marlin with TMC2209 drivers in UART mode. It replaced the printer's original board, which died in a short against the power-supply housing — smoke, fire, gone. The forced upgrade brought quiet drivers and native 3.3 V logic for the encoders, plus a permanent habit: boards live on standoffs, and nothing gets handled powered.`,
+                `The weak-motor story had a sequel: at their rated 500 mA the motors couldn't reliably break the drivetrain loose, and Z stalled under the arm's weight. The fix was measured, not guessed — run currents raised to 800 mA defaults with session tuning up to 1000–1200 mA, the Z driver switched from silent StealthChop to SpreadCycle for its starting torque, and thermals verified clean through the drivers' diagnostics.`,
+              ],
+              bullets: [],
+            },
+            {
+              heading: `Sensing & switch-free homing`,
+              paragraphs: [
+                `Each rotary joint carries an AS5600 12-bit absolute magnetic encoder mounted on the joint output — after the reduction — so it reads the true joint angle directly. Homing is a read, not a motion: a one-time calibration stores each joint's zero offset, and at startup the host reads the encoders and tells the firmware exactly where the arm is. No homing dance, and it survives power cycles.`,
+                `Getting three identical sensors talking was its own saga. Every AS5600 shares one fixed I²C address, so the plan was a multiplexer — until the multiplexer itself proved defective on the bench. The redesign skipped extra hardware entirely: three private I²C buses, one on the controller's hardware peripheral and two bit-banged in software on spare GPIO at ~80 kHz. Along the way, a broken I²C read path in the platform framework had to be worked around with a combined write-then-read transfer, and the firmware gained custom Marlin G-codes (M970/M971) that report each encoder's angle, gain, and magnet-strength flags — which is how I tuned the wired sensors' air gaps empirically.`,
+              ],
+              bullets: [],
+            },
+            {
+              heading: `Software — kinematics & teleop`,
+              paragraphs: [
+                `The control split is "PC is the brain, board is the muscle." A lightweight Python host — the kinematics itself is pure-stdlib math — owns the SCARA forward and inverse kinematics, with elbow-preference solving that automatically falls back to the other elbow solution, verified by round-trip self-tests, plus workspace analysis and the operator interface. Stock Marlin owns what a motion controller is genuinely good at: step timing, acceleration, coordinated multi-axis moves. They speak plain G-code over USB.`,
+                `Teleop runs at 25 Hz from a wired Xbox controller, read through the XInput API directly: the left stick drives the end effector through Cartesian space, the bumpers move Z, the right stick will turn the wrist once it's wired, and the triggers will run the gripper. Two details make it feel solid. Each streamed segment's feedrate is paced to the control tick so Marlin's planner never starves — the fix for a real stall-and-whine bug — and flow control parses the planner's buffer reports to keep just enough motion queued.`,
+                `The safety layer is host-side and always on: every move is clamped to the reachable workspace, Z and wrist limits are enforced, and a base soft-stop refuses any path that would wrap the base joint across the ±180° seam and wind up the tower's cable harness — with on-screen status flags so a protective hold never reads as a stall.`,
+                `The firmware module and host software were built AI-assisted — I direct the architecture, review every decision, and test everything on the real hardware.`,
+              ],
+              bullets: [],
+            },
+            {
+              heading: `Things that broke (and what they taught me)`,
+              paragraphs: [
+                `Nearly every subsystem earned its final design through a diagnosed failure:`,
+              ],
+              bullets: [
+                `Months of Z-axis wobble and grinding traced to one root cause: an M8 threaded rod from the printer's frame had been mistaken for the lead screw. The real T8×2 was in the salvage pile all along — rotation was instantly smooth.`,
+                `The original control board burned in a short against the PSU housing. Contained, diagnosed, replaced with a better board — and a new handling discipline.`,
+                `The I²C multiplexer bought to solve the encoders' shared-address problem was itself defective — replaced by a three-bus architecture that needed zero extra hardware.`,
+                `First bench tests: Z drove up when commanded down, and the endstop read as triggered while open. Every direction and polarity is now set from measurement, not assumption.`,
+                `The Marlin configuration branch I started from ships an intentional compile error — firmware builds failed until the config was rebased onto the matching release branch.`,
+                `Every printed part was reprinted at least once, each revision driven by a measured problem. That's not failure — that's the budget for iterative hardware design.`,
               ],
             },
             {
-              heading: `Mechanical`,
-              paragraphs: [
-                `The base joint rotates the entire three-rod Z-tower. Two 60 mm-bore bearings wrap around the stepper body itself — a packaging trick that shortened the tower by 80 mm and widened the bearing spacing, which is what actually drives tilt stiffness.`,
-                `The drivetrain runs on GT2 belts and pulleys I print myself, up to a 100-tooth wheel for the 5:1 base reduction. Printed pulleys taught me a real tolerance lesson: pitch error a small pulley shrugs off accumulates tooth by tooth on a big one, so the large pulleys use corrected theoretical geometry, proven with printed test wedges before committing to full prints.`,
+              heading: `By the numbers`,
+              paragraphs: [],
+              bullets: [
+                `298.5 mm reach · 21.5 mm inner dead zone · 280 mm of Z travel`,
+                `~$120 in new parts — the rest salvaged from the donor printer or already on hand`,
+                `25 Hz teleop loop · up to 135 mm/s in XY · 44.444 steps per degree on the base`,
+                `12-bit absolute encoders on three private I²C buses · measured backlash ~1–1.5°`,
+                `100-tooth printed pulley, validated driving the full rotating tower under load`,
+                `0 limit switches on the rotary joints — homing is a read, not a search`,
               ],
             },
             {
-              heading: `Electronics & sensing`,
+              heading: `What's next`,
               paragraphs: [
-                `A 32-bit SKR V1.4 Turbo runs Marlin 2.0 with TMC2209 drivers in UART mode, current-tuned to the 0.5 A motors. Every rotational joint carries an AS5600 absolute magnetic encoder — position is known the moment power comes on, no homing dance — and since all three share one I²C address, they sit behind a TCA9548A multiplexer. The Z-axis homes on the printer's original endstop.`,
-                `The electronics also carry a scar: the printer's original control board died in a short against the power-supply housing — smoke, fire, gone. The forced replacement became an upgrade (quiet drivers, native 3.3 V logic for the encoders) and a permanent habit: boards live on standoffs, and nothing gets handled powered.`,
+                `The arm is a working three-joint teleoperated system today — base, elbow, and Z live under the controller. The remaining wiring is for the wrist, whose motor mapping, encoder bus, and software path already exist, and for the gripper servo, whose commands already stream. The end effector's mechanical design comes last, shaped by the arm's measured behavior. After that: an electronics enclosure, baking the proven driver tuning into firmware, using the encoders live for missed-step detection, and formally characterizing accuracy and repeatability.`,
               ],
-            },
-            {
-              heading: `Software`,
-              paragraphs: [
-                `The control split is "PC is the brain, board is the muscle." Python on the PC handles forward and inverse kinematics, path planning, and the control interface, then streams G-code over USB; Marlin does what a motion controller is genuinely good at — step timing, acceleration, coordinated multi-axis moves. Encoder angles flow back over serial for homing, verification, and missed-step detection.`,
-                `The firmware configuration and kinematics were built AI-assisted — I direct the architecture, review every decision, and test on the real hardware.`,
-              ],
+              bullets: [],
             },
           ],
           highlights: [
-            `4-axis SCARA · 160 + 140 mm links · 300 mm reach`,
-            `~$120 in new parts — everything else salvaged from the donor printer`,
-            `Absolute magnetic encoders (AS5600) on every rotational joint via an I²C multiplexer`,
-            `Whole-tower base joint on 60 mm bearings wrapped around the motor itself`,
-            `Self-printed GT2 drivetrain up to 100 teeth, geometry-corrected for pitch drift`,
-            `PC-host Python kinematics + Marlin 2.0 / TMC2209 motion control`,
+            `Xbox-controller teleoperation at 25 Hz through live inverse kinematics`,
+            `Switch-free absolute homing — calibrate once, survives power cycles`,
+            `Three-bus I²C encoder architecture, designed after the multiplexer proved defective`,
+            `Custom Marlin G-codes (M970/M971) for encoder and magnet diagnostics`,
+            `Self-printed GT2 driven pulleys up to 100 teeth, geometry-corrected and load-proven`,
+            `~$120 in new parts on a salvaged-printer skeleton`,
           ],
-          status: `Full system complete — mechanics, electronics & software · end effector in progress`,
+          status: `Teleoperated & driving — base, elbow & Z live · wrist + gripper wiring next`,
         },
       },
       {
@@ -227,6 +283,7 @@ export const content = {
                 `The idea: write normally on paper, and the pen itself captures what you wrote, sends it through cloud AI, and shows the response on a tiny display built into the pen — no phone, no scanner in the loop.`,
                 `The hard part is the packaging. Everything has to fit a 12 mm-diameter barrel, which drove me to a dual-PCB stack architecture with flex interconnects between the boards.`,
               ],
+              bullets: [],
             },
             {
               heading: `Hardware`,
@@ -234,6 +291,7 @@ export const content = {
                 `An ESP32-P4 runs the show, paired with an OV5640 camera watching the pen tip and a 0.95" AMOLED for output. WiFi carries captures to a cloud AI service and brings results back to the display.`,
                 `The full schematic is done in KiCad, and board layout is roughly 65% complete across the two PCBs.`,
               ],
+              bullets: [],
             },
           ],
           highlights: [
@@ -263,6 +321,7 @@ export const content = {
               paragraphs: [
                 `Shopping for a reliable used car means checking the same dealership sites over and over. I scoped a tool to do that for me: a Python + Playwright scraper that sweeps Connecticut dealership listings and filters them by make, model, price, and mileage to surface the best candidates.`,
               ],
+              bullets: [],
             },
             {
               heading: `How I built it`,
@@ -270,6 +329,7 @@ export const content = {
                 `This one is AI-directed by design: I defined the requirements, the filtering rules, and what "a good candidate" means, then directed AI tools to write and iterate on the code while I reviewed results and steered. It's the same engineering loop I use on hardware — spec, build, test, refine — applied to software I don't hand-write.`,
                 `The scraper runs on a schedule and posts matching cars to a private Discord channel, so new candidates show up as notifications instead of another browser tab.`,
               ],
+              bullets: [],
             },
           ],
           highlights: [
@@ -299,6 +359,7 @@ export const content = {
               paragraphs: [
                 `FIRST Robotics Competition gives you six weeks to design, build, and program a competition robot — then puts it on a field against the best teams in the region. I spent four seasons on my high-school team, finishing as captain and lead driver with 1000+ hours in the shop and behind the wheel.`,
               ],
+              bullets: [],
             },
             {
               heading: `What I did`,
@@ -306,6 +367,7 @@ export const content = {
                 `I led CAD, mechanical build, and electrical integration across subteams, designing robot subsystems in Onshape and SolidWorks and troubleshooting fast in the pit between matches, where a broken mechanism has minutes to get fixed, not days.`,
                 `As primary driver I put the design to the test on the field — driving us to the team's first New England District Championship qualification in 10 years, and its first CT State Championship at an off-season event.`,
               ],
+              bullets: [],
             },
           ],
           highlights: [
@@ -334,7 +396,7 @@ export const content = {
       { group: `CAD & Design`, items: `SolidWorks, Onshape, GD&T, design for manufacturability` },
       { group: `Electronics`, items: `KiCad PCB design, soldering, ESP32 / Arduino, closed-loop control, sensors & encoders` },
       { group: `Prototyping`, items: `3D printing, manual milling, laser cutting, CAM` },
-      { group: `AI-Assisted Development`, items: `Directing AI tools to scope, build, and ship working software — automation scripts, web scrapers, and data/reporting pipelines` },
+      { group: `AI-Assisted Development`, items: `Directing AI tools to scope, build, and ship working software — robot firmware and control hosts, automation scripts, web scrapers, and data/reporting pipelines` },
     ],
     facts: [
       { label: `Awards`, text: `Dean's List (WPI, Fall 2025) · Honor Roll (Pomperaug, all years)` },
