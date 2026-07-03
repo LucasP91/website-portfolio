@@ -10,9 +10,11 @@ permissions:
   pages: write
   id-token: write
 
+# Queue deployments instead of cancelling in-flight ones — cancelling a Pages
+# deployment mid-flight makes rapid consecutive pushes fail at deploy-pages.
 concurrency:
   group: pages
-  cancel-in-progress: true
+  cancel-in-progress: false
 
 jobs:
   build:
