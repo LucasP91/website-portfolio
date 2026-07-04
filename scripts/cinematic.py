@@ -32,6 +32,7 @@ top = wc(bpy.data.objects["Part 1.007"])
 elb = J2.matrix_world.translation.copy(); ex, ey = elb.x, elb.y
 HERO_CAM = mu.Vector((0.135, -1.074, 0.102))
 HERO_TGT = mu.Vector((0.003, -0.006, 0.307))
+HERO_CAM = HERO_TGT + (HERO_CAM - HERO_TGT) * 1.32  # widescreen pullback
 th = math.atan2(HERO_CAM.y - cy, HERO_CAM.x - cx)  # hero heading around column
 print(f"ANCHORS column=({cx:.3f},{cy:.3f}) topcap_z={top.z:.3f} elbow=({ex:.3f},{ey:.3f},{elb.z:.3f}) hero_theta={math.degrees(th):.1f}")
 
@@ -94,7 +95,7 @@ except Exception:
 if MODE == "PROBE":
     scene.render.film_transparent = False
     scene.render.image_settings.color_mode = 'RGB'
-    scene.render.resolution_x, scene.render.resolution_y = 700, 875
+    scene.render.resolution_x, scene.render.resolution_y = 640, 360
     scene.eevee.taa_render_samples = 24
     os.makedirs(SCRATCH, exist_ok=True)
     for f in (1, 8, 14, 28, 40, 55, 70, 85, 100, 120):
@@ -106,7 +107,7 @@ else:
     bpy.ops.wm.save_mainfile()
     scene.render.film_transparent = True
     scene.render.image_settings.color_mode = 'RGBA'
-    scene.render.resolution_x, scene.render.resolution_y = 1280, 1600
+    scene.render.resolution_x, scene.render.resolution_y = 1920, 1080
     scene.eevee.taa_render_samples = 64
     os.makedirs(FINAL_OUT, exist_ok=True)
     for f in range(1, 121):
