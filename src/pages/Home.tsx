@@ -53,6 +53,7 @@ export default function Home() {
       <ScrollImageSequence
         frameCount={120}
         heightVh={300}
+        posterFrame={118}
         label={showcase.label}
         caption={showcase.caption}
         captionNote={showcase.captionNote}

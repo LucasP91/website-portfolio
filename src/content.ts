@@ -44,7 +44,7 @@ export const content = {
   showcase: {
     label: `SCARA robot arm, 360-degree turntable`, // screen-reader description
     caption: `SCARA Robot Arm`,
-    captionNote: `Designed in CAD & 3D-printed — repurposed from salvaged Anet A8 parts. Scroll to orbit.`,
+    captionNote: `Designed in CAD & 3D-printed — repurposed from salvaged Anet A8 parts. Scroll to explore.`,
   },
 
   /* ---- About ---- */
