@@ -7,7 +7,7 @@ import { dirname, join } from 'node:path'
 
 const SRC = 'C:/Users/Lucas/renders/turntable_web'
 const DST = join(dirname(fileURLToPath(import.meta.url)), '..', 'public', 'frames')
-const WIDTH = 1536
+const WIDTH = 800
 
 await mkdir(DST, { recursive: true })
 const files = (await readdir(SRC)).filter(f => /^frame_\d+\.png$/.test(f)).sort()
@@ -15,8 +15,7 @@ let total = 0
 for (let i = 0; i < files.length; i++) {
   const n = String(i + 1).padStart(4, '0')
   const out = join(DST, `frame-${n}.png`)
-  // palette quantization: ~3x smaller with no visible banding on these renders
-  await sharp(join(SRC, files[i])).resize({ width: WIDTH }).png({ compressionLevel: 9, palette: true, quality: 95 }).toFile(out)
+  await sharp(join(SRC, files[i])).resize({ width: WIDTH }).png({ compressionLevel: 9, palette: false }).toFile(out)
   total += (await readFile(out)).length
 }
 console.log(`resized ${files.length} frames -> ${DST} @ ${WIDTH}px wide; total ${(total/1048576).toFixed(1)} MB`)
