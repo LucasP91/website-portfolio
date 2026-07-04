@@ -42,13 +42,15 @@ def key(o, path, frame, value):
     elif path == "location":
         o.location = value; o.keyframe_insert("location", frame=frame)
 
-# ---- joints: continuous overlapping motion, biggest in the finale ----
+# ---- joints: continuous, no reversals — J1 makes one full revolution (around
+# the back and home to the front), Z descends once, elbow folds then extends
+# continuously through the locked-off finale ----
 r = math.radians
-for f, v in [(1, 0), (26, r(24)), (48, r(-18)), (70, r(14)), (88, r(-30)), (104, r(24)), (120, r(-8))]:
+for f, v in [(1, 0), (120, r(360))]:
     key(J1, "rotation.z", f, v)
-for f, v in [(1, 0.42), (24, 0.458), (46, 0.382), (66, 0.452), (86, 0.384), (103, 0.455), (120, 0.412)]:
+for f, v in [(1, 0.458), (120, 0.382)]:
     key(JZ, "location.z", f, v)
-for f, v in [(1, 0), (30, r(40)), (52, r(-12)), (72, r(48)), (90, r(-15)), (106, r(38)), (120, r(6))]:
+for f, v in [(1, 0), (70, r(50)), (120, r(-12))]:
     key(J2, "rotation.z", f, v)
 
 # ---- camera target: cap -> column -> elbow -> hero center (locked from f90) ----
@@ -94,7 +96,7 @@ if MODE == "PROBE":
     scene.render.resolution_x, scene.render.resolution_y = 640, 360
     scene.eevee.taa_render_samples = 24
     os.makedirs(SCRATCH, exist_ok=True)
-    for f in (1, 14, 28, 42, 58, 74, 90, 100, 110, 120):
+    for f in list(range(1, 121, 6)) + [120]:
         scene.frame_set(f)
         scene.render.filepath = os.path.join(SCRATCH, f"probe_{f:03d}")
         bpy.ops.render.render(write_still=True)
