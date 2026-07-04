@@ -1,8 +1,8 @@
-"""Cinematic SCARA showcase: blank title-card opening -> tilt onto the top cap ->
-spiral descent along the column/arm with big joint motion -> pull back to the
-classic hero framing. Runs headless: blender -b Untitled.blend -P cinematic.py
-MODE env: PROBE (default; renders key frames, does NOT save) or FINAL
-(saves .blend and renders all 120 frames to the usual output folder)."""
+"""Cinematic SCARA showcase v2: blank title-card opening -> tilt onto the top
+cap -> descent along the column with an earlier, smoother pull-out -> camera
+locks onto the hero framing by f90 while the arm performs big continuous
+motion through the finale. Headless: blender -b Untitled.blend -P cinematic.py
+CINE_MODE env: PROBE (key frames, no save) or FINAL (saves + renders 120)."""
 import bpy, os, math, mathutils as mu
 
 MODE = os.environ.get("CINE_MODE", "PROBE")
@@ -28,15 +28,13 @@ bpy.context.view_layer.update()
 def wc(o):
     return sum((o.matrix_world @ mu.Vector(c) for c in o.bound_box), mu.Vector()) / 8
 col = wc(bpy.data.objects["lead screw"]); cx, cy = col.x, col.y
-top = wc(bpy.data.objects["Part 1.007"])
 elb = J2.matrix_world.translation.copy(); ex, ey = elb.x, elb.y
 HERO_CAM = mu.Vector((0.135, -1.074, 0.102))
 HERO_TGT = mu.Vector((0.003, -0.006, 0.307))
 HERO_CAM = HERO_TGT + (HERO_CAM - HERO_TGT) * 1.32  # widescreen pullback
-th = math.atan2(HERO_CAM.y - cy, HERO_CAM.x - cx)  # hero heading around column
-print(f"ANCHORS column=({cx:.3f},{cy:.3f}) topcap_z={top.z:.3f} elbow=({ex:.3f},{ey:.3f},{elb.z:.3f}) hero_theta={math.degrees(th):.1f}")
+th = math.atan2(HERO_CAM.y - cy, HERO_CAM.x - cx)
 
-def key(o, path, frame, value, index=-1):
+def key(o, path, frame, value):
     if path == "location.z":
         o.location.z = value; o.keyframe_insert("location", index=2, frame=frame)
     elif path == "rotation.z":
@@ -44,42 +42,40 @@ def key(o, path, frame, value, index=-1):
     elif path == "location":
         o.location = value; o.keyframe_insert("location", frame=frame)
 
-# ---- joints: big, readable motion ----
+# ---- joints: continuous overlapping motion, biggest in the finale ----
 r = math.radians
-for f, v in [(1, 0), (45, r(26)), (85, r(-16)), (120, 0)]:
+for f, v in [(1, 0), (26, r(24)), (48, r(-18)), (70, r(14)), (88, r(-30)), (104, r(24)), (120, r(-8))]:
     key(J1, "rotation.z", f, v)
-for f, v in [(1, 0.42), (30, 0.458), (70, 0.382), (120, 0.42)]:
+for f, v in [(1, 0.42), (24, 0.458), (46, 0.382), (66, 0.452), (86, 0.384), (103, 0.455), (120, 0.412)]:
     key(JZ, "location.z", f, v)
-for f, v in [(1, 0), (55, r(45)), (90, r(-8)), (120, 0)]:
+for f, v in [(1, 0), (30, r(40)), (52, r(-12)), (72, r(48)), (90, r(-15)), (106, r(38)), (120, r(6))]:
     key(J2, "rotation.z", f, v)
 
-# ---- camera target: high above (blank) -> cap -> down the column -> elbow -> hero center ----
+# ---- camera target: cap -> column -> elbow -> hero center (locked from f90) ----
 for f, p in [
     (1,   (cx, cy, 1.05)),
     (14,  (cx, cy, 0.52)),
     (28,  (cx, cy, 0.46)),
-    (40,  (cx, cy, 0.40)),
-    (55,  (ex, ey, 0.40)),
-    (70,  (ex, ey, 0.37)),
-    (85,  (0.02, -0.05, 0.34)),
-    (105, tuple(HERO_TGT)),
+    (42,  (ex, ey, 0.41)),
+    (58,  (ex, ey, 0.38)),
+    (74,  (0.02, -0.05, 0.34)),
+    (90,  tuple(HERO_TGT)),
     (120, tuple(HERO_TGT)),
 ]:
     key(ct, "location", f, p)
 
-# ---- camera: spiral around the column, descending, then pull out to hero ----
+# ---- camera: gentler spiral, pulls out earlier, locked on hero from f90 ----
 def spiral(theta_off_deg, radius, z):
     a = th + math.radians(theta_off_deg)
     return (cx + radius * math.cos(a), cy + radius * math.sin(a), z)
 for f, p in [
     (1,   spiral(30, 0.30, 0.80)),
     (14,  spiral(120, 0.33, 0.58)),
-    (28,  spiral(185, 0.34, 0.44)),
-    (40,  spiral(235, 0.37, 0.33)),
-    (55,  spiral(285, 0.42, 0.25)),
-    (70,  spiral(320, 0.50, 0.19)),
-    (85,  spiral(345, 0.66, 0.14)),
-    (105, tuple(HERO_CAM)),
+    (28,  spiral(180, 0.36, 0.44)),
+    (42,  spiral(225, 0.44, 0.32)),
+    (58,  spiral(270, 0.60, 0.22)),
+    (74,  spiral(310, 0.85, 0.15)),
+    (90,  tuple(HERO_CAM)),
     (120, tuple(HERO_CAM)),
 ]:
     key(cam, "location", f, p)
@@ -98,7 +94,7 @@ if MODE == "PROBE":
     scene.render.resolution_x, scene.render.resolution_y = 640, 360
     scene.eevee.taa_render_samples = 24
     os.makedirs(SCRATCH, exist_ok=True)
-    for f in (1, 8, 14, 28, 40, 55, 70, 85, 100, 120):
+    for f in (1, 14, 28, 42, 58, 74, 90, 100, 110, 120):
         scene.frame_set(f)
         scene.render.filepath = os.path.join(SCRATCH, f"probe_{f:03d}")
         bpy.ops.render.render(write_still=True)
