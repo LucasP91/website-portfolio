@@ -169,9 +169,9 @@ export default function ScrollImageSequence({
 
     const cw = canvas.clientWidth
     const ch = canvas.clientHeight
-    // "contain" fit, full-bleed: the 16:9 cinematic frames fill the viewport
-    // width on desktop; any letterbox is invisible (transparent PNGs).
-    const scale = Math.min(cw / img.naturalWidth, ch / img.naturalHeight)
+    // "cover" fit: scale so the cinematic frame fills the whole viewport at any
+    // aspect ratio, center-cropping the overflow — full-bleed on every screen.
+    const scale = Math.max(cw / img.naturalWidth, ch / img.naturalHeight)
     const dw = img.naturalWidth * scale
     const dh = img.naturalHeight * scale
     const dx = (cw - dw) / 2
