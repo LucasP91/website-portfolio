@@ -53,18 +53,26 @@ for f, v in [(1, 0.458), (120, 0.382)]:
 for f, v in [(1, 0), (70, r(50)), (120, r(-12))]:
     key(J2, "rotation.z", f, v)
 
-# ---- camera target: cap -> column -> elbow -> hero center (locked from f90) ----
-for f, p in [
+# ---- camera target: cap -> column -> then TRACK the moving arm (sampled from
+# the animated elbow every 8 frames) -> hero center (locked from f90) ----
+def elbow_at(f):
+    scene.frame_set(f)
+    bpy.context.view_layer.update()
+    return J2.matrix_world.translation.copy()
+
+ct_keys = [
     (1,   (cx, cy, 1.05)),
     (14,  (cx, cy, 0.52)),
     (28,  (cx, cy, 0.46)),
-    (42,  (ex, ey, 0.41)),
-    (58,  (ex, ey, 0.38)),
-    (74,  (0.02, -0.05, 0.34)),
-    (90,  tuple(HERO_TGT)),
-    (120, tuple(HERO_TGT)),
-]:
-    key(ct, "location", f, p)
+]
+for f in range(36, 85, 8):
+    e = elbow_at(f)
+    # aim 60% of the way from the column axis to the live elbow — follows the
+    # sweep while keeping the tower anchored in frame
+    ct_keys.append((f, (cx + 0.6 * (e.x - cx), cy + 0.6 * (e.y - cy), e.z)))
+ct_keys += [(90, tuple(HERO_TGT)), (120, tuple(HERO_TGT))]
+for f, pnt in ct_keys:
+    key(ct, "location", f, pnt)
 
 # ---- camera: gentler spiral, pulls out earlier, locked on hero from f90 ----
 def spiral(theta_off_deg, radius, z):
