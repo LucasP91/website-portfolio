@@ -15,7 +15,7 @@ let total = 0
 for (let i = 0; i < files.length; i++) {
   const n = String(i + 1).padStart(4, '0')
   const out = join(DST, `frame-${n}.png`)
-  await sharp(join(SRC, files[i])).resize({ width: WIDTH }).png({ compressionLevel: 9, palette: false }).toFile(out)
+  await sharp(join(SRC, files[i])).resize({ width: WIDTH }).png({ compressionLevel: 9, palette: true, quality: 95 }).toFile(out)
   total += (await readFile(out)).length
 }
 console.log(`resized ${files.length} frames -> ${DST} @ ${WIDTH}px wide; total ${(total/1048576).toFixed(1)} MB`)
