@@ -157,7 +157,14 @@ export default function ScrollImageSequence({
     }
   }, [frameCount, frameSrc])
 
-  // --- Canvas draw (cover fit), in CSS pixels; context is DPR-scaled ---
+  // How much of the source width we are willing to crop away before we stop filling the
+  // height and start letterboxing instead. The frames are mastered at ~2.08:1 so that the
+  // arm never touches a side edge at its widest (f222-224). On a viewport narrower than
+  // that we crop the transparent margins, which is free -- but on a phone in portrait an
+  // uncapped cover would crop ~78% of the width and leave a sliver of machine.
+  const MAX_SIDE_CROP = 0.3
+
+  // --- Canvas draw, in CSS pixels; context is DPR-scaled ---
   const drawFrame = (index: number) => {
     const canvas = canvasRef.current
     if (!canvas) return
@@ -169,9 +176,19 @@ export default function ScrollImageSequence({
 
     const cw = canvas.clientWidth
     const ch = canvas.clientHeight
-    // "contain" fit (+8% padding) so the whole subject is always visible,
-    // letterboxed/centered, rather than cropped to fill (which cut the base off).
-    const scale = Math.min(cw / img.naturalWidth, ch / img.naturalHeight) * 0.92
+    // COVER, cropped at display time rather than letterboxed.
+    //
+    // The sequence is mastered wide (~2.08:1) so nothing is ever clipped IN THE RENDER.
+    // Contain-fitting that master would size every frame for its single widest moment and
+    // leave the machine at ~79% of viewport height for the whole film. Cover instead fills
+    // the viewport and crops the surplus, which on these frames is transparent margin.
+    //
+    // Vertical crop is deliberate and wanted -- it reads as immersive. Horizontal crop is
+    // the risk, so it is capped: past MAX_SIDE_CROP we stop scaling up and letterbox
+    // vertically instead, which is the lesser failure on a narrow phone.
+    const cover = Math.max(cw / img.naturalWidth, ch / img.naturalHeight)
+    const cropCap = cw / (img.naturalWidth * (1 - MAX_SIDE_CROP))
+    const scale = Math.min(cover, cropCap)
     const dw = img.naturalWidth * scale
     const dh = img.naturalHeight * scale
     const dx = (cw - dw) / 2

@@ -57,3 +57,8 @@ coverage/
 # Private files (kept in the separate private repo)
 /CLAUDE.md
 Lucas_Picard_Resume.*
+
+# Render output - large, regenerable
+preview/
+preflight/
+scripts/__pycache__/
