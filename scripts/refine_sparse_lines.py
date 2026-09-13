@@ -131,7 +131,21 @@ nt.links.new(amt.outputs['Value'], sub.inputs[1])
 print("  polarity -1..+1 -> roughly half incised, half proud (WallPlusLines now ADDs)")
 
 # ---- 4. albedo follows the sign ---------------------------------------------------
-base_src = bsdf.inputs['Base Color'].links[0].from_socket if bsdf.inputs['Base Color'].is_linked else None
+#
+# IDEMPOTENCY. Reading whatever currently feeds Base Color is wrong on a re-run: by then it
+# is this script's own LineLighten, so the chain gets wired into itself. That produced a
+# LineLighten <- LineDarken <- LineLighten cycle, orphaned the real albedo node, and rendered
+# every printed part near-black. Always source from the ORIGINAL albedo mixer by name and
+# never from the current link.
+orig = next((n for n in N if n.name == 'Mix' and n.bl_idname == 'ShaderNodeMix'), None)
+if orig is not None:
+    base_src = orig.outputs[2]                      # Result (colour)
+elif bsdf.inputs['Base Color'].is_linked:
+    src_node = bsdf.inputs['Base Color'].links[0].from_node
+    base_src = None if src_node.name in ('LineLighten', 'LineDarken') else \
+        bsdf.inputs['Base Color'].links[0].from_socket
+else:
+    base_src = None
 if base_src is not None and COLOUR > 0:
     neg = mk('ShaderNodeMath', 'LineNegPart', operation='MULTIPLY')
     nt.links.new(signed.outputs['Value'], neg.inputs[0])
