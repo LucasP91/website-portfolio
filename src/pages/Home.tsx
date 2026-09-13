@@ -49,7 +49,7 @@ export default function Home() {
         </motion.div>
       </motion.section>
 
-      {/* Showcase — scroll-driven SCARA arm turntable */}
+      {/* Showcase — scroll-driven SCARA arm hero film */}
       <ScrollImageSequence
         frameCount={120}
         heightVh={300}

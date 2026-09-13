@@ -47,8 +47,11 @@ export interface ScrollImageSequenceProps {
   captionNote?: string
 }
 
+// WebP, not PNG. The frames carry alpha, which is why they were PNG, but WebP carries it
+// too at roughly a third of the bytes on this material. Decoded residency is unchanged --
+// that is set by width x height x 4 x frameCount whatever the wire format is.
 const defaultFrameSrc = (frame: number) =>
-  `${import.meta.env.BASE_URL}frames/frame-${String(frame).padStart(4, '0')}.png`
+  `${import.meta.env.BASE_URL}frames/frame-${String(frame).padStart(4, '0')}.webp`
 
 // Parallel requests. Enough to saturate a mobile link, few enough that the coarse-to-fine
 // ORDER survives -- fire all 120 at once and they finish in whatever order the network
@@ -86,11 +89,12 @@ function loadOrder(count: number, first: number, stride: number): number[] {
   return order
 }
 
-// How much of the source width we are willing to crop away before we stop filling the
-// height and start letterboxing instead. The frames are mastered at ~2.08:1 so that the
-// arm never touches a side edge at its widest (f222-224). On a viewport narrower than
-// that we crop the transparent margins, which is free -- but on a phone in portrait an
-// uncapped cover would crop ~78% of the width and leave a sliver of machine.
+// How much of a WIDE source's width we are willing to crop away before we stop filling the
+// height and start letterboxing instead. Only wide sources use it: the shipped SCARA frames
+// are cropped at import to the box the arm ever occupies, which is slightly taller than
+// wide, so they take the contain branch below on every screen. It stays for any future
+// sequence delivered wide, where cropping transparent side margin is free but an uncapped
+// cover on a portrait phone would leave a sliver of subject.
 const MAX_SIDE_CROP = 0.3
 
 export default function ScrollImageSequence({

@@ -42,9 +42,10 @@ export const content = {
 
   /* ---- The scroll-driven SCARA animation caption ---- */
   showcase: {
-    label: `SCARA robot arm, 360-degree turntable`, // screen-reader description
+    // screen-reader description — says what the motion IS, since the visual carries it
+    label: `SCARA robot arm running a coordinated move: the base sweeps, the forearm swings out to its stop, the carriage descends the lead screw, and the arm reverses back out`,
     caption: `SCARA Robot Arm`,
-    captionNote: `Designed in CAD & 3D-printed — repurposed from salvaged Anet A8 parts. Scroll to orbit.`,
+    captionNote: `Designed in CAD & 3D-printed — repurposed from salvaged Anet A8 parts. Scroll to run the move.`,
   },
 
   /* ---- About ---- */
