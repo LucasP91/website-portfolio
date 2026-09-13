@@ -152,11 +152,11 @@ export const content = {
         blurb: `I turned a dead $150 3D printer into a teleoperated SCARA arm: a Python host solves the inverse kinematics live while an Xbox controller drives the end effector through Cartesian space, and absolute magnetic encoders give the rotary joints switch-free homing. About $120 in new parts — the rest is salvage, my own printed designs, and software I directed AI to build.`,
         tags: [`Onshape CAD`, `Mechatronics`, `Absolute encoders`, `3D printing`],
         note: `Shown spinning above ↑`,
-        image: `${import.meta.env.BASE_URL}projects/scara-card.png`,
+        image: `${import.meta.env.BASE_URL}projects/scara-card.webp`,
         /* Wide screens use this variant on the project page — padded so the
            arm's column (elevator) is the horizontal center. Phones keep the
            tight `image` above. Leave `` to always use `image`. */
-        pageImage: `${import.meta.env.BASE_URL}projects/scara-page.png`,
+        pageImage: `${import.meta.env.BASE_URL}projects/scara-page.webp`,
         imageAlt: `Rendered CAD model of the SCARA robot arm`,
         imageFit: `contain`,
         page: {
@@ -425,7 +425,7 @@ export const content = {
               paragraphs: [
                 `For browsing rather than alerts, a single-file FastAPI + HTMX dashboard (no build step) serves live filter and sort over active listings, per-VIN price history, and a top-deals view straight from the same SQLite file.`,
               ],
-              image: `${import.meta.env.BASE_URL}projects/car-scraper-dashboard.png`,
+              image: `${import.meta.env.BASE_URL}projects/car-scraper-dashboard.webp`,
               imageAlt: `Screenshot of the local dashboard listing real cars with deal scores, mileage, prices, reliability warnings, and distances`,
               imageCaption: `The live dashboard on real data — deal scores where enough comparables exist, "insufficient data" where they don't, reliability warnings, and verify-by-phone price markers.`,
             },

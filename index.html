@@ -4,7 +4,33 @@
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#050608" />
+    <meta name="description" content="Lucas Picard, mechanical and robotics engineering student at WPI. A SCARA robot arm built from a salvaged 3D printer, plus projects, experience, and résumé." />
     <title>Lucas Picard — Mechanical &amp; Robotics Engineering</title>
+    <script>
+      // OPEN AT THE TOP. Runs before first paint and before the app loads.
+      //
+      // Left to itself the browser restores the last scroll position on reload and on
+      // back/forward, and jumps to any #section in the URL. On this page that means landing
+      // part-way down a 300vh scroll animation that has not finished loading yet.
+      //
+      // So restoration is switched off, and a #section is only honoured when the visitor
+      // got here by clicking a link inside this site (a project page's nav, say). Opening
+      // a shared or bookmarked link, or reloading, always starts at the top.
+      (function () {
+        try {
+          if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+          var nav = performance.getEntriesByType && performance.getEntriesByType('navigation')[0];
+          var reload = !!nav && nav.type === 'reload';
+          var fromThisSite = false;
+          try { fromThisSite = !!document.referrer && new URL(document.referrer).origin === location.origin; } catch (e) {}
+          if (location.hash && (reload || !fromThisSite)) {
+            history.replaceState(history.state, '', location.pathname + location.search);
+          }
+          if (!location.hash) window.scrollTo(0, 0);
+        } catch (e) {}
+      })();
+    </script>
   </head>
   <body>
     <div id="root"></div>

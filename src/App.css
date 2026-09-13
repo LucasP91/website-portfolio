@@ -33,6 +33,10 @@
 .section { padding-block: var(--space-8); }
 .section > * + * { margin-top: var(--space-4); }
 
+/* Nav jumps land BELOW the sticky header, not under it. The header is ~57px on desktop and
+   wraps to ~83px on phones, where it was hiding the top of every section heading. */
+section[id] { scroll-margin-top: 3.5rem; }
+
 /* Hero */
 .hero { padding-block: var(--space-9) var(--space-8); }
 .eyebrow {
@@ -263,6 +267,7 @@
     padding-block: var(--space-3);
   }
   .nav { gap: var(--space-4); justify-content: center; }
+  section[id] { scroll-margin-top: 5.25rem; }
 }
 
 /* ── Visual dynamics (motion-and-animation: transform/opacity only; the global
