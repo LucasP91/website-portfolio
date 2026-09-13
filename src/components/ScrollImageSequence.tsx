@@ -186,9 +186,22 @@ export default function ScrollImageSequence({
     // Vertical crop is deliberate and wanted -- it reads as immersive. Horizontal crop is
     // the risk, so it is capped: past MAX_SIDE_CROP we stop scaling up and letterbox
     // vertically instead, which is the lesser failure on a narrow phone.
-    const cover = Math.max(cw / img.naturalWidth, ch / img.naturalHeight)
-    const cropCap = cw / (img.naturalWidth * (1 - MAX_SIDE_CROP))
-    const scale = Math.min(cover, cropCap)
+    //
+    // COVER ONLY APPLIES TO A WIDE MASTER. The reasoning above depends entirely on the
+    // surplus being transparent side margin. On a PORTRAIT source there is no such surplus:
+    // cover scales to the width and crops the height, so an 800x1000 frame in a 1920x1080
+    // viewport loses ~55% of its height and cuts the base off the machine. That is the exact
+    // failure contain was introduced to fix. So portrait frames keep the old contain fit,
+    // and cover engages on its own once the wide master is in public/frames.
+    const srcAspect = img.naturalWidth / img.naturalHeight
+    let scale: number
+    if (srcAspect >= 1) {
+      const cover = Math.max(cw / img.naturalWidth, ch / img.naturalHeight)
+      const cropCap = cw / (img.naturalWidth * (1 - MAX_SIDE_CROP))
+      scale = Math.min(cover, cropCap)
+    } else {
+      scale = Math.min(cw / img.naturalWidth, ch / img.naturalHeight) * 0.92
+    }
     const dw = img.naturalWidth * scale
     const dh = img.naturalHeight * scale
     const dx = (cw - dw) / 2
