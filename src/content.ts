@@ -54,13 +54,13 @@ export const content = {
     /* One entry per paragraph. */
     paragraphs: [
       `What makes me lose track of time is the moment a stubborn problem finally clicks, when every piece comes together into something that actually works. I've chased that feeling since I rebalanced a Lego Technic motorcycle everyone said couldn't stand on its own, and since my uncle, a mechanical engineer in Germany, taught me to solder over Skype and shipped me a rough little 3D printer at eleven. I've been designing and building real hardware ever since.`,
-      `Today I'm a mechanical engineering student at WPI on a combined B.S./M.S. in Mechanical Engineering, with a second B.S. major in Robotics Engineering. I design and build robotic systems, embedded electronics, and CAD assemblies, and I direct AI to write the software and automation around them. I'm an engineering intern at Microboard Processing, and a dual US/German citizen, bilingual in English and German.`,
+      `Today I'm a mechanical engineering student at WPI on a combined B.S./M.S. in Mechanical Engineering, with a second B.S. major in Robotics Engineering. I design and build robotic systems, embedded electronics, and CAD assemblies, and I direct AI to write the software and automation around them. This past summer I was an engineering intern at Microboard Processing, and I'm a dual US/German citizen, bilingual in English and German.`,
     ],
     /* Quick-facts list. `term` shows in bold, then `detail`. */
     meta: [
       { term: `WPI`, detail: `— Combined B.S./M.S. in Mechanical Engineering + B.S. major in Robotics Engineering, 4-year track, expected 2029` },
       { term: `3.75 GPA`, detail: `· Dean's List` },
-      { term: `Now`, detail: `— Engineering Intern, Microboard Processing (Seymour, CT)` },
+      { term: `Now`, detail: `— Back at WPI for the fall 2026 semester` },
     ],
   },
 
@@ -72,11 +72,11 @@ export const content = {
         role: `Engineering Intern — Document & Controls`,
         org: `Microboard Processing`,
         place: `Seymour, CT · ITAR-regulated electronics mfr.`,
-        dates: `Jun 2026 – Present`,
+        dates: `Jun – Aug 2026`,
         bullets: [
-          `Automating digital engineering and documentation processes alongside an industrial engineer to streamline manufacturing workflows.`,
+          `Automated digital engineering and documentation processes alongside an industrial engineer to streamline manufacturing workflows.`,
           `Built standardized SMT/PCB assembly process-flow documentation that sharpened consistency across the production line.`,
-          `Applying disciplined data-handling within a regulated, compliance-sensitive environment.`,
+          `Applied disciplined data-handling within a regulated, compliance-sensitive environment.`,
         ],
       },
       {
@@ -295,42 +295,116 @@ export const content = {
         },
       },
       {
-        slug: `esp32-ai-camera-pen`,
-        title: `ESP32-P4 AI Camera Pen`,
-        blurb: `A 12 mm-wide handwriting-capture pen I'm designing on a dual-PCB stack — an OV5640 camera and a 0.95" AMOLED display. It captures your handwriting, runs it through cloud AI over WiFi, and shows the result on-device. KiCad schematic is done; PCBs are ~65% laid out.`,
-        tags: [`KiCad`, `ESP32`, `PCB design`, `Embedded`],
+        slug: `pengpt-ai-smart-pen`,
+        title: `PenGPT — AI Smart Pen`,
+        blurb: `A pen that turns handwriting on ordinary paper into text. Two motion sensors and a magnetometer track how the pen moves, and a Linux processor inside the pen is meant to do the reading itself, with no special paper and no phone in the loop. I lead the hardware on a two-person team: a verified 268-part schematic and a 4-layer bring-up board now in layout.`,
+        tags: [`KiCad`, `Schematic & PCB`, `Embedded hardware`, `Power design`],
         note: ``,
-        image: ``,
-        pageImage: ``,
-        imageAlt: ``,
-        imageFit: `cover`,
+        image: `${import.meta.env.BASE_URL}projects/pengpt-board.webp`,
+        pageImage: `${import.meta.env.BASE_URL}projects/pengpt-board-page.webp`,
+        imageAlt: `3D render of the PenGPT rev-1 bring-up board in KiCad: the SG2002 processor, WiFi chip, flash, camera and display connectors, microSD and USB-C placed on a square green 4-layer board`,
+        imageFit: `contain`,
         page: {
-          tagline: `A pen that reads its own handwriting — camera, display, and an AI loop packed into a 12 mm barrel.`,
+          tagline: `A pen that reads its own handwriting — motion sensors, a camera and a Linux processor, with the recognition designed to run inside the pen itself.`,
           sections: [
             {
               heading: `Overview`,
               paragraphs: [
-                `The idea: write normally on paper, and the pen itself captures what you wrote, sends it through cloud AI, and shows the response on a tiny display built into the pen — no phone, no scanner in the loop.`,
-                `The hard part is the packaging. Everything has to fit a 12 mm-diameter barrel, which drove me to a dual-PCB stack architecture with flex interconnects between the boards.`,
+                `The idea is simple to say: write normally on any paper, and the pen turns what you wrote into text on your phone or laptop. No dot-pattern notebook, no tablet, and no photographing the page afterwards.`,
+                `Instead of looking at the ink, the pen tracks its own motion. Two 6-axis IMUs, one at the tip and one at the rear, plus a 3-axis magnetometer give nine degrees of freedom. A Sophgo SG2002 processor running Linux fuses that motion and is designed to run the handwriting model on the pen, so recognition works with no phone and no internet.`,
+                `It's a two-person project that started in March 2026. I lead the hardware: most of the recent schematic work, the design verification, and all of the board layout so far.`,
               ],
               bullets: [],
             },
             {
-              heading: `Hardware`,
+              heading: `How it's meant to work`,
               paragraphs: [
-                `An ESP32-P4 runs the show, paired with an OV5640 camera watching the pen tip and a 0.95" AMOLED for output. WiFi carries captures to a cloud AI service and brings results back to the display.`,
-                `The full schematic is done in KiCad, and board layout is roughly 65% complete across the two PCBs.`,
+                `Every step of this loop is wired in the schematic. The firmware and the recognition model don't exist yet, so this is the designed behaviour, not a demo.`,
+              ],
+              bullets: [
+                `You start writing and a tip switch closes, waking the processor.`,
+                `The two IMUs and the magnetometer stream the pen's motion to the SG2002, which fuses them and runs the recognition model.`,
+                `When the model is unsure of a letter, a 5 MP autofocus camera can look at the page to settle it. Its power rail switches off when it isn't needed.`,
+                `A 0.95" AMOLED strip on the barrel previews the text, and a haptic motor buzzes to confirm a word was caught.`,
+                `The text goes to a phone or laptop over WiFi or Bluetooth.`,
+              ],
+            },
+            {
+              heading: `The hardware`,
+              paragraphs: [
+                `The SG2002 is what makes on-pen recognition realistic. It has a dual-core processor, 256 MB of DDR3 memory inside the package, and a built-in neural accelerator rated at about 1 TOPS. Turning a low-rate stream of motion data into characters takes a small model, so that's plenty. It isn't enough for a conversational AI, where the 256 MB is the hard limit, so the pen is designed to read handwriting rather than answer questions on its own.`,
+              ],
+              table: {
+                headers: [`Job`, `Part`, `Notes`],
+                rows: [
+                  [`Processor`, `Sophgo SG2002`, `Runs Linux. ARM or RISC-V cores selected by a strap pin, 256 MB DDR3 in package, ~1 TOPS accelerator`],
+                  [`Wireless`, `Realtek RTL8723DS`, `WiFi b/g/n and Bluetooth as a bare chip, not a module. WiFi over SDIO, Bluetooth over UART and PCM audio`],
+                  [`Motion`, `2× LSM6DSO32 + IIS2MDC`, `Tip and rear IMUs for a rotation baseline, with the magnetometer on the tip IMU's sensor hub`],
+                  [`Camera`, `OV5648 module`, `5 MP autofocus on a 2-lane MIPI CSI-2 link through a 24-pin board-to-board connector`],
+                  [`Display`, `0.95" AMOLED`, `120 × 240, SH8501B driver, 15-pin FPC`],
+                  [`Feedback & input`, `DRV2605L, AT42QT1070, VEML7700, ICS-40720`, `Haptics, 7-channel capacitive touch, ambient light and an analog microphone`],
+                  [`Storage`, `16 MB SPI-NOR + microSD`, `The flash is the boot device; the card is extra storage`],
+                  [`Power`, `BQ25186 + NCP360`, `USB-C charging with over-voltage protection, single Li-ion cell`],
+                ],
+              },
+            },
+            {
+              heading: `Power architecture`,
+              paragraphs: [
+                `USB-C or the battery feeds a charger that merges both onto one system rail. Three small buck converters make the processor's always-on rails: 0.95 V for the core, 1.35 V for the memory and 1.8 V for I/O. A buck-boost converter makes 3.3 V, and a 2.8 V regulator runs off that for the camera and display.`,
+                `The 3.3 V rail only turns on after the processor's boot ROM asserts a power-sequencing pin. That satisfies Sophgo's sequencing rule, and it gives bring-up a clean first test: if 3.3 V appears, the processor is alive. Separate load switches let firmware cut power to the sensors, the camera, the display and the whole radio. The radio needs that, because Realtek's datasheet requires it to be power-cycled.`,
               ],
               bullets: [],
             },
+            {
+              heading: `Faults caught before a board was made`,
+              paragraphs: [
+                `Before starting layout, I audited the schematic against the manufacturers' own documents, pin by pin, including all 24 camera connector pins and all 15 display pins. That turned up three faults that would each have cost a board:`,
+              ],
+              bullets: [
+                `A boot strap was pulled the wrong way. It told the processor to boot from eMMC memory, and the board has no eMMC, so it would never have started. One resistor now pulls it the other way.`,
+                `A pin the processor reads at power-up as a "firmware upgrade" key was wired to a sensor output that idles low. The board would have dropped into USB recovery mode on every cold start instead of running its software. The sensor signal moved to a free pin, and the key pin got a pull-up.`,
+                `The radio's power switch had a control pin that its datasheet says can't be left floating, so it could never reliably hold the radio off. A pull-down now keeps it off until firmware turns it on.`,
+              ],
+            },
+            {
+              heading: `A clean ERC isn't proof`,
+              paragraphs: [
+                `None of those faults showed up in KiCad's electrical rule check, and the first had been introduced by an earlier review. The schematic now passes ERC with no real errors, but I treat that as the minimum. Connectivity questions get answered from a generated netlist and the manufacturer's datasheet, never from a summary document.`,
+              ],
+              bullets: [],
+            },
+            {
+              heading: `Rev 1: a bring-up board, not a pen`,
+              paragraphs: [
+                `The first board is deliberately not pen-shaped. It's a 100 × 100 mm, 4-layer test board with a ground plane and a power plane inside, so every subsystem can be probed and fixed. It's built for rework: 16 series jumpers isolate sections, and a bodge area leaves room for fixes, so a wiring mistake costs an afternoon instead of a new board.`,
+                `The fab spec comes from measured pad geometry rather than guesswork. There are no BGAs, and the processor's 0.35 mm-pitch pins escape in a single row, so the board can be made at standard 4-layer pricing. All 268 parts are on the board, with the major ones placed by script; routing is next.`,
+              ],
+              image: `${import.meta.env.BASE_URL}projects/pengpt-board-angle.webp`,
+              imageAlt: `Angled 3D render of the rev-1 board in KiCad: major chips and connectors placed on the board, with rows of small passive parts staged beside it`,
+              imageCaption: `The rev-1 board in layout. The major parts are placed; the small passives wait beside the board to be placed next to the chips they support. Nothing is routed yet.`,
+            },
+            {
+              heading: `What's next`,
+              paragraphs: [
+                `Routing the board comes first. Before it's ordered, two open questions have to be settled, and then the board gets built and brought up rail by rail:`,
+              ],
+              bullets: [
+                `Confirm the battery carries its own protection circuit, since the board has no protection IC.`,
+                `Resolve a crystal whose value and footprint disagree in the schematic, so the parts order is right.`,
+                `Fabricate, assemble and bring up the board, then write the firmware and train the recognition model.`,
+                `Shrink the proven design into a pen-shaped board.`,
+              ],
+            },
           ],
           highlights: [
-            `12 mm-diameter dual-PCB stack — extreme packaging constraint`,
-            `OV5640 camera + 0.95" AMOLED display on-device`,
-            `ESP32-P4 with a WiFi → cloud AI → display loop`,
-            `Full KiCad schematic complete; layout ~65%`,
+            `Writes on ordinary paper by tracking the pen's own motion in 9 degrees of freedom`,
+            `Linux-class SG2002 processor chosen so recognition can run inside the pen`,
+            `268-part schematic verified pin by pin against manufacturer documents`,
+            `Caught three faults that ERC missed, two of which would have stopped the board from booting`,
+            `4-layer bring-up board designed for rework, at standard fab pricing`,
           ],
-          status: `Schematic complete · PCB layout ~65%`,
+          status: `Schematic verified · rev-1 board placed, routing next · no hardware or firmware yet`,
         },
       },
       {
