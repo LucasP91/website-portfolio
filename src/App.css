@@ -152,10 +152,24 @@ section[id] { scroll-margin-top: 3.5rem; }
   position: relative;
   margin-left: 6px;
   padding: 0 0 var(--space-6) var(--space-6);
-  border-left: 2px solid var(--color-border);
+  /* transparent: keeps the 2px of layout; the visible line is ::after so it can stop at the last dot */
+  border-left: 2px solid transparent;
 }
 .timeline__item:last-child { padding-bottom: 0; }
+/* The connecting line. It runs the full height of every entry except the last, where it
+   stops at the centre of the dot instead of trailing on past the final job. */
+.timeline__item::after {
+  content: "";
+  position: absolute;
+  left: -2px;
+  top: 0;
+  bottom: 0;
+  width: 2px;
+  background: var(--color-border);
+}
+.timeline__item:last-child::after { bottom: auto; height: 10px; }
 .timeline__item::before {
+  z-index: 1;
   content: "";
   position: absolute;
   left: -7px;
