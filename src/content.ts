@@ -413,9 +413,9 @@ export const content = {
         blurb: `I scoped and directed (built with AI) a used-car-hunting system: every 6 hours it scrapes ~36 Connecticut dealer sites, tracks full price history in SQLite, scores each car against the local market, and sends Discord alerts with per-model reliability warnings. Filters are edited by typing commands into a Discord channel. The search ended with keys in hand.`,
         tags: [`AI-directed`, `Automation`, `Python / Playwright`, `Discord bot`],
         note: ``,
-        image: `${import.meta.env.BASE_URL}projects/car-scraper.svg`,
-        pageImage: ``,
-        imageAlt: `Illustration of a magnifying glass finding a car listing`,
+        image: `${import.meta.env.BASE_URL}projects/car-scraper-keys.webp`,
+        pageImage: `${import.meta.env.BASE_URL}projects/car-scraper-keys-wide.webp`,
+        imageAlt: `Lucas standing beside the grey Mazda CX-3 the search found, outside a Mazda dealership`,
         imageFit: `cover`,
         page: {
           tagline: `A used-car-hunting system that watches 36 Connecticut dealer sites around the clock, prices every car against the local market, and pings Discord when the right one shows up — built for $0 a month by directing AI.`,
