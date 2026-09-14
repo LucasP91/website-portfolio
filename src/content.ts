@@ -32,6 +32,8 @@ export const content = {
 
   /* ---- Hero (the big opening) ---- */
   hero: {
+    /* Portrait shown above the title. Replace public/portrait.webp to swap the photo. */
+    portrait: { src: `${import.meta.env.BASE_URL}portrait.webp`, alt: `Portrait of Lucas Picard` },
     eyebrow: `Mechanical & Robotics Engineering · WPI`,
     title: `From Dreams To Reality`,
     lede: `I'm Lucas Picard — a mechanical & robotics engineer, happiest the moment a hard problem finally clicks into hardware that actually works.`,

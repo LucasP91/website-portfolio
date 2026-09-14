@@ -39,6 +39,18 @@ section[id] { scroll-margin-top: 3.5rem; }
 
 /* Hero */
 .hero { padding-block: var(--space-9) var(--space-8); }
+/* Portrait above the title: a circle with a faint ring, left-aligned with the text below. */
+.hero__portrait {
+  display: block;
+  width: clamp(6.5rem, 5rem + 5vw, 9.5rem);
+  height: auto;
+  aspect-ratio: 1;
+  object-fit: cover;
+  border-radius: 50%;
+  border: 1px solid rgb(255 255 255 / 0.14);
+  box-shadow: 0 0 0 6px rgb(122 162 255 / 0.08), var(--shadow-2);
+  margin-bottom: var(--space-5);
+}
 .eyebrow {
   font-size: var(--text-sm);
   text-transform: uppercase;

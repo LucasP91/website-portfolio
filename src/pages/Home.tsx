@@ -39,6 +39,18 @@ export default function Home() {
         initial={reduce ? false : 'hidden'}
         animate="show"
       >
+        {/* First beat of the stagger. Fixed width/height so the title never shifts when it
+            loads; high fetch priority because it is the first image a visitor sees. */}
+        <motion.img
+          variants={heroItem}
+          className="hero__portrait"
+          src={hero.portrait.src}
+          alt={hero.portrait.alt}
+          width={480}
+          height={480}
+          fetchPriority="high"
+          decoding="async"
+        />
         <motion.p variants={heroItem} className="eyebrow">{hero.eyebrow}</motion.p>
         <motion.h1 variants={heroItem} id="hero-title">{hero.title}</motion.h1>
         <motion.p variants={heroItem} className="hero__lede">{hero.lede}</motion.p>
