@@ -45,6 +45,13 @@ export interface ScrollImageSequenceProps {
   caption?: string
   /** Optional smaller note under the caption title. */
   captionNote?: string
+  /**
+   * 'contain' (default) always shows the whole frame. 'cover' fills the screen and crops,
+   * which is only safe for a source mastered with spare transparent margin. Chosen
+   * explicitly, never inferred from the frame's shape: a tightly cropped frame can be
+   * wider than tall and still have no margin to spend.
+   */
+  fit?: 'contain' | 'cover'
 }
 
 // WebP, not PNG. The frames carry alpha, which is why they were PNG, but WebP carries it
@@ -89,12 +96,10 @@ function loadOrder(count: number, first: number, stride: number): number[] {
   return order
 }
 
-// How much of a WIDE source's width we are willing to crop away before we stop filling the
-// height and start letterboxing instead. Only wide sources use it: the shipped SCARA frames
-// are cropped at import to the box the arm ever occupies, which is slightly taller than
-// wide, so they take the contain branch below on every screen. It stays for any future
-// sequence delivered wide, where cropping transparent side margin is free but an uncapped
-// cover on a portrait phone would leave a sliver of subject.
+// With fit='cover': how much of a wide source's width we are willing to crop away before we
+// stop filling the height and letterbox instead. The shipped SCARA frames use 'contain' --
+// they are cropped at import to the box the arm ever occupies, so there is no margin left
+// for cover to spend on any screen.
 const MAX_SIDE_CROP = 0.3
 
 // Reveal: fully in once the visitor has scrolled this fraction of the way to the pin, and
@@ -110,6 +115,7 @@ export default function ScrollImageSequence({
   label = 'Product animation sequence',
   caption,
   captionNote,
+  fit = 'contain',
 }: ScrollImageSequenceProps) {
   // useReducedMotion() starts null and settles to a boolean; collapsing null into false
   // keeps the loader effect from restarting (and dropping in-flight requests) on that tick.
@@ -217,14 +223,14 @@ export default function ScrollImageSequence({
     const cw = canvas.clientWidth
     const ch = canvas.clientHeight
     if (!cw || !ch) return
-    // COVER, cropped at display time rather than letterboxed -- for a WIDE master only.
-    // The wide master carries transparent side margin, so cover crops nothing but margin,
-    // and the horizontal crop is capped at MAX_SIDE_CROP. On a PORTRAIT source there is no
-    // margin to spend: cover would crop the height and cut the base off the machine, so
-    // portrait frames keep a contain fit with 8% padding.
+    // CONTAIN by default: the whole frame, with 8% padding. The fit used to be picked from
+    // the frame's aspect -- cover for anything at least as wide as tall -- which broke the
+    // moment a re-render widened the import crop to 878x837: cover then cut 22% off the
+    // height on a 1706x1258 window. COVER is opt-in, for sources with transparent margin to
+    // spend, and its horizontal crop is capped at MAX_SIDE_CROP.
     const srcAspect = img.naturalWidth / img.naturalHeight
     let scale: number
-    if (srcAspect >= 1) {
+    if (fit === 'cover' && srcAspect >= 1) {
       const cover = Math.max(cw / img.naturalWidth, ch / img.naturalHeight)
       const cropCap = cw / (img.naturalWidth * (1 - MAX_SIDE_CROP))
       scale = Math.min(cover, cropCap)
