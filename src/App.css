@@ -88,9 +88,9 @@ section[id] { scroll-margin-top: 3.5rem; }
   border-radius: var(--radius-lg);
   overflow: clip;
   box-shadow: var(--shadow-1);
-  transition: transform var(--dur-base) var(--ease-out), box-shadow var(--dur-base) var(--ease-out);
+  transition: transform var(--dur-base) var(--ease-out), box-shadow var(--dur-base) var(--ease-out),
+              background-color var(--dur-base) var(--ease-out);
 }
-.card:hover { transform: translateY(-4px); box-shadow: var(--shadow-2); }
 .card__media {
   aspect-ratio: 16 / 10;
   background: linear-gradient(135deg, var(--gray-200), var(--gray-100));
@@ -350,8 +350,9 @@ section[id] { scroll-margin-top: 3.5rem; }
   background: linear-gradient(90deg, var(--color-primary), #ddd6fe);
 }
 
-/* Cards — hover feedback: lift (existing) + primary-tinted border, soft glow,
-   and a faint sheen sweeping across (transform-only). */
+/* Cards — hover feedback: the whole card grows slightly and its surface lightens, with a
+   faint sheen sweeping across. No coloured border or glow. Keyboard focus on the card's
+   link gets the same treatment. */
 .card { position: relative; }
 .card::before {
   content: "";
@@ -363,10 +364,13 @@ section[id] { scroll-margin-top: 3.5rem; }
   transform: translateX(-130%);
   transition: transform 600ms var(--ease-out);
 }
-.card:hover::before { transform: translateX(130%); }
-.card:hover {
-  border-color: color-mix(in srgb, var(--color-primary) 45%, var(--color-border));
-  box-shadow: var(--shadow-2), 0 0 24px rgb(122 162 255 / 0.10);
+.card:hover::before,
+.card:focus-within::before { transform: translateX(130%); }
+.card:hover,
+.card:focus-within {
+  transform: translateY(-4px) scale(1.025);
+  background-color: color-mix(in srgb, var(--color-surface) 90%, white);
+  box-shadow: var(--shadow-2);
 }
 
 /* Buttons — slight lift on hover; primary gains a soft glow (feedback). */
