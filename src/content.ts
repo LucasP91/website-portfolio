@@ -347,6 +347,9 @@ export const content = {
                   [`Power`, `BQ25186 + NCP360`, `USB-C charging with over-voltage protection, single Li-ion cell`],
                 ],
               },
+              image: `${import.meta.env.BASE_URL}projects/pengpt-schematic.webp`,
+              imageAlt: `The complete PenGPT schematic exported from KiCad, with the power tree, the SG2002 processor, the RTL8723DS radio, camera and display connectors, sensors, microphone and storage laid out on one sheet`,
+              imageCaption: `The complete rev-1 schematic in KiCad, on one sheet: 268 parts and 208 nets.`,
             },
             {
               heading: `Power architecture`,
