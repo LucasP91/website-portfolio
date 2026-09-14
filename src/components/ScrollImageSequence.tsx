@@ -97,6 +97,11 @@ function loadOrder(count: number, first: number, stride: number): number[] {
 // cover on a portrait phone would leave a sliver of subject.
 const MAX_SIDE_CROP = 0.3
 
+// Reveal: fully in once the visitor has scrolled this fraction of the way to the pin, and
+// rising from this far below (as a fraction of the viewport height) while it arrives.
+const REVEAL_AT = 0.7
+const RISE_VH = 0.12
+
 export default function ScrollImageSequence({
   frameCount = 120,
   frameSrc = defaultFrameSrc,
@@ -135,6 +140,15 @@ export default function ScrollImageSequence({
   // (the section's own scroll offset), not the pinned scrollYProgress -- which measured
   // non-monotonic at depth and let the caption creep back. Once it clears it stays cleared.
   const capProgress = useMotionValue(0)
+  // REVEAL. The sequence sits right under the hero, so on a tall screen its pinned canvas is
+  // already in view below the intro text on first paint -- a frame of the arm peeking in
+  // under "From Dreams To Reality". It now starts fully hidden and rises + fades in as the
+  // visitor scrolls toward the pin, completing at 70% of that distance so the arm is fully
+  // there before it starts to animate. Eased out, so it arrives softly rather than linearly.
+  // If the section is already at (or past) the top -- a jump to a later section -- it is
+  // simply shown.
+  const reveal = useMotionValue(0)
+  const rise = useMotionValue(0)
   useEffect(() => {
     const sec = sectionRef.current
     if (!sec) return
@@ -145,6 +159,11 @@ export default function ScrollImageSequence({
       const dist = rect.height - window.innerHeight
       const p = dist > 0 ? Math.min(1, Math.max(0, -rect.top / dist)) : 0
       capProgress.set(p)
+      const reach = (rect.top + window.scrollY) * REVEAL_AT
+      const t = reach > 1 ? Math.min(1, Math.max(0, window.scrollY / reach)) : 1
+      const eased = 1 - Math.pow(1 - t, 3)
+      reveal.set(eased)
+      rise.set((1 - eased) * RISE_VH * window.innerHeight)
     }
     const onScroll = () => {
       if (raf == null) raf = requestAnimationFrame(update)
@@ -157,13 +176,16 @@ export default function ScrollImageSequence({
       window.removeEventListener('resize', onScroll)
       if (raf != null) cancelAnimationFrame(raf)
     }
-  }, [capProgress])
+  }, [capProgress, reveal, rise])
   const captionOpacity = useTransform(capProgress, [0, 0.6, 0.82], [1, 1, 0])
   const captionY = useTransform(capProgress, [0.6, 0.82], [0, -30])
+  // The caption arrives with the arm and still leaves on its own schedule at the end.
+  const captionShown = useTransform([reveal, captionOpacity], ([r, c]: number[]) => r * c)
+  const captionLift = useTransform([rise, captionY], ([a, b]: number[]) => a + b)
   const Caption = caption ? (
     <motion.div
       className="sis__caption"
-      style={reduced ? undefined : { opacity: captionOpacity, y: captionY }}
+      style={reduced ? undefined : { opacity: captionShown, y: captionLift }}
     >
       <h2 className="sis__caption-title">{caption}</h2>
       {captionNote && <p className="sis__caption-note">{captionNote}</p>}
@@ -390,9 +412,11 @@ export default function ScrollImageSequence({
       aria-label={label}
     >
       <div className="sis__sticky">
-        {canvas}
+        <motion.div className="sis__stage" style={{ opacity: reveal, y: rise }}>
+          {canvas}
+          {Progress}
+        </motion.div>
         {Caption}
-        {Progress}
       </div>
     </section>
   )

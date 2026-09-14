@@ -84,3 +84,10 @@
   color: var(--color-text-muted, #aab2bf);
   max-width: 34ch;
 }
+
+/* Stage: carries the canvas and load bar so the intro screen can keep them hidden, then
+   lets them rise and fade in together as the visitor scrolls (driven from the component). */
+.sis__stage {
+  position: absolute;
+  inset: 0;
+}
