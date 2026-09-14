@@ -162,13 +162,11 @@ print()
 # speed this is a 34-frame snap that would be over before the descent registers; at 100 it
 # runs 75 frames and reads as coordinated with the Z move rather than interrupting it.
 #
-# The +/-20 deg forbidden zone is SYMMETRIC about the fold: the topper fouls the stage-1 arm
-# from either side, so the joint cannot pass THROUGH 0 deg -- but it can reach the mirror
-# limit by going the long way round. Travelling negative from -170 deg reaches -340 deg,
-# which is the same pose as +20 deg: the forearm ends on the OPPOSITE side of the arm,
-# against the other stop, without ever entering the collision zone.
+# J2 cannot pass the fold (the topper fouls the stage-1 arm within ~20 deg of it) and it
+# cannot swing back through the Z tower either (measured, see J2_BLOCKED below). So from
+# the -170 rest it runs OUT to the -20 stop and back; the mirror stop at +20 is unreachable.
 J2_REST = _opt('--j2-rest', -170.0)
-J2_TRAVEL = _opt('--j2-travel', 150.0)           # sign sets direction; -170 = the long way
+J2_TRAVEL = _opt('--j2-travel', 150.0)           # out to the -20 stop
 J2_VMAX = _opt('--j2-vmax', 100.0)               # deg/s -- coordinated feed, not full tilt
 J2_START = _opt('--j2-start', 150.0)             # was f150; brought forward
 J2_REV = _opt('--j2-rev', -80.0)                 # reverses at REV_F with J1
@@ -176,23 +174,26 @@ J2_SEG = [(J2_START, J2_TRAVEL), (REV_F, J2_REV)]
 
 # A LIMIT DERIVED FROM THE PATH CANNOT POLICE THE PATH.
 #
-# This block used to span the clamp across every position the path visits -- min to max of
-# the commanded waypoints. That stops the 2nd-order ring overshooting the move's own
-# endpoints, which is a real job, but it is NOT a mechanical stop: ask for a bigger sweep
-# and the "limit" politely widens to accommodate it. A +190 deg sweep from -170 therefore
-# clamped to (-170, +20) and drove J2 clean through 0 deg -- 69 frames of the delivered
-# film in a pose where the encoder topper is inside the stage-1 arm.
-#
-# The fold zone is a fact about the machine, so it is a constant. The reachable set is
-# every angle more than FOUL_DEG from the fold, and the clamp is the one revolution the
-# commanded path lives in. Reaching the mirror stop is still allowed -- it just has to be
-# done the long way round, with a NEGATIVE travel from the negative rest.
-J2_FOUL = 20.0                                   # topper vs stage-1 arm, from either side
+# The clamp used to span the commanded waypoints, which widens to admit any sweep you ask for.
+# The forbidden set is a fact about the machine, so it is a constant, in POSE degrees:
+#   (-20, +20)   the encoder topper fouls the stage-1 arm near the fold, from either side
+#                (recorded on the real machine; the topper is not in the CAD)
+#   (+68, +174)  the forearm sweeps through the Z tower -- rods, lead screw, top plate and
+#                screws. Measured by BVH overlap of the forearm meshes against the assembly
+#                over the full range at both carriage heights (blocked +72..+170, 4 deg margin)
+# From the -170 rest the one reachable band is about [-186, -20]. An earlier "long way round"
+# route to the mirror stop at +20 put the forearm through the tower rods for ~50 frames.
+J2_BLOCKED = ((-20.0, 20.0), (68.0, 174.0))
 
 
 def _pose(deg):
     p = (deg + 180.0) % 360.0 - 180.0
     return 180.0 if p == -180.0 else p
+
+
+def _blocked(deg):
+    p = _pose(deg)
+    return any(lo < p < hi for lo, hi in J2_BLOCKED)
 
 
 _pos, _all = J2_REST, [J2_REST]
@@ -202,27 +203,29 @@ for _f, _d in J2_SEG:
 print("  J2 path: " + " -> ".join(f"{p:.0f}" for p in _all) +
       f"   (starts f{J2_START:.0f}, reverses f{REV_F:.0f})")
 
-_cursor, _bad = J2_REST, []
+if _blocked(J2_REST):
+    raise SystemExit(f"REFUSED: J2 rest {J2_REST:+.1f} is inside a blocked region")
+_lo_d = _hi_d = J2_REST
+while not _blocked(_lo_d - 0.25) and _lo_d > J2_REST - 360:
+    _lo_d -= 0.25
+while not _blocked(_hi_d + 0.25) and _hi_d < J2_REST + 360:
+    _hi_d += 0.25
+
+_cursor = J2_REST
 for _f, _d in J2_SEG:
-    _steps = max(2, int(abs(_d)) + 1)
+    _steps = max(2, int(abs(_d) * 4) + 1)
     for _k in range(_steps + 1):
         _a = _cursor + _d * (_k / _steps)
-        if abs(_pose(_a)) < J2_FOUL:
-            _bad.append(_a)
+        if _blocked(_a):
+            raise SystemExit(
+                f"REFUSED: the commanded J2 path passes through a blocked region at {_a:+.1f} deg "
+                f"(pose {_pose(_a):+.1f}). From this rest J2 can only move within "
+                f"[{_lo_d:+.1f}, {_hi_d:+.1f}] -- bounded by the fold and the Z tower. "
+                f"scripts/rekey_j2.py re-keys J2 alone.")
     _cursor += _d
-if _bad:
-    _worst = min(_bad, key=lambda a: abs(_pose(a)))
-    raise SystemExit(
-        f"REFUSED: the commanded J2 path crosses the +/-{J2_FOUL:.0f} deg fold zone "
-        f"(closest approach {_pose(_worst):+.1f} deg).\n"
-        f"  The mirror stop is reachable the LONG way round: a negative --j2-travel from "
-        f"the negative rest\n  lands on it without passing through the fold. "
-        f"scripts/rekey_j2.py does this for J2 alone.")
 
-_lo = math.floor((D2R(min(_all)) + D2R(J2_FOUL)) / (2 * math.pi)) * 2 * math.pi + D2R(J2_FOUL)
-J2_LIMIT = (_lo, _lo + 2 * math.pi - 2 * D2R(J2_FOUL))
-print(f"  J2 legal band this revolution: [{math.degrees(J2_LIMIT[0]):+.0f}, "
-      f"{math.degrees(J2_LIMIT[1]):+.0f}] deg  (fold zone +/-{J2_FOUL:.0f})")
+J2_LIMIT = (D2R(_lo_d), D2R(_hi_d))
+print(f"  J2 reachable band: [{_lo_d:+.1f}, {_hi_d:+.1f}] deg  (blocked poses {J2_BLOCKED})")
 fc_j2 = fcurve(J2, 'rotation_euler', 2)
 u2, x2 = joint_track(fc_j2, [(f, D2R(d)) for f, d in J2_SEG],
                      D2R(J2_VMAX), D2R(1400), 16.0, 0.10, D2R(J2_REST), limit=J2_LIMIT)

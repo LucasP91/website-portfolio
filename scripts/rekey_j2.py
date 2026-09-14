@@ -1,34 +1,30 @@
-"""Re-key JNT_J2 alone, and refuse any path that enters the collision zone.
+"""Re-key JNT_J2 alone, and refuse any path through a region the machine cannot occupy.
 
 WHY THIS EXISTS SEPARATELY FROM rekey_motion.py
 rekey_motion.py clears and rebuilds the animation on every object it touches, including the
 camera. The accepted overhead ending was arrived at through CLI overrides that were never
 written down, so re-running the full re-key would lose it. This touches J2 and nothing else.
 
-THE DEFECT IT FIXES
-The baked film drove J2 from its -170 deg rest to +20 deg -- a +190 deg sweep straight
-THROUGH 0 deg. The encoder topper fouls the stage-1 arm within ~20 deg of the fold from
-either side, so 69 frames of the film (f118-f186) sat in a pose the machine cannot reach.
+WHERE J2 CANNOT GO (pose degrees, i.e. the angle folded into -180..180)
+  (-20, +20)   The encoder topper fouls the stage-1 arm near the fold, from either side.
+               Recorded by Lucas on the real machine. The topper is not in the CAD, so a
+               mesh check cannot see this one.
+  (+68, +174)  The forearm sweeps through the Z tower: rods, lead screw, top plate and their
+               screws. MEASURED by BVH overlap of the forearm meshes against the rest of the
+               assembly over the full range at both carriage heights -- blocked +72..+170 at
+               2 deg steps, widened by 4 deg each side.
 
-rekey_motion.py's clamp did not catch it because J2_LIMIT is derived from the requested
-path's own endpoints:
+From the -170 rest the one reachable band is about [-186, -20]. The mirror stop at +20
+cannot be reached at all: the short way crosses the fold, and the long way crosses the
+tower. A previous version of this script went the long way and put the forearm through the
+rods for ~50 frames (f103-f149, then again on the way back, f191-f203).
 
-    _pos, _all = J2_REST, [J2_REST]
-    for _f, _d in J2_SEG: _pos += _d; _all.append(_pos)
-    J2_LIMIT = (D2R(min(_all)), D2R(max(_all)))
-
-A limit computed from the move can only ever stop the move overshooting ITSELF. Ask for
-+190 and the limit obligingly widens to span the collision. A mechanical stop is a fact
-about the machine, so here it is a CONSTANT, and the path is checked against it.
-
-REACHING THE FAR STOP LEGALLY
-+20 deg is a legal pose -- it is the mirror stop. Only the transit through 0 is illegal. So
-the far stop is reached the long way round: travelling NEGATIVE from -170 deg lands on
--340 deg, which is the same pose as +20 deg, having passed -180/-270 and never gone near
-the fold. Identical silhouette, legal path.
+THE MOVE
+Out to the -20 stop, arriving by contact -- the 2nd-order ring meets the stop and is held
+by it -- then reversing back out to -60, the pose the overhead ending was composed around.
 
 Usage:
-    blender -b Untitled.blend -P scripts/rekey_j2.py -- [--travel -170] [--rev 80]
+    blender -b Untitled.blend -P scripts/rekey_j2.py -- [--travel 150] [--rev -40]
                                                         [--start 91] [--rev-frame 175]
                                                         [--vmax 100] [--rev-vmax 0]
                                                         [--dry-run]
@@ -55,17 +51,14 @@ CTRL_HZ = 25.0      # the host's real control loop
 D2R = math.radians
 
 # ---- MACHINE FACTS. Not derived from the shot, and not negotiable by a CLI flag. --------
-# The topper carrying the end-of-arm encoder fouls the side of the stage-1 arm when the
-# joint closes to within ~20 deg of the fold, from EITHER side. So the reachable set is
-# every angle whose pose is outside +/-FOUL of 0 deg, and the two stops are the edges.
-FOUL_DEG = 20.0
+J2_BLOCKED = ((-20.0, 20.0), (68.0, 174.0))   # open intervals, pose degrees -- see docstring
 J2_REST = opt('--rest', -170.0)
-J2_TRAVEL = opt('--travel', -170.0)       # negative = the long way round to the far stop
-J2_REV = opt('--rev', 80.0)               # applied at --rev-frame
+J2_TRAVEL = opt('--travel', 150.0)        # out to the -20 stop
+J2_REV = opt('--rev', -40.0)              # back out to -60, applied at --rev-frame
 J2_START = opt('--start', 91.0)
 REV_F = opt('--rev-frame', 175.0)
 VMAX = opt('--vmax', 100.0)               # deg/s, coordinated feed for the sweep
-REV_VMAX = opt('--rev-vmax', 0.0) or VMAX  # the reversal may want its own speed
+REV_VMAX = opt('--rev-vmax', 0.0) or VMAX
 AMAX = 1400.0
 F0, ZETA = 16.0, 0.10
 
@@ -76,38 +69,50 @@ def pose(deg):
     return 180.0 if p == -180.0 else p
 
 
-def fouls(deg):
-    return abs(pose(deg)) < FOUL_DEG
+def blocked(deg):
+    p = pose(deg)
+    return any(lo < p < hi for lo, hi in J2_BLOCKED)
+
+
+def reachable_band(rest):
+    """The contiguous run of legal angles containing the rest pose, in 0.25 deg steps."""
+    if blocked(rest):
+        raise SystemExit(f"REFUSED: the rest pose {rest:+.1f} is itself inside a blocked region")
+    lo = hi = rest
+    while not blocked(lo - 0.25) and lo > rest - 360:
+        lo -= 0.25
+    while not blocked(hi + 0.25) and hi < rest + 360:
+        hi += 0.25
+    return lo, hi
 
 
 SEGS = [(J2_START, J2_TRAVEL, VMAX), (REV_F, J2_REV, REV_VMAX)]
+BAND = reachable_band(J2_REST)
+print(f"machine: blocked poses {', '.join(f'({a:+.0f},{b:+.0f})' for a, b in J2_BLOCKED)}; "
+      f"rest {J2_REST:+.0f} -> reachable band [{BAND[0]:+.2f}, {BAND[1]:+.2f}]")
 
 # ---- check the COMMANDED path before building anything -------------------------------
-# Sampling endpoints is not enough: the collision is something a move passes through, so
-# the whole swept interval of every segment has to be walked.
-print(f"machine: fold zone is +/-{FOUL_DEG:.0f} deg about 0; rest {J2_REST:.0f} "
-      f"(pose {pose(J2_REST):+.0f})")
-bad, cursor = [], J2_REST
+# The whole swept interval of every segment, not just its endpoints -- a collision is
+# something a move passes through.
+cursor, bad = J2_REST, []
 for i, (fs, d, v) in enumerate(SEGS):
     target = cursor + d
-    steps = max(2, int(abs(d)) + 1)
+    steps = max(2, int(abs(d) * 4) + 1)
     for k in range(steps + 1):
         a = cursor + d * (k / steps)
-        if fouls(a):
+        if blocked(a):
             bad.append((i, a))
     print(f"  seg {i}: f{fs:.0f}  {cursor:+.1f} -> {target:+.1f}  "
           f"({d:+.0f} deg @ {v:.0f} deg/s)   pose {pose(cursor):+.0f} -> {pose(target):+.0f}")
     cursor = target
 
 if bad:
-    worst = min(bad, key=lambda t: abs(pose(t[1])))
-    print(f"\nREFUSED: the commanded path enters the fold zone in {len(bad)} sampled "
-          f"positions.\n  closest approach {pose(worst[1]):+.2f} deg on segment {worst[0]} "
-          f"(limit +/-{FOUL_DEG:.0f}).")
-    print("  Reach the far stop the long way round instead: a NEGATIVE --travel from a\n"
-          "  negative rest lands on the mirror stop without crossing the fold.")
-    sys.exit(1)
-print("  commanded path clears the fold zone")
+    i, a = bad[0]
+    raise SystemExit(
+        f"\nREFUSED: segment {i} passes through a blocked region at {a:+.1f} deg "
+        f"(pose {pose(a):+.1f}).\n  From this rest J2 can only move within "
+        f"[{BAND[0]:+.1f}, {BAND[1]:+.1f}] -- the fold and the Z tower bound it on each side.")
+print("  commanded path stays inside the reachable band")
 
 # ---- build the curve ------------------------------------------------------------------
 J2 = bpy.data.objects['JNT_J2']
@@ -156,33 +161,19 @@ for (fs, D_deg, v_deg) in SEGS:
 
 x = M.ring_response(u, dt, F0, ZETA)
 
-# THE RESPONSE IS CLAMPED, THE COMMAND IS REFUSED. Two different failures.
-#
-# A command that crosses the fold is an authoring error -- nothing on the machine would
-# execute it, so it is rejected above. A RESPONSE that crosses it is just contact: the link
-# rings past the setpoint, meets the stop, and is held there by it. Flattening that side of
-# the ring is not losing the 2nd-order model, it is what the model predicts a hard stop
-# does. Refusing here instead would reject every move that arrives ON a stop, which is most
-# of them, since arriving by contact rather than by setpoint is the point of the beat.
-#
-# The legal band is the one revolution the commanded path lives in, bounded by the two
-# stops either side of it -- for a path running -170 -> -340 that is [-340, -20], because
-# angles in (-380, -340) and (-20, 20) both fold to inside the zone.
-lo_band = math.floor((min(u + [D2R(J2_REST)]) + D2R(FOUL_DEG)) / (2 * math.pi)) * 2 * math.pi + D2R(FOUL_DEG)
-hi_band = lo_band + 2 * math.pi - 2 * D2R(FOUL_DEG)
-print(f"  legal band for this revolution: [{math.degrees(lo_band):+.0f}, "
-      f"{math.degrees(hi_band):+.0f}] deg")
-
-contact = [(i + 1, math.degrees(v)) for i, v in enumerate(x) if v < lo_band or v > hi_band]
-x = [max(lo_band, min(hi_band, v)) for v in x]
+# THE RESPONSE IS CLAMPED, THE COMMAND IS REFUSED. A command through a blocked region is an
+# authoring error. A rung response past a stop is contact: the link rings past its setpoint,
+# meets the stop, and is held there -- which is what arriving on the -20 stop means.
+lo_r, hi_r = D2R(BAND[0]), D2R(BAND[1])
+contact = [(i + 1, math.degrees(v)) for i, v in enumerate(x) if v < lo_r or v > hi_r]
+x = [max(lo_r, min(hi_r, v)) for v in x]
 if contact:
-    worst = max(contact, key=lambda t: max(t[1] - math.degrees(hi_band),
-                                           math.degrees(lo_band) - t[1]))
-    over = max(worst[1] - math.degrees(hi_band), math.degrees(lo_band) - worst[1])
-    print(f"  CONTACT: the ring meets the stop on {len(contact)} frames "
-          f"(f{contact[0][0]}-f{contact[-1][0]}), deepest {over:.2f} deg at f{worst[0]} "
-          f"-- held by the stop, as on the machine")
-print(f"  closest approach to the fold {min(abs(pose(math.degrees(v))) for v in x):.1f} deg")
+    deepest = max(max(t[1] - BAND[1], BAND[0] - t[1]) for t in contact)
+    print(f"  CONTACT: the ring meets a stop on {len(contact)} frames "
+          f"(f{contact[0][0]}-f{contact[-1][0]}), deepest {deepest:.2f} deg -- held by the stop")
+if any(blocked(math.degrees(v)) for v in x):
+    raise SystemExit("REFUSED: the clamped curve still enters a blocked region")
+print("  keyed curve verified: no frame enters a blocked region")
 
 if DRY:
     print("\nDRY RUN - no keys written, blend not saved")
@@ -201,7 +192,5 @@ fc.keyframe_points.sort()
 fc.update()
 
 bpy.ops.wm.save_mainfile()
-print(f"\nBLEND SAVED - J2 re-keyed: rest {J2_REST:+.0f} -> "
-      f"{J2_REST + J2_TRAVEL:+.0f} -> {J2_REST + J2_TRAVEL + J2_REV:+.0f} "
-      f"(poses {pose(J2_REST):+.0f} -> {pose(J2_REST + J2_TRAVEL):+.0f} -> "
-      f"{pose(J2_REST + J2_TRAVEL + J2_REV):+.0f})")
+print(f"\nBLEND SAVED - J2 re-keyed: {J2_REST:+.0f} -> {J2_REST + J2_TRAVEL:+.0f} -> "
+      f"{J2_REST + J2_TRAVEL + J2_REV:+.0f}")
