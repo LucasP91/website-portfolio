@@ -78,6 +78,11 @@ section[id] { scroll-margin-top: 3.5rem; }
   gap: var(--space-5);
   grid-template-columns: repeat(auto-fit, minmax(min(100%, 16rem), 1fr));
 }
+/* Extra room under the Projects heading. A hovered card lifts 4px and grows 2.5% from its
+   centre, so its top edge rises by up to ~18px (4 + half of 2.5% of a ~1100px card). With the
+   default 16px section spacing that crossed the heading underline; 32px keeps ~14px clear at
+   every width. More specific than .section > * + *, which would otherwise win. */
+.section > .project-grid { margin-top: var(--space-6); }
 
 .card {
   height: 100%;
