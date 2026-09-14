@@ -337,10 +337,13 @@ section[id] { scroll-margin-top: 3.5rem; }
 
 /* Section headings — short gradient accent bar (visual anchor; enters with the
    heading's scroll reveal). */
+/* The heading box shrinks to its text, so the bar below can span the whole title instead of
+   stopping at a fixed 2.75rem. On a heading that wraps, it spans the widest line. */
+.section h2 { width: fit-content; max-width: 100%; }
 .section h2::after {
   content: "";
   display: block;
-  width: 2.75rem;
+  width: 100%;
   height: 3px;
   margin-top: var(--space-3);
   border-radius: 2px;
