@@ -6,4 +6,7 @@ import react from '@vitejs/plugin-react'
 export default defineConfig(({ command }) => ({
   base: command === 'build' ? '/website-portfolio/' : '/',
   plugins: [react()],
+  // Collect every bundled package's license into dist/credits.txt; the MIT licenses ask that
+  // their notices ship with the code. scripts/credits-notice.mjs adds the header.
+  build: { license: { fileName: 'credits.txt' } },
 }))

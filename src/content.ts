@@ -630,4 +630,5 @@ export const content = {
 
   /* Footer. {year} is replaced automatically with the current year. */
   footer: `© {year} Lucas Picard.`,
+  footerCredits: { label: `Open-source credits`, href: `${import.meta.env.BASE_URL}credits.txt` },
 }

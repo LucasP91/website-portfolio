@@ -9,7 +9,7 @@ import { content } from './content'
 // App shell: background, header, routes, footer. Page content lives in
 // src/pages/*; ALL text lives in src/content.ts.
 function App() {
-  const { brand, nav, footer } = content
+  const { brand, nav, footer, footerCredits } = content
   const year = new Date().getFullYear()
   // Nav links are plain same-document anchors on the home page; from a project
   // page they navigate home (full load) and land on the section.
@@ -42,7 +42,10 @@ function App() {
 
       <footer className="site-footer">
         <div className="container">
-          <p className="text-muted">{footer.replace('{year}', String(year))}</p>
+          <p className="text-muted">
+            {footer.replace('{year}', String(year))}{' '}
+            <a className="site-footer__credits" href={footerCredits.href}>{footerCredits.label}</a>
+          </p>
         </div>
       </footer>
     </>
