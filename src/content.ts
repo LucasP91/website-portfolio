@@ -299,7 +299,7 @@ export const content = {
       {
         slug: `pengpt-ai-smart-pen`,
         title: `PenGPT — AI Smart Pen`,
-        blurb: `A pen that turns handwriting on ordinary paper into text. Two motion sensors and a magnetometer track how the pen moves, and a Linux processor inside the pen is meant to do the reading itself, with no special paper and no phone in the loop. I lead the hardware on a two-person team: a verified 268-part schematic and a 4-layer bring-up board now in layout.`,
+        blurb: `A pen that turns handwriting on ordinary paper into text. Two motion sensors and a magnetometer track how the pen moves, and a Linux processor inside the pen is meant to do the reading itself, with no special paper and no phone in the loop. It's mainly a two-person project, with the work shared between us: a verified 268-part schematic and a 4-layer bring-up board now in layout.`,
         tags: [`KiCad`, `Schematic & PCB`, `Embedded hardware`, `Power design`],
         note: ``,
         image: `${import.meta.env.BASE_URL}projects/pengpt-board.webp`,
@@ -314,7 +314,7 @@ export const content = {
               paragraphs: [
                 `The idea is simple to say: write normally on any paper, and the pen turns what you wrote into text on your phone or laptop. No dot-pattern notebook, no tablet, and no photographing the page afterwards.`,
                 `Instead of looking at the ink, the pen tracks its own motion. Two 6-axis IMUs, one at the tip and one at the rear, plus a 3-axis magnetometer give nine degrees of freedom. The IMUs sit at opposite ends because the farther apart they are, the more clearly a rotation shows up as a difference between them. A Sophgo SG2002 processor running Linux fuses that motion and is designed to run the handwriting model on the pen, so recognition works with no phone and no internet.`,
-                `It's a two-person project that started in March 2026. I lead the hardware: most of the recent schematic work, the design verification, and all of the board layout so far.`,
+                `It's mainly a two-person project that started in March 2026. My teammate and I have shared a lot of the work, from the schematic to the design verification and the board layout.`,
               ],
               bullets: [],
               image: `${import.meta.env.BASE_URL}projects/pengpt-prototype.webp`,
