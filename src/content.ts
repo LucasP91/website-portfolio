@@ -612,7 +612,7 @@ export const content = {
       { group: `AI-Assisted Development`, items: `Directing AI tools to scope, build, and ship working software — robot firmware and control hosts, automation scripts, web scrapers, and data/reporting pipelines` },
     ],
     facts: [
-      { label: `Awards`, text: `Dean's List (WPI, Fall 2025) · Honor Roll (Pomperaug, all years)` },
+      { label: `Awards`, text: `Dean's List (WPI, Fall 2025 & Spring 2026) · Honor Roll (Pomperaug, all years)` },
       { label: `Languages`, text: `English (native) · German (Seal of Biliteracy) — dual US/German citizen` },
       { label: `Interests`, text: `Acrylic painting · drawing · music performance · robotics` },
     ],
