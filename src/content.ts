@@ -1,18 +1,18 @@
 /* ============================================================================
- *  SITE CONTENT  –  ALL website text lives here. Edit this file to rewrite copy.
+ *  SITE CONTENT  -  ALL website text lives here. Edit this file to rewrite copy.
  * ============================================================================
  *
  *  HOW TO EDIT (safe rules):
  *  • Only change the words *between the backticks* ` ... `.
  *      e.g.  title: `I build the things I'm told can't be built.`
  *                   ^^^^^^^^^^^^^^ change this, keep the backticks ^^^^^^^^^^^^
- *  • Backticks let you type apostrophes (') and quotes (") freely – no escaping.
+ *  • Backticks let you type apostrophes (') and quotes (") freely - no escaping.
  *  • Keep the commas, the [ ] brackets, and the { } braces as they are.
  *  • To add a bullet/tag/item, copy an existing line (with its quotes + comma)
  *    and edit it. To remove one, delete the whole line.
  *  • Don't rename the labels on the left (title:, heading:, etc.).
  *
- *  Symbols you can paste:  ·  (dot)   –  (en dash)   ↓ ↑ →   ✓
+ *  Symbols you can paste:  ·  (dot)   -  (en dash)   ↓ ↑ →   ✓
  * ============================================================================ */
 
 const resumeUrl = `${import.meta.env.BASE_URL}resume.pdf`
@@ -21,7 +21,7 @@ export const content = {
   /* Name shown top-left and in the footer. */
   brand: `Lucas Picard`,
 
-  /* Top navigation. `label` is the text; `href` jumps to that section – leave
+  /* Top navigation. `label` is the text; `href` jumps to that section - leave
      the # hrefs alone unless you also rename a section. */
   nav: [
     { label: `About`, href: `#about` },
@@ -36,7 +36,7 @@ export const content = {
     portrait: { src: `${import.meta.env.BASE_URL}portrait.webp`, alt: `Portrait of Lucas Picard` },
     eyebrow: `Mechanical & Robotics Engineering · WPI`,
     title: `From Dreams To Reality`,
-    lede: `I'm Lucas Picard – a mechanical & robotics engineer, happiest the moment a hard problem finally clicks into hardware that actually works.`,
+    lede: `I'm Lucas Picard - a mechanical & robotics engineer, happiest the moment a hard problem finally clicks into hardware that actually works.`,
     primaryCta: { label: `View projects`, href: `#projects` },
     secondaryCta: { label: `Get in touch`, href: `#contact` },
     resumeCta: { label: `Resume ↓`, href: resumeUrl },
@@ -44,10 +44,10 @@ export const content = {
 
   /* ---- The scroll-driven SCARA animation caption ---- */
   showcase: {
-    // screen-reader description – says what the motion IS, since the visual carries it
+    // screen-reader description - says what the motion IS, since the visual carries it
     label: `SCARA robot arm running a coordinated move: the base sweeps, the forearm swings out to its stop, the carriage descends the lead screw, and the arm reverses back out`,
     caption: `SCARA Robot Arm`,
-    captionNote: `Designed in CAD & 3D-printed – repurposed from salvaged Anet A8 parts. Scroll to run the move.`,
+    captionNote: `Designed in CAD & 3D-printed - repurposed from salvaged Anet A8 parts. Scroll to run the move.`,
   },
 
   /* ---- About ---- */
@@ -60,9 +60,9 @@ export const content = {
     ],
     /* Quick-facts list. `term` shows in bold, then `detail`. */
     meta: [
-      { term: `WPI`, detail: `– Combined B.S./M.S. in Mechanical Engineering + B.S. major in Robotics Engineering, 4-year track, expected 2029` },
+      { term: `WPI`, detail: `- Combined B.S./M.S. in Mechanical Engineering + B.S. major in Robotics Engineering, 4-year track, expected 2029` },
       { term: `3.75 GPA`, detail: `· Dean's List` },
-      { term: `Now`, detail: `– Back at WPI for the fall 2026 semester` },
+      { term: `Now`, detail: `- Back at WPI for the fall 2026 semester` },
     ],
   },
 
@@ -71,10 +71,10 @@ export const content = {
     heading: `Experience`,
     jobs: [
       {
-        role: `Engineering Intern – Document & Controls`,
+        role: `Engineering Intern - Document & Controls`,
         org: `Microboard Processing`,
         place: `Seymour, CT · ITAR-regulated electronics mfr.`,
-        dates: `Jun – Aug 2026`,
+        dates: `Jun - Aug 2026`,
         bullets: [
           `Automated digital engineering and documentation processes alongside an industrial engineer to streamline manufacturing workflows.`,
           `Built standardized SMT/PCB assembly process-flow documentation that sharpened consistency across the production line.`,
@@ -85,26 +85,26 @@ export const content = {
         role: `Studio Assistant & Operations`,
         org: `Picard Studio`,
         place: `Southbury, CT · art-education business`,
-        dates: `Feb 2020 – Present`,
+        dates: `Feb 2020 - Present`,
         bullets: [
           `Built and maintained KPI dashboards tracking MRR, ARPU, retention, churn, and acquisition to drive decisions.`,
           `Automated monthly metrics reporting through the Kajabi API and GitHub Actions, piping data into Google Sheets.`,
           `Analyzed membership cancellation data, surfacing renewal-window and engagement-based retention signals.`,
-          `Delivered freelance CAD – designed, prototyped, and invoiced a wall-mount equipment cradle.`,
+          `Delivered freelance CAD - designed, prototyped, and invoiced a wall-mount equipment cradle.`,
         ],
       },
       {
         role: `Service Staff (Seasonal)`,
         org: `Aquila's Nest Vineyards`,
         place: ``, // leave empty to hide
-        dates: `Jul – Nov 2024`,
+        dates: `Jul - Nov 2024`,
         bullets: [], // empty = no bullet points
       },
       {
         role: `Grocery Clerk`,
         org: `New Morning Market`,
         place: ``,
-        dates: `Aug – Nov 2023`,
+        dates: `Aug - Nov 2023`,
         bullets: [],
       },
     ],
@@ -121,16 +121,16 @@ export const content = {
         degree: `Combined B.S./M.S. Mechanical Engineering · B.S. Robotics Engineering (double major)`,
         place: `Worcester, MA`,
         dates: `Expected 2029`,
-        meta: `Sophomore standing · 3.75 / 4.00 GPA · Dean's List. Entered with 21 AP transfer credits (Calculus I–II, Physics C: Mechanics & E&M, CS A, Art, U.S. Government).`,
-        completed: [`Statics`, `Dynamics`, `Thermodynamics`, `Manufacturing Science & CNC`, `Intro to Robotics`, `Intro to ECE`, `Calculus III–IV`, `Differential Equations`, `Linear Algebra`],
-        upcoming: [`Unified Robotics I–IV`, `Fluid Mechanics`, `Heat Transfer`, `Stress Analysis`, `Control Engineering`, `Materials Science`, `Software Engineering`],
+        meta: `Sophomore standing · 3.75 / 4.00 GPA · Dean's List. Entered with 21 AP transfer credits (Calculus I-II, Physics C: Mechanics & E&M, CS A, Art, U.S. Government).`,
+        completed: [`Statics`, `Dynamics`, `Thermodynamics`, `Manufacturing Science & CNC`, `Intro to Robotics`, `Intro to ECE`, `Calculus III-IV`, `Differential Equations`, `Linear Algebra`],
+        upcoming: [`Unified Robotics I-IV`, `Fluid Mechanics`, `Heat Transfer`, `Stress Analysis`, `Control Engineering`, `Materials Science`, `Software Engineering`],
         activities: `Combat Robotics · Club Badminton · Intramural Soccer`,
       },
       {
         school: `Pomperaug High School`,
         degree: `Southbury, CT`,
         place: ``,
-        dates: `2021 – 2025`,
+        dates: `2021 - 2025`,
         meta: `4.06 / 4.5 GPA · Honor Roll all years · German Seal of Biliteracy.`,
         completed: [],
         upcoming: [],
@@ -141,7 +141,7 @@ export const content = {
 
   /* ---- Projects. One { } block per card. `tags` are the little chips.
          `note` is the optional blue line under a card (leave `` to hide).
-         `slug` is the page URL (/projects/<slug>) – lowercase-with-dashes.
+         `slug` is the page URL (/projects/<slug>) - lowercase-with-dashes.
          `image`/`imageAlt` show on the card and page (`` = placeholder).
          `page` is that project's detail page: a tagline, sections of
          paragraphs, a highlights list, and a status line. ---- */
@@ -152,11 +152,11 @@ export const content = {
       {
         slug: `scara-robot-arm`,
         title: `SCARA Robot Arm`,
-        blurb: `I turned a dead $150 3D printer into a teleoperated SCARA arm: a Python host solves the inverse kinematics live while an Xbox controller drives the end effector through Cartesian space, and absolute magnetic encoders give the rotary joints switch-free homing. About $120 in new parts – the rest is salvage, my own printed designs, and software I directed AI to build.`,
+        blurb: `I turned a dead $150 3D printer into a teleoperated SCARA arm: a Python host solves the inverse kinematics live while an Xbox controller drives the end effector through Cartesian space, and absolute magnetic encoders give the rotary joints switch-free homing. About $120 in new parts - the rest is salvage, my own printed designs, and software I directed AI to build.`,
         tags: [`Onshape CAD`, `Mechatronics`, `Absolute encoders`, `3D printing`],
         note: `Shown spinning above ↑`,
         image: `${import.meta.env.BASE_URL}projects/scara-card.webp`,
-        /* Wide screens use this variant on the project page – padded so the
+        /* Wide screens use this variant on the project page - padded so the
            arm's column (elevator) is the horizontal center. Phones keep the
            tight `image` above. Leave `` to always use `image`. */
         pageImage: `${import.meta.env.BASE_URL}projects/scara-page.webp`,
@@ -176,7 +176,7 @@ export const content = {
             {
               heading: `Why a SCARA`,
               paragraphs: [
-                `The salvaged motors turned out to be the weak 0.5 A variant. After decoding their labels, I found they had about a third of the torque of the NEMA 17s normally used in robotics. That killed my original 6-axis plan, since the elbow alone would have needed a 15–25:1 reduction. Instead of buying better motors, I changed the design. In a SCARA the arm joints sweep horizontally and never fight gravity, which means the same motors work fine with modest 2–5:1 belt reductions. The big thing is that a hardware limitation ended up deciding the whole architecture.`,
+                `The salvaged motors turned out to be the weak 0.5 A variant. After decoding their labels, I found they had about a third of the torque of the NEMA 17s normally used in robotics. That killed my original 6-axis plan, since the elbow alone would have needed a 15-25:1 reduction. Instead of buying better motors, I changed the design. In a SCARA the arm joints sweep horizontally and never fight gravity, which means the same motors work fine with modest 2-5:1 belt reductions. The big thing is that a hardware limitation ended up deciding the whole architecture.`,
               ],
               bullets: [],
             },
@@ -184,7 +184,7 @@ export const content = {
               heading: `Mechanical design`,
               paragraphs: [
                 `The base joint rotates the entire three-rod Z tower. Two 60 mm bore bearings wrap around the stepper body itself. This shortened the tower by 80 mm and spread the bearings farther apart, which is what actually keeps the tower from tilting. The bearings' load rating is barely touched.`,
-                `The vertical axis rides the printer's original T8×2 lead screw on three smooth rods. The screw is self-locking, so the arm holds its height with the power off, and I measured its practical top speed at around 12 mm/s. Soft limits on joint travel are set to protect the cable wrap rather than the mechanics. The encoders on the joint outputs measured the drivetrain's real backlash at about 1–1.5°.`,
+                `The vertical axis rides the printer's original T8×2 lead screw on three smooth rods. The screw is self-locking, so the arm holds its height with the power off, and I measured its practical top speed at around 12 mm/s. Soft limits on joint travel are set to protect the cable wrap rather than the mechanics. The encoders on the joint outputs measured the drivetrain's real backlash at about 1-1.5°.`,
               ],
               table: {
                 headers: [`Parameter`, `Value`],
@@ -194,7 +194,7 @@ export const content = {
                   [`Max reach`, `298.5 mm · 21.5 mm inner dead zone`],
                   [`J1 / J2 travel`, `±180° / ±150° (soft limits that protect the cables)`],
                   [`Z travel`, `280 mm, soft-capped · ~12 mm/s practical top speed`],
-                  [`Measured rotary backlash`, `~1–1.5° at the joint outputs`],
+                  [`Measured rotary backlash`, `~1-1.5° at the joint outputs`],
                 ],
               },
               image: `${import.meta.env.BASE_URL}projects/scara-workspace.svg`,
@@ -214,7 +214,7 @@ export const content = {
                   [`J1 · base`, `20T → 100T printed pulley`, `5:1`, `44.444 steps/°`],
                   [`J2 · elbow`, `20T → 40T printed pulley`, `2:1`, `17.778 steps/°`],
                   [`J4 · wrist`, `20T → 40T printed pulley`, `2:1`, `17.778 steps/° (wiring next)`],
-                  [`Z · lift`, `T8×2 lead screw, direct`, `–`, `1600 steps/mm`],
+                  [`Z · lift`, `T8×2 lead screw, direct`, `-`, `1600 steps/mm`],
                 ],
               },
               bullets: [],
@@ -223,7 +223,7 @@ export const content = {
               heading: `Electronics`,
               paragraphs: [
                 `A 32-bit SKR V1.4 Turbo runs Marlin with TMC2209 drivers in UART mode. It replaced the printer's original board, which died after shorting against the power supply housing and catching fire. The forced upgrade brought quieter drivers and native 3.3 V logic for the encoders. It also gave me a permanent habit: boards live on standoffs, and nothing gets handled while it's powered.`,
-                `The weak motors caused another problem. At their rated 500 mA they couldn't reliably get the drivetrain moving, and Z stalled under the arm's weight. I fixed this by measuring instead of guessing. The run currents went up to 800 mA by default with tuning up to 1000–1200 mA, the Z driver switched from silent StealthChop to SpreadCycle for more starting torque, and I checked the thermals through the drivers' diagnostics.`,
+                `The weak motors caused another problem. At their rated 500 mA they couldn't reliably get the drivetrain moving, and Z stalled under the arm's weight. I fixed this by measuring instead of guessing. The run currents went up to 800 mA by default with tuning up to 1000-1200 mA, the Z driver switched from silent StealthChop to SpreadCycle for more starting torque, and I checked the thermals through the drivers' diagnostics.`,
               ],
               bullets: [],
             },
@@ -239,7 +239,7 @@ export const content = {
               bullets: [],
             },
             {
-              heading: `Software – kinematics & teleop`,
+              heading: `Software - kinematics & teleop`,
               paragraphs: [
                 `The PC does the thinking and the board does the moving. A lightweight Python host, with the kinematics written in plain standard-library math, handles the SCARA forward and inverse kinematics. It prefers one elbow solution and automatically falls back to the other, and round-trip self-tests check the math. The host also runs the workspace analysis and the operator interface. Stock Marlin handles what a motion controller is actually good at: step timing, acceleration, and coordinated multi-axis moves. The two talk in plain G-code over USB.`,
                 `Teleop runs at 25 Hz from a wired Xbox controller read directly through the XInput API. The left stick moves the end effector, the bumpers move Z, the right stick will turn the wrist once it's wired, and the triggers will run the gripper. Two details make it feel solid. Each segment's feed rate is matched to the control loop so Marlin's planner never runs out of moves, which fixed a real stall-and-whine bug. Flow control also reads the planner's buffer reports to keep just enough motion queued.`,
@@ -272,7 +272,7 @@ export const content = {
                 `298.5 mm reach · 21.5 mm inner dead zone · 280 mm of Z travel`,
                 `~$120 in new parts, with the rest salvaged from the donor printer or already on hand`,
                 `25 Hz teleop loop · up to 135 mm/s in XY · 44.444 steps per degree on the base`,
-                `12-bit absolute encoders on three separate I²C buses · measured backlash ~1–1.5°`,
+                `12-bit absolute encoders on three separate I²C buses · measured backlash ~1-1.5°`,
                 `100-tooth printed pulley, tested driving the full rotating tower under load`,
                 `0 limit switches on the rotary joints, since homing is a read instead of a search`,
               ],
@@ -298,7 +298,7 @@ export const content = {
       },
       {
         slug: `pengpt-ai-smart-pen`,
-        title: `PenGPT – AI Smart Pen`,
+        title: `PenGPT - AI Smart Pen`,
         blurb: `A pen that turns handwriting on ordinary paper into text. Two motion sensors and a magnetometer track how the pen moves, and a Linux processor inside the pen is meant to do the reading itself, with no special paper and no phone in the loop. It's mainly a two-person project, with the work shared between us: a verified 268-part schematic and a 4-layer bring-up board now in layout.`,
         tags: [`KiCad`, `Schematic & PCB`, `Embedded hardware`, `Power design`],
         note: ``,
@@ -437,7 +437,7 @@ export const content = {
               ],
               bullets: [
                 `Volkswagen · Hyundai · Mazda · Kia · Ford · Honda · Toyota`,
-                `$7,000–$11,500 cash · 135k miles or less · 2015 or newer`,
+                `$7,000-$11,500 cash · 135k miles or less · 2015 or newer`,
                 `Within 50 miles of Southbury, CT`,
                 `Nissan and Chevrolet left out on purpose (CVT and Cruze reliability)`,
               ],
@@ -464,7 +464,7 @@ export const content = {
             {
               heading: `Going where the cheap cars are`,
               paragraphs: [
-                `The first few weeks of data showed a real fact about the market. The big franchise dealers with scrape-friendly websites rarely stock $7–10k cars, and the budget inventory is at independent lots. Instead of adding more franchise dealers, I changed direction. I added a new engine for the platform most CT independents use, registered about 35 independent dealers at once through a YAML file, and built an auto-discovery command. It searches for nearby used-car lots, checks each site's platform by probing for known inventory APIs, and safely adds confirmed dealers to the registry.`,
+                `The first few weeks of data showed a real fact about the market. The big franchise dealers with scrape-friendly websites rarely stock $7-10k cars, and the budget inventory is at independent lots. Instead of adding more franchise dealers, I changed direction. I added a new engine for the platform most CT independents use, registered about 35 independent dealers at once through a YAML file, and built an auto-discovery command. It searches for nearby used-car lots, checks each site's platform by probing for known inventory APIs, and safely adds confirmed dealers to the registry.`,
               ],
               bullets: [],
             },
@@ -490,7 +490,7 @@ export const content = {
                 `A cheap car with a transmission that's about to fail isn't a deal. The system includes mechanic-level reliability rules that show up as a caution on the alert itself, right when I'm deciding:`,
               ],
               bullets: [
-                `Ford Focus and Fiesta 2012–18 automatics, which use the failure-prone DPS6 "PowerShift" dual-clutch`,
+                `Ford Focus and Fiesta 2012-18 automatics, which use the failure-prone DPS6 "PowerShift" dual-clutch`,
                 `Hyundai and Kia: avoid the Theta II GDI (2.0/2.4) and 1.6T engines, since the 2.0 MPI is the safe pick`,
                 `VW EA888 1.8T/2.0T: check that the timing-chain tensioner has been serviced before buying`,
                 `Structured engine and trim excludes with year ranges, plus per-VIN manual excludes so a car with a bad CarFax stays gone`,
@@ -538,7 +538,7 @@ export const content = {
                 `3,001 listings tracked · 481 recorded price/mileage/status changes`,
                 `Search: ~2 weeks · 45 alerts · ~10 cars pursued · 5 checked in person · 1 bought`,
                 `~5,300 lines of Python across 33 modules · ~2,600 lines of tests (175 tests)`,
-                `Built May 27 – June 14, 2026 in 5 phases · 20 commits`,
+                `Built May 27 - June 14, 2026 in 5 phases · 20 commits`,
                 `$0/month, with no paid APIs and the free CI tier`,
               ],
             },
@@ -556,8 +556,8 @@ export const content = {
       },
       {
         slug: `frc-robotics`,
-        title: `FRC Robotics – Captain & Lead Driver`,
-        blurb: `1000+ hours as captain and lead driver. I led CAD, mechanical build, and electrical integration across subteams and designed subsystems in Onshape / SolidWorks – and behind the wheel, I drove us to the team's first New England District Championship qualification in 10 years and its first CT State Championship.`,
+        title: `FRC Robotics - Captain & Lead Driver`,
+        blurb: `1000+ hours as captain and lead driver. I led CAD, mechanical build, and electrical integration across subteams and designed subsystems in Onshape / SolidWorks - and behind the wheel, I drove us to the team's first New England District Championship qualification in 10 years and its first CT State Championship.`,
         tags: [`Leadership`, `CAD`, `Robotics`],
         note: ``,
         image: `${import.meta.env.BASE_URL}projects/frc-team.jpg`,
@@ -589,7 +589,7 @@ export const content = {
             `First New England District Championship qualification in 10 years`,
             `First CT State Championship (off-season event)`,
           ],
-          status: `2021 – 2025 · alumni`,
+          status: `2021 - 2025 · alumni`,
         },
       },
     ],
@@ -609,11 +609,11 @@ export const content = {
       { group: `CAD & Design`, items: `SolidWorks, Onshape, GD&T, design for manufacturability` },
       { group: `Electronics`, items: `KiCad PCB design, soldering, ESP32 / Arduino, closed-loop control, sensors & encoders` },
       { group: `Prototyping`, items: `3D printing, manual milling, laser cutting, CAM` },
-      { group: `AI-Assisted Development`, items: `Directing AI tools to scope, build, and ship working software – robot firmware and control hosts, automation scripts, web scrapers, and data/reporting pipelines` },
+      { group: `AI-Assisted Development`, items: `Directing AI tools to scope, build, and ship working software - robot firmware and control hosts, automation scripts, web scrapers, and data/reporting pipelines` },
     ],
     facts: [
       { label: `Awards`, text: `Dean's List (WPI, Fall 2025 & Spring 2026) · Honor Roll (Pomperaug, all years)` },
-      { label: `Languages`, text: `English (native) · German (Seal of Biliteracy) – dual US/German citizen` },
+      { label: `Languages`, text: `English (native) · German (Seal of Biliteracy) - dual US/German citizen` },
       { label: `Interests`, text: `Acrylic painting · drawing · music performance · robotics` },
     ],
   },

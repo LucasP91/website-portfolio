@@ -420,7 +420,7 @@ if END_FROM_FRAME > 0:
           f"running {288 - END_FROM_FRAME:.0f} frames")
 END_ON = next((_argv[i + 1] for i, a in enumerate(_argv) if a == '--end-on'), 'nut')
 
-# The second-stage link plus what it carries — the "arm body" for the overhead centring.
+# The second-stage link plus what it carries - the "arm body" for the overhead centring.
 ARM_BODY = [o for o in bpy.data.objects
             if o.type == 'MESH' and o.parent is J2 and not o.hide_render] or \
            [o for o in bpy.data.objects

@@ -1,4 +1,4 @@
-"""SCARA hero — BRASS PRE-FLIGHT  (TO_BUILD_06 section 7)
+"""SCARA hero - BRASS PRE-FLIGHT  (TO_BUILD_06 section 7)
 
 The brass accent is the one element whose failure mode produces a plausible-looking
 image: if RIG_BrassMirror's drivers desync, the nut simply stops reading and nothing

@@ -10,7 +10,7 @@
   <!-- scale: 1.5 px per mm, base at (500,500) -->
   <!-- reachable disc to max reach -->
   <circle cx="500" cy="500" r="448" fill="rgb(122 162 255 / 0.04)" stroke="#7aa2ff" stroke-width="3"/>
-  <!-- practical annulus 80–260 mm -->
+  <!-- practical annulus 80-260 mm -->
   <path d="M500 110 a390 390 0 1 0 0.01 0 Z M500 380 a120 120 0 1 1 -0.01 0 Z" fill="rgb(122 162 255 / 0.10)" fill-rule="evenodd"/>
   <circle cx="500" cy="500" r="390" fill="none" stroke="#3a4353" stroke-width="2" stroke-dasharray="4 8"/>
   <circle cx="500" cy="500" r="120" fill="none" stroke="#3a4353" stroke-width="2" stroke-dasharray="4 8"/>
@@ -46,11 +46,11 @@
 
     <rect x="990" y="204" width="26" height="26" rx="6" fill="rgb(122 162 255 / 0.10)" stroke="#3a4353" stroke-width="2"/>
     <text x="1030" y="224" fill="#e8ebf0">practical band</text>
-    <text x="1030" y="248" fill="#8a93a3" font-size="17">~80–260 mm radius</text>
+    <text x="1030" y="248" fill="#8a93a3" font-size="17">~80-260 mm radius</text>
 
     <circle cx="1003" cy="301" r="13" fill="#15181e" stroke="#8a93a3" stroke-width="2.5"/>
     <text x="1030" y="308" fill="#e8ebf0">dead zone</text>
-    <text x="1030" y="332" fill="#8a93a3" font-size="17">21.5 mm – where L2</text>
+    <text x="1030" y="332" fill="#8a93a3" font-size="17">21.5 mm - where L2</text>
     <text x="1030" y="355" fill="#8a93a3" font-size="17">can't fold past L1</text>
 
     <line x1="988" y1="398" x2="1018" y2="398" stroke="#c98a8a" stroke-width="3" stroke-dasharray="8 6"/>

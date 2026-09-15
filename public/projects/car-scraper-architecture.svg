@@ -103,5 +103,5 @@
   <path d="M1540 420 C1575 430 1575 800 1532 808" stroke="#55627a" stroke-width="3" fill="none" marker-end="url(#arr)"/>
 
   <!-- footnote -->
-  <text x="80" y="906" fill="#8a93a3" font-size="19">One Python process, one SQLite file – no services, no queues, no paid APIs.</text>
+  <text x="80" y="906" fill="#8a93a3" font-size="19">One Python process, one SQLite file - no services, no queues, no paid APIs.</text>
 </svg>

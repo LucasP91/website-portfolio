@@ -139,7 +139,7 @@ export default function ScrollImageSequence({
     offset: ['start start', 'end end'],
   })
 
-  // Map progress (0–1) to a 0-based frame index.
+  // Map progress (0-1) to a 0-based frame index.
   const frameIndex = useTransform(scrollYProgress, [0, 1], [0, frameCount - 1])
 
   // Caption fade is driven by a manually-computed, guaranteed-monotonic section progress

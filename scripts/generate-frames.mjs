@@ -41,7 +41,7 @@ for (let i = 1; i <= FRAME_COUNT; i++) {
     <text x="${cx}" y="${cy + 30}" font-family="Arial, sans-serif" font-size="160" font-weight="700"
           fill="rgba(255,255,255,0.92)" text-anchor="middle">${i}</text>
     <text x="${cx}" y="${H - 48}" font-family="Arial, sans-serif" font-size="34"
-          fill="rgba(255,255,255,0.7)" text-anchor="middle">frame ${pad(i)} / ${pad(FRAME_COUNT)} – ${(t * 100).toFixed(0)}%</text>
+          fill="rgba(255,255,255,0.7)" text-anchor="middle">frame ${pad(i)} / ${pad(FRAME_COUNT)} - ${(t * 100).toFixed(0)}%</text>
   </svg>`
 
   await sharp(Buffer.from(svg)).jpeg({ quality: 78, mozjpeg: true }).toFile(join(outDir, `frame-${pad(i)}.jpg`))

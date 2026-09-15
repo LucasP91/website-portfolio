@@ -1,4 +1,4 @@
-/* Base layer – reset, typography defaults, accessibility primitives.
+/* Base layer - reset, typography defaults, accessibility primitives.
    Grounded in web-design-principles (accessibility-wcag, typography, motion). */
 
 *, *::before, *::after { box-sizing: border-box; }
@@ -38,7 +38,7 @@ ul[role="list"] { list-style: none; padding: 0; }
   border-radius: var(--radius-sm);
 }
 
-/* Skip link – visible on focus */
+/* Skip link - visible on focus */
 .skip-link {
   position: absolute;
   left: var(--space-3);

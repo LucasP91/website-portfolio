@@ -44,16 +44,16 @@
   <text x="225" y="305" text-anchor="middle" fill="#55627a" font-size="19" font-style="italic">zero_deg saved per joint</text>
   <g fill="#aab2bf" font-size="20" text-anchor="middle">
     <text x="225" y="352">Calibrate once at a</text>
-    <text x="225" y="380">known pose – each joint's</text>
+    <text x="225" y="380">known pose - each joint's</text>
     <text x="225" y="408">encoder zero is stored</text>
   </g>
 
   <!-- panel 2: power on anywhere -->
   <path d="M622 150 l-30 62 h24 l-16 58 44 -74 h-24 l22 -46 z" fill="rgb(122 162 255 / 0.18)" stroke="#93c5fd" stroke-width="2.5"/>
   <text x="690" y="228" fill="#dbe7ff" font-size="34" font-weight="700">217.4°</text>
-  <text x="615" y="305" text-anchor="middle" fill="#55627a" font-size="19" font-style="italic">absolute – knows at power-up</text>
+  <text x="615" y="305" text-anchor="middle" fill="#55627a" font-size="19" font-style="italic">absolute - knows at power-up</text>
   <g fill="#aab2bf" font-size="20" text-anchor="middle">
-    <text x="615" y="352">Power on in any pose –</text>
+    <text x="615" y="352">Power on in any pose -</text>
     <text x="615" y="380">the magnetic encoders</text>
     <text x="615" y="408">already read true angles</text>
   </g>
@@ -78,9 +78,9 @@
   <text x="1395" y="305" text-anchor="middle" fill="#55627a" font-size="19" font-style="italic">no switch-seek, no motion</text>
   <g fill="#aab2bf" font-size="20" text-anchor="middle">
     <text x="1395" y="352">Homing is a read, not a</text>
-    <text x="1395" y="380">search – and calibration</text>
+    <text x="1395" y="380">search - and calibration</text>
     <text x="1395" y="408">survives power cycles</text>
   </g>
 
-  <text x="60" y="524" fill="#8a93a3" font-size="19">The one exception: Z still homes to the printer's original endstop switch – the only physical switch on the machine.</text>
+  <text x="60" y="524" fill="#8a93a3" font-size="19">The one exception: Z still homes to the printer's original endstop switch - the only physical switch on the machine.</text>
 </svg>
