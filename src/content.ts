@@ -313,10 +313,13 @@ export const content = {
               heading: `Overview`,
               paragraphs: [
                 `The idea is simple to say: write normally on any paper, and the pen turns what you wrote into text on your phone or laptop. No dot-pattern notebook, no tablet, and no photographing the page afterwards.`,
-                `Instead of looking at the ink, the pen tracks its own motion. Two 6-axis IMUs, one at the tip and one at the rear, plus a 3-axis magnetometer give nine degrees of freedom. A Sophgo SG2002 processor running Linux fuses that motion and is designed to run the handwriting model on the pen, so recognition works with no phone and no internet.`,
+                `Instead of looking at the ink, the pen tracks its own motion. Two 6-axis IMUs, one at the tip and one at the rear, plus a 3-axis magnetometer give nine degrees of freedom. The IMUs sit at opposite ends because the farther apart they are, the more clearly a rotation shows up as a difference between them. A Sophgo SG2002 processor running Linux fuses that motion and is designed to run the handwriting model on the pen, so recognition works with no phone and no internet.`,
                 `It's a two-person project that started in March 2026. I lead the hardware: most of the recent schematic work, the design verification, and all of the board layout so far.`,
               ],
               bullets: [],
+              image: `${import.meta.env.BASE_URL}projects/pengpt-prototype.webp`,
+              imageAlt: `An early PenGPT prototype held in a hand: a white tapered pen body with a small screen reading "Ready! Press button." and a camera near the back end`,
+              imageCaption: `An early prototype from before the current design, with a status screen on the barrel. The rev-1 electronics on this page are a newer design that hasn't been built yet. Photo courtesy of my teammate.`,
             },
             {
               heading: `How it's meant to work`,
@@ -358,6 +361,7 @@ export const content = {
               paragraphs: [
                 `USB-C or the battery feeds a charger that merges both onto one system rail. Three small buck converters make the processor's always-on rails: 0.95 V for the core, 1.35 V for the memory and 1.8 V for I/O. A buck-boost converter makes 3.3 V, and a 2.8 V regulator runs off that for the camera and display.`,
                 `The 3.3 V rail only turns on after the processor's boot ROM asserts a power-sequencing pin. That satisfies Sophgo's sequencing rule, and it gives bring-up a clean first test: if 3.3 V appears, the processor is alive. Separate load switches let firmware cut power to the sensors, the camera, the display and the whole radio. The radio needs that, because Realtek's datasheet requires it to be power-cycled.`,
+                `A pen has almost no room for a battery, so idle draw decides whether it's usable. The team's target is about 10 hours on a charge, which is why every domain that isn't needed can be switched fully off.`,
               ],
               bullets: [],
             },
@@ -392,7 +396,7 @@ export const content = {
             {
               heading: `What's next`,
               paragraphs: [
-                `Routing the board comes first. Before it's ordered, two open questions have to be settled, and then the board gets built and brought up rail by rail:`,
+                `Routing the board comes first, with the goal of having boards back around November 2026. Before it's ordered, two open questions have to be settled, and then the board gets built and brought up rail by rail:`,
               ],
               bullets: [
                 `Confirm the battery carries its own protection circuit, since the board has no protection IC.`,
@@ -409,7 +413,7 @@ export const content = {
             `Caught three faults that ERC missed, two of which would have stopped the board from booting`,
             `4-layer bring-up board designed for rework, at standard fab pricing`,
           ],
-          status: `Schematic verified · rev-1 board placed, routing next · no hardware or firmware yet`,
+          status: `Schematic verified · rev-1 board placed, routing next · boards targeted for November 2026 · rev-1 not built yet`,
         },
       },
       {
