@@ -23,7 +23,7 @@ export default function ProjectPage() {
   const labels = content.projectPage
 
   useEffect(() => {
-    if (project) document.title = `${project.title} — Lucas Picard`
+    if (project) document.title = `${project.title} – Lucas Picard`
     window.scrollTo(0, 0)
   }, [project])
 

@@ -21,7 +21,7 @@
 
   <!-- host -->
   <rect x="470" y="320" width="360" height="260" rx="14" fill="#1b202a" stroke="#7aa2ff" stroke-width="2.5"/>
-  <text x="650" y="372" text-anchor="middle" fill="#e8ebf0" font-size="26" font-weight="700">Python host — “the brain”</text>
+  <text x="650" y="372" text-anchor="middle" fill="#e8ebf0" font-size="26" font-weight="700">Python host – “the brain”</text>
   <g fill="#aab2bf" font-size="20" text-anchor="middle">
     <text x="650" y="412">forward / inverse kinematics</text>
     <text x="650" y="442">elbow-preference + fallback</text>
@@ -32,7 +32,7 @@
 
   <!-- board -->
   <rect x="960" y="320" width="330" height="260" rx="14" fill="#1b202a" stroke="#2a313c" stroke-width="2.5"/>
-  <text x="1125" y="372" text-anchor="middle" fill="#e8ebf0" font-size="26" font-weight="700">SKR V1.4 — “the muscle”</text>
+  <text x="1125" y="372" text-anchor="middle" fill="#e8ebf0" font-size="26" font-weight="700">SKR V1.4 – “the muscle”</text>
   <g fill="#aab2bf" font-size="20" text-anchor="middle">
     <text x="1125" y="412">stock Marlin 2.1.2.5</text>
     <text x="1125" y="442">TMC2209 UART drivers</text>

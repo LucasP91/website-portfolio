@@ -49,7 +49,7 @@
   <path d="M291 292 l7 7 l13 -14" stroke="#93c5fd" stroke-width="3" fill="none" stroke-linecap="round"/>
   <g fill="#aab2bf" font-size="20" text-anchor="middle">
     <text x="225" y="352">Real Chromium loads the</text>
-    <text x="225" y="380">inventory page — the Akamai</text>
+    <text x="225" y="380">inventory page – the Akamai</text>
     <text x="225" y="408">bot wall sees a real browser</text>
   </g>
 
@@ -73,7 +73,7 @@
   <text x="1005" y="292" text-anchor="middle" fill="#55627a" font-size="19" font-style="italic">request captured</text>
   <g fill="#aab2bf" font-size="20" text-anchor="middle">
     <text x="1005" y="352">The engine intercepts</text>
-    <text x="1005" y="380">that exact request —</text>
+    <text x="1005" y="380">that exact request –</text>
     <text x="1005" y="408">no reverse-engineering</text>
   </g>
 
@@ -88,9 +88,9 @@
   <text x="1395" y="300" text-anchor="middle" fill="#55627a" font-size="19" font-style="italic">page size ↑ = full inventory</text>
   <g fill="#aab2bf" font-size="20" text-anchor="middle">
     <text x="1395" y="352">…and replays it with a</text>
-    <text x="1395" y="380">bigger page size — the whole</text>
+    <text x="1395" y="380">bigger page size – the whole</text>
     <text x="1395" y="408">inventory in one response</text>
   </g>
 
-  <text x="60" y="524" fill="#8a93a3" font-size="19">One parser per platform covers every store on it — no brittle HTML scraping, no forged request signatures.</text>
+  <text x="60" y="524" fill="#8a93a3" font-size="19">One parser per platform covers every store on it – no brittle HTML scraping, no forged request signatures.</text>
 </svg>

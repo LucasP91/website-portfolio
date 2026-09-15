@@ -1,4 +1,4 @@
-/* Aurora Background — plain-CSS port of the 21st.dev / Aceternity Aurora
+/* Aurora Background – plain-CSS port of the 21st.dev / Aceternity Aurora
    (dark variant), as a fixed site-wide backdrop over a galaxy grey->black base.
    Faithful to the original: --dark-gradient + --aurora layers, an animated
    ::after with mix-blend-difference, and the radial mask. */
@@ -44,7 +44,7 @@
   background-size: 200%, 100%;
   background-attachment: fixed;
   mix-blend-mode: difference;
-  /* ping-pong (alternate) so it eases back instead of hard-resetting — no flash at the loop */
+  /* ping-pong (alternate) so it eases back instead of hard-resetting – no flash at the loop */
   animation: aurora 90s ease-in-out infinite alternate;
 }
 

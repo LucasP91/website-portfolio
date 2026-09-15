@@ -22,7 +22,7 @@ export default function Home() {
   // Restore the base title and honor #section hashes (SPA nav from project
   // pages and full loads both land on the right section).
   useEffect(() => {
-    document.title = 'Lucas Picard — Mechanical & Robotics Engineering'
+    document.title = 'Lucas Picard – Mechanical & Robotics Engineering'
     const hash = window.location.hash
     if (hash && hash !== '#main') {
       setTimeout(() => document.querySelector(hash)?.scrollIntoView(), 0)
@@ -31,7 +31,7 @@ export default function Home() {
 
   return (
     <main id="main">
-      {/* Hero — staggered entrance (fade + lift), static under reduced motion */}
+      {/* Hero – staggered entrance (fade + lift), static under reduced motion */}
       <motion.section
         className="hero container"
         aria-labelledby="hero-title"
@@ -61,7 +61,7 @@ export default function Home() {
         </motion.div>
       </motion.section>
 
-      {/* Showcase — scroll-driven SCARA arm hero film */}
+      {/* Showcase – scroll-driven SCARA arm hero film */}
       <ScrollImageSequence
         frameCount={120}
         heightVh={300}
@@ -84,7 +84,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Experience — timeline */}
+      {/* Experience – timeline */}
       <section id="experience" className="section container section--split" aria-labelledby="experience-title">
         <div className="section__head"><h2 id="experience-title">{experience.heading}</h2></div>
         <div className="section__body">

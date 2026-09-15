@@ -1,7 +1,7 @@
 // Post-build step: give every route a real HTML file, and generate the sitemap.
 //
 // WHY. The site is a single-page app on GitHub Pages. GitHub has no file at
-// /projects/<slug>, so it served dist/404.html instead — the page rendered fine in a browser,
+// /projects/<slug>, so it served dist/404.html instead – the page rendered fine in a browser,
 // but the HTTP status was 404, and search engines do not index pages that answer 404. Only the
 // home page could ever show up in Google.
 //
@@ -29,7 +29,7 @@ const projects = [...content.matchAll(entry)].map(([, slug, title, blurb, image]
   image: image.replace('${import.meta.env.BASE_URL}', `${SITE}/`),
 }))
 if (projects.length === 0) {
-  console.error('prerender-routes: found no projects in src/content.ts — has its layout changed?')
+  console.error('prerender-routes: found no projects in src/content.ts – has its layout changed?')
   process.exit(1)
 }
 
@@ -39,7 +39,7 @@ const attr = s => s.replace(/&/g, '&amp;').replace(/"/g, '&quot;').replace(/</g,
 function summary(text, max = 155) {
   if (text.length <= max) return text
   const cut = text.slice(0, max)
-  return cut.slice(0, cut.lastIndexOf(' ')).replace(/[,;:—–-]\s*$/, '') + '…'
+  return cut.slice(0, cut.lastIndexOf(' ')).replace(/[,;:––-]\s*$/, '') + '…'
 }
 
 /** Replace one tag's value, and fail loudly if index.html no longer has that tag. */
@@ -53,7 +53,7 @@ function setTag(html, pattern, replacement, label) {
 
 function pageFor({ slug, title, blurb, image }) {
   const url = `${SITE}/projects/${slug}/`
-  const fullTitle = attr(`${title} — Lucas Picard`)
+  const fullTitle = attr(`${title} – Lucas Picard`)
   const desc = attr(summary(blurb))
   let html = shell
   html = setTag(html, /<title>[\s\S]*?<\/title>/, `<title>${fullTitle}</title>`, 'title')
