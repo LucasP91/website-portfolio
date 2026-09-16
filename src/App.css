@@ -567,3 +567,13 @@ section[id] { scroll-margin-top: 3.5rem; }
 }
 .ppage__table tr > td:first-child { color: var(--color-text); font-weight: 600; white-space: nowrap; }
 .ppage__table tbody tr:first-child td { border-top: none; }
+
+/* Video figure on a project page. Sits in .ppage__figure, so it inherits the
+   frame, rounding and caption styling from the image figures above. */
+.ppage__video {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 16 / 9;
+  background: #000;
+}

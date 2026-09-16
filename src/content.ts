@@ -582,6 +582,9 @@ export const content = {
                 `As primary driver I got to test the design on the field. I drove the team to its first New England District Championship qualification in 10 years and its first CT State Championship at an off-season event.`,
               ],
               bullets: [],
+              video: `${import.meta.env.BASE_URL}projects/frc-robotics.mp4`,
+              videoPoster: `${import.meta.env.BASE_URL}projects/frc-video-poster.webp`,
+              videoCaption: `Five minutes from four seasons on the team: the shop during build season, the robot on the field, and presenting our work.`,
             },
           ],
           highlights: [

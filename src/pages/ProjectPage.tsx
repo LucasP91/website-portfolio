@@ -14,6 +14,9 @@ type PageSection = {
   image?: string
   imageAlt?: string
   imageCaption?: string
+  video?: string
+  videoPoster?: string
+  videoCaption?: string
 }
 
 // Project detail page (/projects/<slug>). All copy comes from content.ts.
@@ -80,6 +83,22 @@ export default function ProjectPage() {
                   <figure className="ppage__figure">
                     <img src={s.image} alt={s.imageAlt ?? ''} loading="lazy" />
                     {s.imageCaption && <figcaption>{s.imageCaption}</figcaption>}
+                  </figure>
+                )}
+                {s.video && (
+                  /* preload="metadata" fetches only the header, so a long clip costs
+                     nothing until the visitor presses play. */
+                  <figure className="ppage__figure">
+                    <video
+                      className="ppage__video"
+                      controls
+                      preload="metadata"
+                      playsInline
+                      poster={s.videoPoster}
+                    >
+                      <source src={s.video} type="video/mp4" />
+                    </video>
+                    {s.videoCaption && <figcaption>{s.videoCaption}</figcaption>}
                   </figure>
                 )}
                 {Array.isArray(s.bullets) && s.bullets.length > 0 && (
