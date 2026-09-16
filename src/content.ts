@@ -586,11 +586,47 @@ export const content = {
               videoPoster: `${import.meta.env.BASE_URL}projects/frc-video-poster.webp`,
               videoCaption: `Five minutes from four seasons on the team: the shop during build season, the robot on the field, and presenting our work.`,
             },
+            {
+              heading: `Bringing CAD to the team`,
+              paragraphs: [
+                `The first year I joined, nothing was planned. There was no real CAD, and the robot was scrap parts held together with tape and our hopes. I pushed for a fully developed CAD model over the next two years, and I was the only student on the CAD team. I spent a lot of time studying robots from past seasons to understand what made a design good or bad, so we could stop repeating other teams mistakes and our own.`,
+                `That changed how the team designed. My junior year we committed to the first design we drew, and it was never adapted through prototypes. The next season we ran four robot iterations plus subsystem prototypes, which made the design adaptable and let programming start early instead of waiting for final hardware.`,
+              ],
+              bullets: [],
+            },
+            {
+              heading: `Strategy before parts`,
+              paragraphs: [
+                `We started the season by studying the game in a way we never had before. We played it ourselves with students standing in for robots and took detailed notes on every part of it. That gave us our priorities, and the priorities gave the design team a robot it could actually finish: mechanically simple, focused on ranking points, and easy for alliance partners to work with.`,
+              ],
+              bullets: [],
+            },
+            {
+              heading: `The wiring that kept costing us matches`,
+              paragraphs: [
+                `My sophomore year we had faulty electrical connections, with wires disconnecting in every single match of a competition. The big thing is that this was not a driving problem or a design problem, it was a connector problem. The next year we stopped using WAGO connectors and switched to JST and bullet connectors, and I spent my entire February vacation soldering bullet connectors onto every motor and controller. After that the robot was modular and it stayed connected.`,
+                `Manufacturing taught a similar lesson. A new CNC router in our woodshop let us make parts quickly and accurately, but it also showed that not every part should be custom, because CNC work takes time. We started machining only the parts that needed it and buying the rest, which is how we built quickly enough to iterate.`,
+              ],
+              bullets: [],
+            },
+            {
+              heading: `Training the team and speaking for it`,
+              paragraphs: [
+                `We are a small team working out of the school woodshop, so time is the resource we have least of. Preseason starts with new students of different ages and very little knowledge, so I built a system of lessons and assignments that taught the skills they would need. Once the season started we needed a way to keep track of who was doing what, so we moved onto project-management software to assign roles and tasks.`,
+                `I also started the team presenting to people outside the shop. We present to our district Board of Education, to middle schoolers and to high schoolers at school events, and to community groups around town, including Heritage Village here in Southbury. Speaking for the team turned out to be as much a part of captaining it as the build was.`,
+              ],
+              bullets: [],
+            },
           ],
           highlights: [
             `Team captain & lead driver · 1000+ hours over four seasons`,
             `Captained the whole team, guiding the subteam leads, including marketing and outreach`,
             `60-80 hour weeks through build season, Monday through Sunday, alongside a full course load`,
+            `Introduced CAD to a team that had none, as its only CAD student`,
+            `Four robot iterations and subsystem prototypes in one season, up from one`,
+            `Rewired the robot with JST and bullet connectors, ending per-match disconnections`,
+            `Built the preseason training system and moved the team onto project-management software`,
+            `Presents for the team to the district Board of Education, schools and community groups`,
             `First New England District Championship qualification in 10 years`,
             `First CT State Championship (off-season event)`,
           ],
