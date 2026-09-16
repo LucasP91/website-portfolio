@@ -76,12 +76,12 @@ export const content = {
         place: `Seymour, CT · ITAR-regulated electronics mfr.`,
         dates: `Jun - Aug 2026`,
         bullets: [
-          `Reviewed customer requirements for their boards and wrote the matching process flows, supporting roughly $12M in quoted work.`,
-          `Automated digital engineering and documentation processes alongside an industrial engineer, cutting manual work worth an estimated $12K+ in annual salary.`,
-          `Built standardized SMT/PCB assembly process-flow documentation that sharpened consistency across the production line.`,
-          `Presented new assemblies to every engineering subteam and the project managers, aligning them on the setup work each one still needed.`,
+          `Reviewed customer requirements for their boards and wrote the matching process flows, supporting roughly $12 million in quoted work.`,
           `Took on core Document & Controls Manager responsibilities over the final weeks of the internship.`,
-          `Applied disciplined data-handling within a regulated, compliance-sensitive environment.`,
+          `Automated digital engineering and documentation processes alongside an industrial engineer, cutting manual work worth about $12,000 a year in labor.`,
+          `Built the standard SMT and PCB assembly process-flow documents, so every build follows the same written steps.`,
+          `Presented new assemblies to every engineering subteam and the project managers, aligning them on the setup work each one still needed.`,
+          `Handled ITAR-controlled documentation to the company rules.`,
         ],
       },
       {
