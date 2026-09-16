@@ -565,7 +565,7 @@ export const content = {
         imageAlt: `Lucas and a teammate holding the district event finalist plaque and trophy at a New England FIRST competition`,
         imageFit: `cover`,
         page: {
-          tagline: `Four seasons and 1000+ hours, leading the whole team during the week and driving the robot on match day.`,
+          tagline: `Four seasons and 1000+ hours, captaining the team through build season and driving the robot on match day.`,
           sections: [
             {
               heading: `Overview`,
@@ -577,7 +577,8 @@ export const content = {
             {
               heading: `What I did`,
               paragraphs: [
-                `As captain I ran the whole team, not just the build side. That meant the marketing and outreach subteams as well as CAD, mechanical build, and electrical integration. I designed robot subsystems in Onshape and SolidWorks and troubleshot in the pit between matches, where a broken mechanism has minutes to get fixed instead of days.`,
+                `As captain I was responsible for the whole team, not just the build side. I did not run the marketing and outreach subteams myself. I worked with their leads, guided them, and kept every subteam pointed the same way. My own hands-on work was CAD, mechanical build, and electrical integration, designing robot subsystems in Onshape and SolidWorks and troubleshooting in the pit between matches, where a broken mechanism has minutes to get fixed instead of days.`,
+                `Build season ran Monday through Sunday. I put in 60-80 hour weeks on the robot while carrying a full course load.`,
                 `As primary driver I got to test the design on the field. I drove the team to its first New England District Championship qualification in 10 years and its first CT State Championship at an off-season event.`,
               ],
               bullets: [],
@@ -585,7 +586,8 @@ export const content = {
           ],
           highlights: [
             `Team captain & lead driver · 1000+ hours over four seasons`,
-            `Led every subteam, including marketing and outreach, and designed subsystems in Onshape / SolidWorks`,
+            `Captained the whole team, guiding the subteam leads, including marketing and outreach`,
+            `60-80 hour weeks through build season, Monday through Sunday, alongside a full course load`,
             `First New England District Championship qualification in 10 years`,
             `First CT State Championship (off-season event)`,
           ],
