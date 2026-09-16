@@ -565,12 +565,12 @@ export const content = {
         imageAlt: `Lucas and a teammate holding the district event finalist plaque and trophy at a New England FIRST competition`,
         imageFit: `cover`,
         page: {
-          tagline: `Four seasons and 1000+ hours, captaining the team through build season and driving the robot on match day.`,
+          tagline: `Three seasons and 1000+ hours, captaining the team for two of them and driving the robot on match day.`,
           sections: [
             {
               heading: `Overview`,
               paragraphs: [
-                `FIRST Robotics Competition gives you six weeks to design, build, and program a competition robot, then puts it on a field against the best teams in the region. I spent four seasons on my high school team and finished as captain and lead driver, with 1000+ hours in the shop and behind the wheel.`,
+                `FIRST Robotics Competition gives you six weeks to design, build, and program a competition robot, then puts it on a field against the best teams in the region. I spent three seasons on my high school team, two of them as captain, and finished as captain and lead driver with 1000+ hours in the shop and behind the wheel.`,
               ],
               bullets: [],
             },
@@ -584,7 +584,7 @@ export const content = {
               bullets: [],
               video: `${import.meta.env.BASE_URL}projects/frc-robotics.mp4`,
               videoPoster: `${import.meta.env.BASE_URL}projects/frc-video-poster.webp`,
-              videoCaption: `Five minutes from four seasons on the team: the shop during build season, the robot on the field, and presenting our work.`,
+              videoCaption: `Five minutes from three seasons on the team: the shop during build season, the robot on the field, and presenting our work.`,
             },
             {
               heading: `Bringing CAD to the team`,
@@ -619,7 +619,7 @@ export const content = {
             },
           ],
           highlights: [
-            `Team captain & lead driver · 1000+ hours over four seasons`,
+            `Team captain for two of three seasons · lead driver · 1000+ hours`,
             `Captained the whole team, guiding the subteam leads, including marketing and outreach`,
             `60-80 hour weeks through build season, Monday through Sunday, alongside a full course load`,
             `Introduced CAD to a team that had none, as its only CAD student`,
@@ -630,7 +630,7 @@ export const content = {
             `First New England District Championship qualification in 10 years`,
             `First CT State Championship (off-season event)`,
           ],
-          status: `2021 - 2025 · alumni`,
+          status: `2022 - 2025 · alumni`,
         },
       },
     ],
