@@ -577,3 +577,8 @@ section[id] { scroll-margin-top: 3.5rem; }
   aspect-ratio: 16 / 9;
   background: #000;
 }
+
+/* A tall portrait photo (the real SCARA arm) would otherwise run past a full screen.
+   Cap its height and letterbox it against the figure's own dark ground. Wide diagrams
+   are never this tall, so the cap never binds for them. */
+.ppage__figure img { max-height: 78svh; object-fit: contain; background: #12151b; }

@@ -172,6 +172,9 @@ export const content = {
                 `Today it's a working teleoperated robot. I drive the end effector in straight lines with an Xbox controller while a Python host solves the inverse kinematics live at 25 Hz and streams the motion to the board. A 160 mm upper arm and 138.5 mm forearm give it a 298.5 mm reach, and homing is just a sensor read at startup. The spinning model at the top of this site is the real assembly, exported from Onshape and rendered in Blender.`,
               ],
               bullets: [],
+              image: `${import.meta.env.BASE_URL}projects/scara-real.webp`,
+              imageAlt: `The finished SCARA arm standing on the floor: a 3D-printed black base, a three-rod vertical tower with the lead screw between the rods, and the upper arm and forearm reaching out to the right, with the motor wiring looped around the base`,
+              imageCaption: `The arm as it stands today. The base, tower, carriage, arm segments and pulleys are all my own designs, printed at home; the rods, lead screw and steppers came out of the donor printer.`,
             },
             {
               heading: `Why a SCARA`,
