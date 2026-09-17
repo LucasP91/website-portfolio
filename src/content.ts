@@ -96,12 +96,12 @@ export const content = {
         ],
       },
       {
-        role: `Studio Assistant & Operations`,
+        role: `Operations Consultant & Studio Assistant`,
         org: `Picard Studio`,
         place: `Southbury, CT · art-education business`,
         dates: `Feb 2020 - Present`,
         bullets: [
-          `Built and maintained KPI dashboards tracking MRR, ARPU, retention, churn, and acquisition to drive decisions.`,
+          `Contracted through 2026 for AI-assisted operations work: KPI dashboards tracking MRR, ARPU, retention, churn, and acquisition, plus AI agent implementation and time-management optimization.`,
           `Automated monthly metrics reporting through the Kajabi API and GitHub Actions, piping data into Google Sheets.`,
           `Analyzed membership cancellation data, surfacing renewal-window and engagement-based retention signals.`,
         ],
