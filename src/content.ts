@@ -85,6 +85,17 @@ export const content = {
         ],
       },
       {
+        role: `Freelance CAD & 3D Printing`,
+        org: `Cagenio Home Technology`,
+        place: `Client project`,
+        dates: `Summer 2026`,
+        bullets: [
+          `Designed a wall-mounted holder for an Ethernet switch that carries the switch and its wiring and keeps dust and debris out of the ports, delivered as a print-ready 3D file.`,
+          `Built the client's Prusa MK4 from the kit, along with its enclosure and the MMU3 multi-material unit, then set the printer up to run the part in production.`,
+          `Now hired by a second client to design another part.`,
+        ],
+      },
+      {
         role: `Studio Assistant & Operations`,
         org: `Picard Studio`,
         place: `Southbury, CT · art-education business`,
@@ -93,7 +104,6 @@ export const content = {
           `Built and maintained KPI dashboards tracking MRR, ARPU, retention, churn, and acquisition to drive decisions.`,
           `Automated monthly metrics reporting through the Kajabi API and GitHub Actions, piping data into Google Sheets.`,
           `Analyzed membership cancellation data, surfacing renewal-window and engagement-based retention signals.`,
-          `Delivered freelance CAD - designed, prototyped, and invoiced a wall-mount equipment cradle.`,
         ],
       },
       {
