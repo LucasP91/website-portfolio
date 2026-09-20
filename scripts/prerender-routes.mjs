@@ -15,6 +15,14 @@
 import { readFileSync, writeFileSync, mkdirSync, copyFileSync } from 'node:fs'
 
 const SITE = 'https://lucasp91.github.io/website-portfolio'
+
+// Pages that changed URL. Google keeps crawling the old address for months, so each
+// one gets a stub that points at the new page. Static hosting cannot send a 301, and a
+// canonical plus a meta refresh is how Google is told the page moved. Old URLs are
+// deliberately NOT in the sitemap.
+const MOVED = {
+  'esp32-ai-camera-pen': 'pengpt-ai-smart-pen',
+}
 const DIST = 'dist'
 
 const shell = readFileSync(`${DIST}/index.html`, 'utf8')
@@ -73,6 +81,19 @@ for (const p of projects) {
   mkdirSync(`${DIST}/projects/${p.slug}`, { recursive: true })
   writeFileSync(`${DIST}/projects/${p.slug}/index.html`, pageFor(p))
 }
+for (const [from, to] of Object.entries(MOVED)) {
+  const url = `${SITE}/projects/${to}/`
+  mkdirSync(`${DIST}/projects/${from}`, { recursive: true })
+  writeFileSync(
+    `${DIST}/projects/${from}/index.html`,
+    `<!doctype html>\n<html lang="en">\n<head>\n<meta charset="utf-8" />\n` +
+      `<title>Moved to ${to}</title>\n<link rel="canonical" href="${url}" />\n` +
+      `<meta http-equiv="refresh" content="0; url=${url}" />\n<meta name="robots" content="noindex, follow" />\n` +
+      `</head>\n<body><p>This page moved to <a href="${url}">${url}</a>.</p></body>\n</html>\n`,
+  )
+  console.log(`  moved: /projects/${from}/ -> /projects/${to}/`)
+}
+
 copyFileSync(`${DIST}/index.html`, `${DIST}/404.html`)
 
 const today = new Date().toISOString().slice(0, 10)

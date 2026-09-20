@@ -1,7 +1,8 @@
 import { useEffect } from 'react'
-import { useParams, Link, Navigate } from 'react-router-dom'
+import { useParams, Link } from 'react-router-dom'
 import Reveal from '../components/Reveal'
 import { content } from '../content'
+import NotFound from '../components/NotFound'
 
 /* Sections may optionally carry bullets, a data table, and/or a figure
    (image + caption); typed here so content.ts sections only declare the
@@ -30,7 +31,7 @@ export default function ProjectPage() {
     window.scrollTo(0, 0)
   }, [project])
 
-  if (!project) return <Navigate to="/" replace />
+  if (!project) return <NotFound />
   const { page } = project
 
   return (

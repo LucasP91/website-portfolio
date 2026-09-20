@@ -1,10 +1,11 @@
 import './App.css'
-import { Routes, Route, Navigate } from 'react-router-dom'
+import { Routes, Route } from 'react-router-dom'
 import AuroraBackground from './components/AuroraBackground'
 import ScrollProgress from './components/ScrollProgress'
 import Home from './pages/Home'
 import ProjectPage from './pages/ProjectPage'
 import { content } from './content'
+import NotFound from './components/NotFound'
 
 // App shell: background, header, routes, footer. Page content lives in
 // src/pages/*; ALL text lives in src/content.ts.
@@ -37,7 +38,7 @@ function App() {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/projects/:slug" element={<ProjectPage />} />
-        <Route path="*" element={<Navigate to="/" replace />} />
+        <Route path="*" element={<NotFound />} />
       </Routes>
 
       <footer className="site-footer">
