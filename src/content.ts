@@ -403,11 +403,11 @@ export const content = {
               heading: `Rev 1: a bring-up board, not a pen`,
               paragraphs: [
                 `The first board is intentionally not shaped like a pen. It's a 100 × 100 mm, 4-layer test board with a ground plane and a power plane inside, so every section can be probed and fixed. It's built to be reworked: 16 series jumpers isolate sections, and a bodge area leaves room for fixes, so a wiring mistake costs an afternoon instead of a new board.`,
-                `The fab specs come from measured pad sizes rather than guesses. There are no BGAs, and the processor's 0.35 mm pitch pins escape in a single row, meaning the board can be made at standard 4-layer pricing. All 268 parts are on the board, with the major ones placed by script, and routing is next.`,
+                `The fab specs come from measured pad sizes rather than guesses. There are no BGAs, and the processor's 0.35 mm pitch pins escape in a single row, meaning the board can be made at standard 4-layer pricing. All 268 parts are now placed to the layout guide, the passives grouped around the chips they serve, and routing is next.`,
               ],
               image: `${import.meta.env.BASE_URL}projects/pengpt-board-angle.webp`,
-              imageAlt: `Angled 3D render of the rev-1 board in KiCad: major chips and connectors placed on the board, with rows of small passive parts staged beside it`,
-              imageCaption: `The rev-1 board in layout. The major parts are placed, and the small passives wait beside the board to be placed next to the chips they support. Nothing is routed yet.`,
+              imageAlt: `Angled 3D render of the rev-1 board in KiCad with every part placed: the processor at the centre, the radio and its antenna connector at the left, connectors along the top edge, and test pads with a bodge area at the right`,
+              imageCaption: `The rev-1 board with all 268 parts placed to the layout guide: the processor at the centre, the radio and antenna connector at the left, connectors along the top, and the test pads and bodge area down the right. Nothing is routed yet.`,
             },
             {
               heading: `What's next`,
